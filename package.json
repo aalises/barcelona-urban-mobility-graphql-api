@@ -1,0 +1,49 @@
+{
+  "name": "barcelona-urban-mobility-graphql-api",
+  "version": "0.0.0-alpha",
+  "description": "Barcelona Urban Mobility GraphQL API",
+  "main": "dist/server.js",
+  "scripts": {
+    "build:prod": "webpack --config webpack.production.js",
+    "build:dev": "webpack --config webpack.development.js",
+    "start": "node dist/server",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint",
+    "schema": "graphql-codegen",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "aalises",
+  "license": "ISC",
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@graphql-codegen/cli": "^1.17.10",
+    "@graphql-codegen/schema-ast": "^1.17.8",
+    "@graphql-codegen/typescript": "^1.17.10",
+    "@types/webpack-env": "^1.15.3",
+    "@typescript-eslint/eslint-plugin": "^4.4.0",
+    "@typescript-eslint/parser": "^4.4.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "eslint": "^7.10.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.3.0",
+    "prettier": "^2.1.2",
+    "ts-loader": "^8.0.4",
+    "typescript": "^4.0.3",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "3.11.0",
+    "webpack-merge": "^5.1.4",
+    "webpack-node-externals": "^2.5.2"
+  },
+  "dependencies": {
+    "apollo-server": "^2.18.2",
+    "graphql": "^15.3.0"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}

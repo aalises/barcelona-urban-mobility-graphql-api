@@ -1,0 +1,8 @@
+schema: http://localhost:4000
+generates:
+  ./src/types.d.ts:
+    plugins:
+      - typescript
+  ./schema.graphql:
+    plugins:
+        - schema-ast

@@ -1,0 +1,14 @@
+schema {
+  query: RootQuery
+}
+
+"""Root Query"""
+type RootQuery {
+  message: Message
+}
+
+"""Just a message"""
+type Message {
+  message: String
+  description: String
+}
