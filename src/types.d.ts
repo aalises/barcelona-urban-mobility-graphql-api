@@ -24,15 +24,13 @@ export type RootQueryMetroStationsArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type MetroStationsQueryResponse = Error | MetroStationConnection;
-
-/** Generic Error */
-export type Error = {
-  __typename?: 'Error';
-  /** HTTP Status Code of the Error */
-  code?: Maybe<Scalars['Int']>;
-  /** Error Description */
-  message?: Maybe<Scalars['String']>;
+/** Information about the metro stations of the city of Barcelona */
+export type MetroStationsQueryResponse = {
+  __typename?: 'MetroStationsQueryResponse';
+  /** Connection with the data about stations */
+  stations?: Maybe<MetroStationConnection>;
+  /** Total number of stations */
+  numberOfStations?: Maybe<Scalars['Int']>;
 };
 
 /** A connection to a list of items. */
