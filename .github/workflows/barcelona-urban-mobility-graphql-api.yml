@@ -35,3 +35,8 @@ jobs:
         run: yarn typecheck
         env:
           CI: true
+
+      - name: test
+        run: yarn test
+        env:
+          CI: true

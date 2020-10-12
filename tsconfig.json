@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
-    "target": "es5",                       
+    "target": "es6",                       
     "module": "esnext", 
     "moduleResolution": "node",   
     "strict": true,
-    "noImplicitAny": true,              
+    "noImplicitAny": false,
     "strictNullChecks": true,           
     "esModuleInterop": true,                 
     "skipLibCheck": true,                     

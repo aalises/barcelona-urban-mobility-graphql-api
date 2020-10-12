@@ -1,11 +1,11 @@
 import { GraphQLObjectType } from "graphql";
 
-import message from "./queries/MessageQuery";
+import metroStations from "./queries/MetroStationsQuery";
 
 export default new GraphQLObjectType({
   name: "RootQuery",
   description: "Root Query",
   fields: {
-    message,
+    metroStations,
   },
 });
