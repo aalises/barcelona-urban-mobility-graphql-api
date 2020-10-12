@@ -1,6 +1,6 @@
 # Barcelona Urban Mobility Graphql API
 
-GraphQL API built using Apollo Server that integrates information about the urban mobility of the city of Barcelona.
+GraphQL API built using Apollo Server + Typescript that integrates information about the urban mobility of the city of Barcelona.
 
 It provides information about bus stops and lines, metro stations/lines, and public bikes (Bicing) stations and availability.
 
@@ -27,6 +27,10 @@ The application will be available on the `PORT` environment variable, or `4000` 
 ### Generate Schema
 
 To generate the schema and Typescript types for the schema (on `src/types.d.ts`), run `schema`. This uses [GraphQL Code Generator](https://graphql-code-generator.com/)
+
+### Test
+
+In order to test using Jest, just run `yarn test` or `npm run test`
 
 ### Data Sources
 
