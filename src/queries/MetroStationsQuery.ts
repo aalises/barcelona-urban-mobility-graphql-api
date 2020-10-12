@@ -27,7 +27,13 @@ const MetroStationsQueryResponse = new GraphQLUnionType({
 export default {
   type: MetroStationsQueryResponse,
   args: connectionArgs,
-  resolve: (_, args): MetroStationsQueryResponseType => {
+  resolve: async (
+    _,
+    args,
+    { dataSources }
+  ): Promise<MetroStationsQueryResponseType> => {
+    const data = await dataSources.metroStations.getAllStations();
+    console.log(data);
     return connectionFromArray(
       [
         {
