@@ -1,6 +1,14 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const nodeExternals = require("webpack-node-externals");
+
 const path = require("path");
 
 module.exports = {
+  entry: [path.join(__dirname, "src/index.ts")],
+  externals: [nodeExternals({})],
+  mode: "production",
+  plugins: [new CleanWebpackPlugin()],
   module: {
     rules: [
       {
