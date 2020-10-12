@@ -8,7 +8,6 @@
     "plugins": ["node", "@typescript-eslint", "prettier"],
     "env": {
       "es6": true,
-      "jest": true,
       "node": true
     },
     "settings": {

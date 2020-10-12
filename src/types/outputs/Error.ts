@@ -6,11 +6,11 @@ export default new GraphQLObjectType({
   fields: {
     code: {
       type: GraphQLInt,
-      description: "HTTP Status Code of the Error"
+      description: "HTTP Status Code of the Error",
     },
     message: {
-        type: GraphQLString,
-        description: "Error Description"
-      },
+      type: GraphQLString,
+      description: "Error Description",
+    },
   },
 });
