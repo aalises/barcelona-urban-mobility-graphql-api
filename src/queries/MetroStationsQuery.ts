@@ -4,7 +4,7 @@ import {
   connectionFromArray,
 } from "graphql-relay";
 import type {
-  MetroStationsQueryResponse as MetroStationsQueryResponseType,
+  MetroStations as MetroStationsType,
   MetroStationConnection as MetroStationConnectionType,
 } from "../types";
 
@@ -17,7 +17,7 @@ export default {
     _,
     args: ConnectionArguments,
     { dataSources }
-  ): Promise<MetroStationsQueryResponseType> => {
+  ): Promise<MetroStationsType> => {
     const {
       numberOfStations,
       stations,

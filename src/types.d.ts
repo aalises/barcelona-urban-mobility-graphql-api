@@ -12,7 +12,7 @@ export type Scalars = {
 /** Root Query */
 export type RootQuery = {
   __typename?: 'RootQuery';
-  metroStations?: Maybe<MetroStationsQueryResponse>;
+  metroStations?: Maybe<MetroStations>;
 };
 
 
@@ -25,8 +25,8 @@ export type RootQueryMetroStationsArgs = {
 };
 
 /** Information about the metro stations of the city of Barcelona */
-export type MetroStationsQueryResponse = {
-  __typename?: 'MetroStationsQueryResponse';
+export type MetroStations = {
+  __typename?: 'MetroStations';
   /** Connection with the data about stations */
   stations?: Maybe<MetroStationConnection>;
   /** Total number of stations */

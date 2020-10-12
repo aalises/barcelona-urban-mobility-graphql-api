@@ -4,7 +4,11 @@ import MetroStationsDataSource from "./datasources/MetroStationsDataSource";
 
 const server: ApolloServer = new ApolloServer({
   schema,
-  playground: true,
+  playground: {
+    settings: {
+      "editor.theme": "light",
+    },
+  },
   introspection: true,
   dataSources: () => ({
     metroStations: new MetroStationsDataSource(),

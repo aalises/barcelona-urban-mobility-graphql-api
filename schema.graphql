@@ -4,11 +4,11 @@ schema {
 
 """Root Query"""
 type RootQuery {
-  metroStations(after: String, first: Int, before: String, last: Int): MetroStationsQueryResponse
+  metroStations(after: String, first: Int, before: String, last: Int): MetroStations
 }
 
 """Information about the metro stations of the city of Barcelona"""
-type MetroStationsQueryResponse {
+type MetroStations {
   """Connection with the data about stations"""
   stations: MetroStationConnection
 

@@ -7,7 +7,7 @@ const { connectionType: MetroStationConnection } = connectionDefinitions({
 });
 
 export default new GraphQLObjectType({
-  name: "MetroStationsQueryResponse",
+  name: "MetroStations",
   description: "Information about the metro stations of the city of Barcelona",
   fields: {
     stations: {
