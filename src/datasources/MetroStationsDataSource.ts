@@ -6,14 +6,14 @@ import {
   TMB_API_APP_KEY,
 } from "../environment";
 
-interface MetroStationAPIType {
-  type: "Feature";
+export interface MetroStationAPIType {
+  type: string;
   id: string;
   geometry: {
-    type: "Point";
-    coordinates: Float32Array;
+    type: string;
+    coordinates: number[];
   };
-  geometry_name: "GEOMETRY";
+  geometry_name: string;
   properties: {
     CODI_GRUP_STACIO: number;
     NOM_STACIO: string;

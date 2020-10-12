@@ -1,4 +1,8 @@
-import { connectionArgs, connectionFromArray } from "graphql-relay";
+import {
+  connectionArgs,
+  ConnectionArguments,
+  connectionFromArray,
+} from "graphql-relay";
 import type {
   MetroStationsQueryResponse as MetroStationsQueryResponseType,
   MetroStationConnection as MetroStationConnectionType,
@@ -11,7 +15,7 @@ export default {
   args: connectionArgs,
   resolve: async (
     _,
-    args,
+    args: ConnectionArguments,
     { dataSources }
   ): Promise<MetroStationsQueryResponseType> => {
     const {
