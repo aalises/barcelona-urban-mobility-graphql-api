@@ -1,5 +1,5 @@
 import { RESTDataSource } from "apollo-datasource-rest";
-import type { MetroStation as MetroStationType } from "../types";
+import type { MetroStation as MetroStationType } from "../../types";
 import {
   TMB_API_BASE_URL,
   TMB_API_APP_ID,

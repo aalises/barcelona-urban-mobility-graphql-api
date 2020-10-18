@@ -6,9 +6,9 @@ import {
 import type {
   MetroStations as MetroStationsType,
   MetroStationConnection as MetroStationConnectionType,
-} from "../types";
+} from "../../types";
 
-import MetroStationsQueryResponse from "../types/outputs/MetroStationsQueryResponse";
+import MetroStationsQueryResponse from "../outputs/MetroStationsQueryResponse";
 
 export default {
   type: MetroStationsQueryResponse,

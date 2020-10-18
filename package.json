@@ -2,10 +2,10 @@
   "name": "barcelona-urban-mobility-graphql-api",
   "version": "0.0.0-alpha",
   "description": "Barcelona Urban Mobility GraphQL API",
-  "main": "src/lambda/graphql.ts",
+  "main": "src/graphql.ts",
   "scripts": {
-    "build": "netlify-lambda build src/lambda",
-    "start": "netlify-lambda serve src/lambda",
+    "build": "netlify-lambda build src",
+    "start": "netlify-lambda serve src",
     "typecheck": "tsc --noEmit",
     "lint": "eslint",
     "schema": "graphql-codegen",

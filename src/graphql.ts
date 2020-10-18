@@ -1,7 +1,7 @@
 import { ApolloServer } from "apollo-server-lambda";
-import schema from "../schema";
-import MetroStationsDataSource from "../datasources/MetroStationsDataSource";
-import formatError from "../utils/formatError";
+import schema from "./schema";
+import MetroStationsDataSource from "./datasources/MetroStationsDataSource";
+import formatError from "./utils/formatError";
 
 const server: ApolloServer = new ApolloServer({
   schema,

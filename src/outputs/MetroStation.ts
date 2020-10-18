@@ -4,7 +4,6 @@ import {
   GraphQLID,
   GraphQLString,
   GraphQLList,
-  GraphQLInt,
 } from "graphql";
 
 export default new GraphQLObjectType({
