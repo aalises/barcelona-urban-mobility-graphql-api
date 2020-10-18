@@ -1,4 +1,4 @@
-import { ApolloError, ForbiddenError } from "apollo-server";
+import { ApolloError, ForbiddenError } from "apollo-server-lambda";
 import { GraphQLError } from "graphql";
 
 /*

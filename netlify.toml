@@ -1,0 +1,12 @@
+[build]
+  command = "yarn build"
+  functions = "built-lambda"
+
+[[redirects]]
+  from = "/"
+  to = "/graphql"
+
+[[redirects]]
+  from = "/graphql"
+  to = "/.netlify/functions/graphql"
+  status = 200

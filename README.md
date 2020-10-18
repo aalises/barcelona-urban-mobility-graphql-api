@@ -42,4 +42,4 @@ For the metro stations, we use the public `Transports Metropolitans de Barcelona
 https://api.tmb.cat/v1/transit/estacions?app_id=XXX&app_key=XXX
 ```
 
-The `App Key` and `App ID` are passed through the node's `process.env.TMB_API_KEY_ID` and `process.env.TMB_API_KEY_APP` and the credentials can be obtained if you log and register an app to the portal.
+The `App Key` and `App ID` are passed through the node's `process.env.TMB_API_APP_KEY` and `process.env.TMB_API_APP_ID` and the credentials can be obtained if you log and register an app to the portal.

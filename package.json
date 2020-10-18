@@ -2,11 +2,11 @@
   "name": "barcelona-urban-mobility-graphql-api",
   "version": "0.0.0-alpha",
   "description": "Barcelona Urban Mobility GraphQL API",
-  "main": "dist/server.js",
+  "main": "src/index.ts",
   "scripts": {
-    "build": "webpack --config webpack.config.js",
-    "start": "node dist/server",
-    "dev": "concurrently --kill-others \"tsc -w\" \"nodemon --exec babel-node dist/index\"",
+    "build": "netlify-lambda build src/lambda",
+    "start": "netlify-lambda serve src/lambda",
+    "dev": "concurrently --kill-others \"tsc -w\" \"nodemon --delay 10 --exec babel-node dist/index\"",
     "typecheck": "tsc --noEmit",
     "lint": "eslint",
     "schema": "graphql-codegen",
@@ -15,6 +15,7 @@
   "author": "aalises",
   "license": "ISC",
   "devDependencies": {
+    "netlify-lambda": "^2.0.1",
     "@babel/core": "^7.11.6",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-typescript": "^7.10.4",
@@ -25,13 +26,11 @@
     "@graphql-codegen/typescript": "^1.17.10",
     "@types/graphql-relay": "^0.6.0",
     "@types/jest": "^26.0.14",
-    "@types/webpack-env": "^1.15.3",
     "@typescript-eslint/eslint-plugin": "^4.4.0",
     "@typescript-eslint/parser": "^4.4.0",
     "apollo-datasource-rest": "^0.9.4",
     "babel-jest": "^26.5.2",
     "babel-node": "^0.0.1-security",
-    "clean-webpack-plugin": "^3.0.0",
     "concurrently": "^5.3.0",
     "eslint": "^7.10.0",
     "eslint-config-prettier": "^6.12.0",
@@ -42,13 +41,10 @@
     "nodemon": "^2.0.4",
     "prettier": "^2.1.2",
     "ts-loader": "^8.0.4",
-    "typescript": "^4.0.3",
-    "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12",
-    "webpack-node-externals": "^2.5.2"
+    "typescript": "^4.0.3"
   },
   "dependencies": {
-    "apollo-server": "^2.18.2",
+    "apollo-server-lambda": "^2.18.2",
     "graphql": "^15.3.0",
     "graphql-relay": "^0.6.0"
   },
