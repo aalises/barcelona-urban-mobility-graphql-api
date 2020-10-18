@@ -1,23 +1,25 @@
 import DataSource from "../MetroStationsDataSource";
 
-const data = {
-  type: "Feature",
-  id: "ESTACIONS.6660935",
-  geometry: {
-    type: "Point",
-    coordinates: [2.224737, 41.442817],
-  },
-  geometry_name: "GEOMETRY",
-  properties: {
-    CODI_GRUP_ESTACIO: 6660935,
-    NOM_ESTACIO: "La Salut",
-    PICTO: "L10N",
-    DATA: "2020-10-11Z",
-  },
-};
+jest.mock("../../environment", () => ({
+  TMB_API_APP_ID: "testAppId",
+  TMB_API_APP_KEY: "testAppKey",
+}));
+
+const dataSource = new DataSource();
+const mockGet = jest.fn();
+
+//@ts-expect-error we are trying to mock a protected method, which is fine for our test purposes
+dataSource.get = mockGet;
 
 describe("MetroStationsDataSource", () => {
-  const dataSource = new DataSource();
+  it("Correctly looks up the stations from the API", async () => {
+    await dataSource.getAllStations();
+
+    expect(mockGet).toBeCalledWith("estacions", {
+      app_id: "testAppId",
+      app_key: "testAppKey",
+    });
+  });
 
   it("Correctly parses an station API data to the schema format", () => {
     expect(dataSource.metroStationReducer(data as any)).toEqual({
@@ -40,3 +42,19 @@ describe("MetroStationsDataSource", () => {
     expect(dataSource.parseLines(lineString)).toEqual(parsedLineString);
   });
 });
+
+const data = {
+  type: "Feature",
+  id: "ESTACIONS.6660935",
+  geometry: {
+    type: "Point",
+    coordinates: [2.224737, 41.442817],
+  },
+  geometry_name: "GEOMETRY",
+  properties: {
+    CODI_GRUP_ESTACIO: 6660935,
+    NOM_ESTACIO: "La Salut",
+    PICTO: "L10N",
+    DATA: "2020-10-11Z",
+  },
+};

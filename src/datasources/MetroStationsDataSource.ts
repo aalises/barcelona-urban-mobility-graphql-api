@@ -61,19 +61,20 @@ export default class MetroStationsDataSource extends RESTDataSource {
   }
 
   async getAllStations(): Promise<{
-    numberOfStations: number;
+    numberOfStations: number | null;
     stations: MetroStationType[];
   }> {
-    const response: MetroStationsAPIType = await this.get("estacions", {
+    const response: MetroStationsAPIType | null = await this.get("estacions", {
       app_id: TMB_API_APP_ID,
       app_key: TMB_API_APP_KEY,
     });
 
     return {
-      numberOfStations: response.numberReturned,
-      stations: response.features.map((station: MetroStationAPIType) =>
-        this.metroStationReducer(station)
-      ),
+      numberOfStations: response?.numberReturned ?? null,
+      stations:
+        response?.features?.map((station: MetroStationAPIType) =>
+          this.metroStationReducer(station)
+        ) ?? [],
     };
   }
 }
