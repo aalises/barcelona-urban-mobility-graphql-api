@@ -1,6 +1,6 @@
 import formatError from "../formatError";
 import { GraphQLError } from "graphql";
-import { ApolloError, ForbiddenError } from "apollo-server";
+import { ApolloError, ForbiddenError } from "apollo-server-lambda";
 
 const createGraphqlError = (message: string, status: number): GraphQLError =>
   new GraphQLError(message, null, null, null, null, null, {
@@ -20,6 +20,8 @@ describe("formatError", () => {
   });
 
   it("Returns ForbiddenError with the provided message when the error status is 403", () => {
+    process.env.NODE_ENV = "production";
+
     const message = "Test message";
     const error = formatError(createGraphqlError(message, 403));
 
@@ -28,8 +30,9 @@ describe("formatError", () => {
   });
 
   it("Defaults to returning ApolloError", () => {
-    const error = formatError(createGraphqlError("", 500));
+    process.env.NODE_ENV = "production";
 
+    const error = formatError(createGraphqlError("", 500));
     expect(error).toBeInstanceOf(ApolloError);
   });
 });
