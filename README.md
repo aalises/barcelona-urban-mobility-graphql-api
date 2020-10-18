@@ -14,11 +14,11 @@ It provides information about bus stops and lines, metro stations/lines, and pub
 - [ ] Add bike availability information to the `bikeStations` query
 - [ ] Add filtering of the stops/stations by line ID or name
 
-## GraphQL Playground
+## GraphQL Playground 🚀
 
 [Barcelona Urban Mobility GraphQL Playground](https://barcelona-urban-mobility-graphql-api.netlify.app/graphql)
 
-## Usage
+## Usage 🔧
 
 ### Install
 
@@ -26,9 +26,7 @@ The installation requires node.js as the execution environment as well as npm or
 
 ### Run
 
-To run it, execute `build:prod` (Production) or `build:dev` (Development), depending on the environment you want to work on, and then run `start`.
-
-The application will be available on the `PORT` environment variable, or `4000` as the default port.
+To run it, execute `yarn build`, and then `yarn start`. The application will be available port `9000`.
 
 ### Generate Schema
 
@@ -38,7 +36,7 @@ To generate the schema and Typescript types for the schema (on `src/types.d.ts`)
 
 In order to test using Jest, just run `yarn test` or `npm run test`
 
-### Data Sources
+## Data Sources 📊
 
 ### Metro Stations
 
