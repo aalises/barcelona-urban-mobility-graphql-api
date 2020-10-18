@@ -1,5 +1,7 @@
 # Barcelona Urban Mobility Graphql API
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a1b85612-974d-4aeb-8350-c78fae6dd9c0/deploy-status)](https://app.netlify.com/sites/barcelona-urban-mobility-graphql-api/deploys)
+
 GraphQL API built using Apollo Server + Typescript that integrates information about the urban mobility of the city of Barcelona.
 
 It provides information about bus stops and lines, metro stations/lines, and public bikes (Bicing) stations and availability.
@@ -11,6 +13,10 @@ It provides information about bus stops and lines, metro stations/lines, and pub
 - [ ] `bikeStations` query with information about bike stations
 - [ ] Add bike availability information to the `bikeStations` query
 - [ ] Add filtering of the stops/stations by line ID or name
+
+## GraphQL Playground
+
+[Barcelona Urban Mobility GraphQL Playground](https://barcelona-urban-mobility-graphql-api.netlify.app/graphql)
 
 ## Usage
 
