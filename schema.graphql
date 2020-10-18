@@ -5,6 +5,7 @@ schema {
 """Root Query"""
 type RootQuery {
   metroStations(after: String, first: Int, before: String, last: Int): MetroStations
+  busStops(after: String, first: Int, before: String, last: Int): BusStops
 }
 
 """Information about the metro stations of the city of Barcelona"""
@@ -69,4 +70,46 @@ type Coordinates {
   latitude: Float
   longitude: Float
   altitude: Float
+}
+
+"""Information about the bus stops of the city of Barcelona"""
+type BusStops {
+  """Connection with the data about stops"""
+  stops: BusStopConnection
+
+  """Total number of stops"""
+  numberOfStops: Int
+}
+
+"""A connection to a list of items."""
+type BusStopConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [BusStopEdge]
+}
+
+"""An edge in a connection."""
+type BusStopEdge {
+  """The item at the end of the edge"""
+  node: BusStop
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""Bus stop information"""
+type BusStop {
+  """Unique ID of the stop"""
+  id: ID
+
+  """Name of the stop"""
+  name: String
+
+  """Location coordinates of the stop"""
+  location: Coordinates
+
+  """Lines the stop belongs to e.g. 92, 73"""
+  lines: [String]
 }

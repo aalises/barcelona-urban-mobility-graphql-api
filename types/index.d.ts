@@ -13,11 +13,21 @@ export type Scalars = {
 export type RootQuery = {
   __typename?: 'RootQuery';
   metroStations?: Maybe<MetroStations>;
+  busStops?: Maybe<BusStops>;
 };
 
 
 /** Root Query */
 export type RootQueryMetroStationsArgs = {
+  after?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['String']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
+/** Root Query */
+export type RootQueryBusStopsArgs = {
   after?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['String']>;
@@ -83,4 +93,44 @@ export type Coordinates = {
   latitude?: Maybe<Scalars['Float']>;
   longitude?: Maybe<Scalars['Float']>;
   altitude?: Maybe<Scalars['Float']>;
+};
+
+/** Information about the bus stops of the city of Barcelona */
+export type BusStops = {
+  __typename?: 'BusStops';
+  /** Connection with the data about stops */
+  stops?: Maybe<BusStopConnection>;
+  /** Total number of stops */
+  numberOfStops?: Maybe<Scalars['Int']>;
+};
+
+/** A connection to a list of items. */
+export type BusStopConnection = {
+  __typename?: 'BusStopConnection';
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** A list of edges. */
+  edges?: Maybe<Array<Maybe<BusStopEdge>>>;
+};
+
+/** An edge in a connection. */
+export type BusStopEdge = {
+  __typename?: 'BusStopEdge';
+  /** The item at the end of the edge */
+  node?: Maybe<BusStop>;
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
+};
+
+/** Bus stop information */
+export type BusStop = {
+  __typename?: 'BusStop';
+  /** Unique ID of the stop */
+  id?: Maybe<Scalars['ID']>;
+  /** Name of the stop */
+  name?: Maybe<Scalars['String']>;
+  /** Location coordinates of the stop */
+  location?: Maybe<Coordinates>;
+  /** Lines the stop belongs to e.g. 92, 73 */
+  lines?: Maybe<Array<Maybe<Scalars['String']>>>;
 };

@@ -8,7 +8,7 @@ import type {
   MetroStationConnection as MetroStationConnectionType,
 } from "../../types";
 
-import MetroStationsQueryResponse from "../outputs/MetroStationsQueryResponse";
+import MetroStationsQueryResponse from "../types/outputs/MetroStationsQueryResponse";
 
 export default {
   type: MetroStationsQueryResponse,
