@@ -1,10 +1,6 @@
 import { RESTDataSource } from "apollo-datasource-rest";
 import type { MetroStation as MetroStationType } from "../../types";
-import {
-  TMB_API_BASE_URL,
-  TMB_API_APP_ID,
-  TMB_API_APP_KEY,
-} from "../environment";
+import { TMB_API_BASE_URL } from "../config";
 
 export interface MetroStationAPIType {
   type: string;
@@ -65,8 +61,8 @@ export default class MetroStationsDataSource extends RESTDataSource {
     stations: MetroStationType[];
   }> {
     const response: MetroStationsAPIType | null = await this.get("estacions", {
-      app_id: TMB_API_APP_ID,
-      app_key: TMB_API_APP_KEY,
+      app_id: process.env.TMB_API_APP_ID ?? "",
+      app_key: process.env.TMB_API_APP_KEY ?? "",
     });
 
     return {
