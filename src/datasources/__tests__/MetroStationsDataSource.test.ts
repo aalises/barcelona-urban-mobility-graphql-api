@@ -1,18 +1,17 @@
 import DataSource from "../MetroStationsDataSource";
 
-jest.mock("../../environment", () => ({
-  TMB_API_APP_ID: "testAppId",
-  TMB_API_APP_KEY: "testAppKey",
-}));
-
 const dataSource = new DataSource();
-const mockGet = jest.fn();
-
-//@ts-expect-error we are trying to mock a protected method, which is fine for our test purposes
-dataSource.get = mockGet;
 
 describe("MetroStationsDataSource", () => {
   it("Correctly looks up the stations from the API", async () => {
+    const mockGet = jest.fn();
+
+    //@ts-expect-error we are trying to mock a protected method, which is fine for our test purposes
+    dataSource.get = mockGet;
+
+    process.env.TMB_API_APP_ID = "testAppId";
+    process.env.TMB_API_APP_KEY = "testAppKey";
+
     mockGet.mockReturnValueOnce(mockMetroStationsAPIResponse);
 
     const res = await dataSource.getAllStations();
@@ -42,7 +41,7 @@ describe("MetroStationsDataSource", () => {
   });
 });
 
-const mockMetroStationsAPIResponse = {
+export const mockMetroStationsAPIResponse = {
   type: "FeatureCollection",
   features: [
     {
@@ -88,7 +87,7 @@ const mockMetroStationsAPIResponse = {
   },
 };
 
-const mockMetroStationsResponse = {
+export const mockMetroStationsResponse = {
   numberOfStations: 2,
   stations: [
     {
