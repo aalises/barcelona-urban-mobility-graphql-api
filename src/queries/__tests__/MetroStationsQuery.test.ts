@@ -5,7 +5,7 @@ import createTestServer from "../../utils/createTestServer";
 import { mockMetroStationsAPIResponse } from "../../datasources/__tests__/MetroStationsDataSource.test";
 
 const GET_METRO_STATIONS = gql`
-  query launchList($first: Int) {
+  query getMetroStations($first: Int) {
     metroStations(first: $first) {
       stations {
         edges {
@@ -19,8 +19,8 @@ const GET_METRO_STATIONS = gql`
   }
 `;
 
-describe("Queries", () => {
-  it("[metroStations]: Fetches list of metro stations", async () => {
+describe("metroStations Query", () => {
+  it("Fetches list of metro stations", async () => {
     const { server, metroStations } = createTestServer();
     //@ts-expect-error we are trying to mock a protected method, which is fine for our test purposes
     metroStations.get = jest
