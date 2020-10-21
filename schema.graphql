@@ -77,4 +77,5 @@ Input for the FindBy argument of the queries, which allows finding an entity by 
 """
 input FindByInput {
   id: Int
+  name: String
 }

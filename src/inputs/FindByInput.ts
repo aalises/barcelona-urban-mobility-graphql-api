@@ -1,4 +1,4 @@
-import { GraphQLInt, GraphQLInputObjectType } from "graphql";
+import { GraphQLInt, GraphQLInputObjectType, GraphQLString } from "graphql";
 
 export default new GraphQLInputObjectType({
   name: "FindByInput",
@@ -7,6 +7,9 @@ export default new GraphQLInputObjectType({
   fields: {
     id: {
       type: GraphQLInt,
+    },
+    name: {
+      type: GraphQLString,
     },
   },
 });

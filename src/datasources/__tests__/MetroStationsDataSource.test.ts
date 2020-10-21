@@ -26,8 +26,8 @@ describe("MetroStationsDataSource", () => {
   });
 
   describe("[getStation]", () => {
-    it("Throws a Validation Error if an empty ID is passed as parameter", async () => {
-      const res = await dataSource.getStation({ id: null });
+    it("Throws a Validation Error if a falsy ID and name are passed as parameter", async () => {
+      const res = await dataSource.getStation({ id: null, name: null });
 
       expect(res).toBeInstanceOf(ValidationError);
     });
@@ -41,7 +41,7 @@ describe("MetroStationsDataSource", () => {
 
     it("Throws an Error if the features are null or undefined", async () => {
       mockGet.mockReturnValueOnce({ features: null });
-      const res = await dataSource.getStation({ id: 32 });
+      const res = await dataSource.getStation({ name: "Urwhatawave" });
 
       expect(res).toBeInstanceOf(ApolloError);
     });
@@ -56,6 +56,20 @@ describe("MetroStationsDataSource", () => {
       expect(mockGet).toBeCalledWith("estacions/32", {
         app_id: "testAppId",
         app_key: "testAppKey",
+      });
+    });
+
+    it("Correctly gets a station by Name", async () => {
+      mockGet.mockReturnValueOnce({
+        features: [mockMetroStationsAPIResponse.features[0]],
+      });
+      const res = await dataSource.getStation({ name: "Urwhatawave" });
+
+      expect(res).toEqual(mockMetroStationsResponse.stations[0]);
+      expect(mockGet).toBeCalledWith("estacions", {
+        app_id: "testAppId",
+        app_key: "testAppKey",
+        filter: "NOM_ESTACIO='Urwhatawave'",
       });
     });
   });

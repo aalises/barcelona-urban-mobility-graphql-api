@@ -47,10 +47,10 @@ describe("MetroStation Query", () => {
       }
     `);
   });
-  it("Throws a validation error if the ID is null", async () => {
+  it("Throws a validation error if the ID and name are falsy", async () => {
     const res = await query({
       query: GET_METRO_STATION,
-      variables: { findBy: { id: null } },
+      variables: { findBy: { id: null, name: null } },
     });
 
     expect(res).toMatchInlineSnapshot(`
@@ -59,7 +59,7 @@ describe("MetroStation Query", () => {
           "metroStation": null,
         },
         "errors": Array [
-          [GraphQLError: You have to provide a non empty ID for the metroStation query],
+          [GraphQLError: You have to provide either a non empty ID or non empty Name for the metroStation query],
         ],
         "extensions": undefined,
         "http": Object {
