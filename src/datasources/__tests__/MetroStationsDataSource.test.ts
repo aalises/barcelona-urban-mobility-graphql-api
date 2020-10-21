@@ -1,29 +1,66 @@
 import DataSource from "../MetroStationsDataSource";
+import { ApolloError, ValidationError } from "apollo-server-lambda";
 
 const dataSource = new DataSource();
 
 describe("MetroStationsDataSource", () => {
-  it("Correctly looks up the stations from the API", async () => {
-    const mockGet = jest.fn();
+  process.env.TMB_API_APP_ID = "testAppId";
+  process.env.TMB_API_APP_KEY = "testAppKey";
+  const mockGet = jest.fn();
 
-    //@ts-expect-error we are trying to mock a protected method, which is fine for our test purposes
-    dataSource.get = mockGet;
+  //@ts-expect-error we are trying to mock a protected method, which is fine for our test purposes
+  dataSource.get = mockGet;
 
-    process.env.TMB_API_APP_ID = "testAppId";
-    process.env.TMB_API_APP_KEY = "testAppKey";
+  describe("[getAllStations]", () => {
+    it("Correctly looks up the stations from the API", async () => {
+      mockGet.mockReturnValueOnce(mockMetroStationsAPIResponse);
 
-    mockGet.mockReturnValueOnce(mockMetroStationsAPIResponse);
+      const res = await dataSource.getAllStations();
+      expect(res).toEqual(mockMetroStationsResponse);
 
-    const res = await dataSource.getAllStations();
-    expect(res).toEqual(mockMetroStationsResponse);
-
-    expect(mockGet).toBeCalledWith("estacions", {
-      app_id: "testAppId",
-      app_key: "testAppKey",
+      expect(mockGet).toBeCalledWith("estacions", {
+        app_id: "testAppId",
+        app_key: "testAppKey",
+      });
     });
   });
 
-  it("Correctly parses an station API data to the schema format", () => {
+  describe("[getStation]", () => {
+    it("Throws a Validation Error if an empty ID is passed as parameter", async () => {
+      const res = await dataSource.getStation({ id: null });
+
+      expect(res).toBeInstanceOf(ValidationError);
+    });
+
+    it("Throws a Not Found Error if the response does not contain features", async () => {
+      mockGet.mockReturnValueOnce({ features: [] });
+      const res = await dataSource.getStation({ id: 32 });
+
+      expect(res).toBeInstanceOf(ApolloError);
+    });
+
+    it("Throws an Error if the features are null or undefined", async () => {
+      mockGet.mockReturnValueOnce({ features: null });
+      const res = await dataSource.getStation({ id: 32 });
+
+      expect(res).toBeInstanceOf(ApolloError);
+    });
+
+    it("Correctly gets a station by ID", async () => {
+      mockGet.mockReturnValueOnce({
+        features: [mockMetroStationsAPIResponse.features[0]],
+      });
+      const res = await dataSource.getStation({ id: 32 });
+
+      expect(res).toEqual(mockMetroStationsResponse.stations[0]);
+      expect(mockGet).toBeCalledWith("estacions/32", {
+        app_id: "testAppId",
+        app_key: "testAppKey",
+      });
+    });
+  });
+
+  it("[metroStationReducer]: Correctly parses an station API data to the schema format", () => {
     expect(
       dataSource.metroStationReducer(
         mockMetroStationsAPIResponse.features[0] as any
@@ -36,9 +73,12 @@ describe("MetroStationsDataSource", () => {
     ["", []],
     ["L1L2", ["L1", "L2"]],
     ["L4L5L10N", ["L4", "L5", "L10N"]],
-  ])("parses the line string %p to be %p", (lineString, parsedLineString) => {
-    expect(dataSource.parseLines(lineString)).toEqual(parsedLineString);
-  });
+  ])(
+    "[parseLines]: Parses the line string %p to be %p",
+    (lineString, parsedLineString) => {
+      expect(dataSource.parseLines(lineString)).toEqual(parsedLineString);
+    }
+  );
 });
 
 export const mockMetroStationsAPIResponse = {
@@ -91,7 +131,7 @@ export const mockMetroStationsResponse = {
   numberOfStations: 2,
   stations: [
     {
-      id: "ESTACIONS.6660935",
+      id: 6660935,
       lines: ["L10N"],
       location: {
         latitude: 41.442817,
@@ -100,7 +140,7 @@ export const mockMetroStationsResponse = {
       name: "La Salut",
     },
     {
-      id: "ESTACIONS.6660525",
+      id: 6660525,
       lines: ["L5"],
       location: {
         latitude: 41.41506,

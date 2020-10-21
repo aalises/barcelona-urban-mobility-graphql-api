@@ -9,7 +9,7 @@ It provides information about bus stops and lines, metro stations/lines, and pub
 ### Feature Roadmap / Checklist for v1.0.0
 
 - [x] `metroStations` query with information about metro stations
-- [ ] `metroStation` query with information about one metro station (find by name or id)
+- [x] `metroStation` query with information about one metro station (find by id)
 - [ ] `metroLines` query with information about metro lines
 - [ ] `metroLine` query with information about one metro line (find by name or id)
 - [ ] `busStops` query with information about bus stops

@@ -13,6 +13,7 @@ export type Scalars = {
 export type RootQuery = {
   __typename?: 'RootQuery';
   metroStations?: Maybe<MetroStations>;
+  metroStation?: Maybe<MetroStation>;
 };
 
 
@@ -22,6 +23,12 @@ export type RootQueryMetroStationsArgs = {
   first?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['String']>;
   last?: Maybe<Scalars['Int']>;
+};
+
+
+/** Root Query */
+export type RootQueryMetroStationArgs = {
+  findBy: FindByInput;
 };
 
 /** Information about the metro stations of the city of Barcelona */
@@ -83,4 +90,9 @@ export type Coordinates = {
   latitude?: Maybe<Scalars['Float']>;
   longitude?: Maybe<Scalars['Float']>;
   altitude?: Maybe<Scalars['Float']>;
+};
+
+/** Input for the FindBy argument of the queries, which allows finding an entity by some parameters (e.g. name or id) */
+export type FindByInput = {
+  id?: Maybe<Scalars['Int']>;
 };
