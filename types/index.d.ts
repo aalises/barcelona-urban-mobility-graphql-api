@@ -95,4 +95,5 @@ export type Coordinates = {
 /** Input for the FindBy argument of the queries, which allows finding an entity by some parameters (e.g. name or id) */
 export type FindByInput = {
   id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
 };

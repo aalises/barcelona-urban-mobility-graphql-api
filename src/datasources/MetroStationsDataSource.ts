@@ -60,20 +60,34 @@ export default class MetroStationsDataSource extends RESTDataSource {
     };
   }
 
-  async getStation({ id }: FindByInput): Promise<MetroStationType | null> {
-    if (!id) {
-      return new ValidationError("You need to provide an ID");
+  async getStation({
+    id,
+    name,
+  }: FindByInput): Promise<MetroStationType | null> {
+    if (!id && !name) {
+      return new ValidationError(
+        "You need to provide either a valid ID or a valid name"
+      );
     }
 
     const path = ["estacions", id].filter(Boolean).join("/");
+    const nameFilterParameter = name ? { filter: `NOM_ESTACIO='${name}'` } : {};
 
     const response: MetroStationsAPIType | null = await this.get(path, {
-      app_id: process.env.TMB_API_APP_ID ?? "",
-      app_key: process.env.TMB_API_APP_KEY ?? "",
+      ...{
+        app_id: process.env.TMB_API_APP_ID ?? "",
+        app_key: process.env.TMB_API_APP_KEY ?? "",
+      },
+      ...nameFilterParameter,
     });
 
     if (Array.isArray(response?.features) && response?.features.length === 0) {
-      return new ApolloError(`No stations were found with the ID: ${id}`);
+      return new ApolloError(
+        `No stations were found with these parameters: ${JSON.stringify({
+          id,
+          name,
+        })}`
+      );
     }
 
     const station: MetroStationAPIType | null = response?.features?.[0] ?? null;
