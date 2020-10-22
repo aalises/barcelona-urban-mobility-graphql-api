@@ -1,6 +1,7 @@
 import { ApolloServer } from "apollo-server-lambda";
 import schema from "./schema";
 import MetroStationsDataSource from "./datasources/MetroStationsDataSource";
+import MetroLinesDataSource from "./datasources/MetroLinesDataSource";
 import formatError from "./utils/formatError";
 
 const server: ApolloServer = new ApolloServer({
@@ -14,6 +15,7 @@ const server: ApolloServer = new ApolloServer({
   introspection: true,
   dataSources: () => ({
     metroStations: new MetroStationsDataSource(),
+    metroLines: new MetroLinesDataSource(),
   }),
 });
 

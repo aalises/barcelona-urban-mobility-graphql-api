@@ -2,6 +2,7 @@ import { GraphQLObjectType } from "graphql";
 
 import metroStations from "./queries/MetroStationsQuery";
 import metroStation from "./queries/MetroStationQuery";
+import metroLine from "./queries/MetroLineQuery";
 
 export default new GraphQLObjectType({
   name: "RootQuery",
@@ -9,5 +10,6 @@ export default new GraphQLObjectType({
   fields: {
     metroStations,
     metroStation,
+    metroLine,
   },
 });

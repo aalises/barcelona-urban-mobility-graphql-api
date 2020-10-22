@@ -5,8 +5,9 @@ import {
   GraphQLString,
   GraphQLList,
 } from "graphql";
+import { connectionDefinitions } from "graphql-relay";
 
-export default new GraphQLObjectType({
+const MetroStation = new GraphQLObjectType({
   name: "MetroStation",
   description: "Metro station information",
   fields: {
@@ -28,3 +29,9 @@ export default new GraphQLObjectType({
     },
   },
 });
+
+const { connectionType: MetroStationConnection } = connectionDefinitions({
+  nodeType: MetroStation,
+});
+
+export { MetroStationConnection, MetroStation as default };

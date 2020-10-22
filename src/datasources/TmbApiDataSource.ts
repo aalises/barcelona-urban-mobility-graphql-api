@@ -8,7 +8,7 @@ export default class TmbApiDataSource extends RESTDataSource {
   }
 
   //We add the authorization params to the get method
-  async get<TResult>(path, params?, init?): Promise<TResult> {
+  async get<TResult = any>(path, params?, init?): Promise<TResult> {
     return super.get(
       path,
       {
