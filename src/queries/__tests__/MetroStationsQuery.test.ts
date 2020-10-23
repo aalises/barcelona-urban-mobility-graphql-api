@@ -22,7 +22,6 @@ const GET_METRO_STATIONS = gql`
 describe("metroStations Query", () => {
   it("Fetches list of metro stations", async () => {
     const { server, metroStations } = createTestServer();
-    //@ts-expect-error we are trying to mock a protected method, which is fine for our test purposes
     metroStations.get = jest
       .fn()
       .mockReturnValueOnce(mockMetroStationsAPIResponse);

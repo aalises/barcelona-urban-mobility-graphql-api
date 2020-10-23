@@ -1,47 +1,46 @@
 import DataSource from "../MetroStationsDataSource";
 import { ApolloError, ValidationError } from "apollo-server-lambda";
 
-const dataSource = new DataSource();
+const MetroStationsDataSource = new DataSource();
 
-describe("MetroStationsDataSource", () => {
-  process.env.TMB_API_APP_ID = "testAppId";
-  process.env.TMB_API_APP_KEY = "testAppKey";
+describe("MetroStationsMetroStationsDataSource", () => {
   const mockGet = jest.fn();
 
-  //@ts-expect-error we are trying to mock a protected method, which is fine for our test purposes
-  dataSource.get = mockGet;
+  MetroStationsDataSource.get = mockGet;
 
   describe("[getAllStations]", () => {
     it("Correctly looks up the stations from the API", async () => {
       mockGet.mockReturnValueOnce(mockMetroStationsAPIResponse);
 
-      const res = await dataSource.getAllStations();
+      const res = await MetroStationsDataSource.getAllStations();
       expect(res).toEqual(mockMetroStationsResponse);
 
-      expect(mockGet).toBeCalledWith("estacions", {
-        app_id: "testAppId",
-        app_key: "testAppKey",
-      });
+      expect(mockGet.mock.calls[0][0]).toBe("estacions");
     });
   });
 
   describe("[getStation]", () => {
     it("Throws a Validation Error if a falsy ID and name are passed as parameter", async () => {
-      const res = await dataSource.getStation({ id: null, name: null });
+      const res = await MetroStationsDataSource.getStation({
+        id: null,
+        name: null,
+      });
 
       expect(res).toBeInstanceOf(ValidationError);
     });
 
     it("Throws a Not Found Error if the response does not contain features", async () => {
       mockGet.mockReturnValueOnce({ features: [] });
-      const res = await dataSource.getStation({ id: 32 });
+      const res = await MetroStationsDataSource.getStation({ id: 32 });
 
       expect(res).toBeInstanceOf(ApolloError);
     });
 
     it("Throws an Error if the features are null or undefined", async () => {
       mockGet.mockReturnValueOnce({ features: null });
-      const res = await dataSource.getStation({ name: "Urwhatawave" });
+      const res = await MetroStationsDataSource.getStation({
+        name: "Urwhatawave",
+      });
 
       expect(res).toBeInstanceOf(ApolloError);
     });
@@ -50,25 +49,22 @@ describe("MetroStationsDataSource", () => {
       mockGet.mockReturnValueOnce({
         features: [mockMetroStationsAPIResponse.features[0]],
       });
-      const res = await dataSource.getStation({ id: 32 });
+      const res = await MetroStationsDataSource.getStation({ id: 32 });
 
       expect(res).toEqual(mockMetroStationsResponse.stations[0]);
-      expect(mockGet).toBeCalledWith("estacions/32", {
-        app_id: "testAppId",
-        app_key: "testAppKey",
-      });
+      expect(mockGet.mock.calls[0][0]).toBe("estacions/32");
     });
 
     it("Correctly gets a station by Name", async () => {
       mockGet.mockReturnValueOnce({
         features: [mockMetroStationsAPIResponse.features[0]],
       });
-      const res = await dataSource.getStation({ name: "Urwhatawave" });
+      const res = await MetroStationsDataSource.getStation({
+        name: "Urwhatawave",
+      });
 
       expect(res).toEqual(mockMetroStationsResponse.stations[0]);
       expect(mockGet).toBeCalledWith("estacions", {
-        app_id: "testAppId",
-        app_key: "testAppKey",
         filter: "NOM_ESTACIO='Urwhatawave'",
       });
     });
@@ -76,7 +72,7 @@ describe("MetroStationsDataSource", () => {
 
   it("[metroStationReducer]: Correctly parses an station API data to the schema format", () => {
     expect(
-      dataSource.metroStationReducer(
+      MetroStationsDataSource.metroStationReducer(
         mockMetroStationsAPIResponse.features[0] as any
       )
     ).toEqual(mockMetroStationsResponse.stations[0]);
@@ -90,7 +86,9 @@ describe("MetroStationsDataSource", () => {
   ])(
     "[parseLines]: Parses the line string %p to be %p",
     (lineString, parsedLineString) => {
-      expect(dataSource.parseLines(lineString)).toEqual(parsedLineString);
+      expect(MetroStationsDataSource.parseLines(lineString)).toEqual(
+        parsedLineString
+      );
     }
   );
 });

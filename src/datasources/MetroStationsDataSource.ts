@@ -1,9 +1,8 @@
-import { RESTDataSource } from "apollo-datasource-rest";
+import TmbApiDataSource from "./TmbApiDataSource";
 import type {
   FindByInput,
   MetroStation as MetroStationType,
 } from "../../types";
-import { TMB_API_BASE_URL } from "../config";
 import { ApolloError, ValidationError } from "apollo-server-lambda";
 
 export interface MetroStationAPIType {
@@ -37,12 +36,7 @@ interface MetroStationsAPIType {
   };
 }
 
-export default class MetroStationsDataSource extends RESTDataSource {
-  constructor() {
-    super();
-    this.baseURL = TMB_API_BASE_URL;
-  }
-
+export default class MetroStationsDataSource extends TmbApiDataSource {
   //Transforms e.g. L1L2 into [L1, L2]
   parseLines(lines: string): string[] {
     return lines.replace(/L/g, ",L").split(",").filter(Boolean);
@@ -73,13 +67,10 @@ export default class MetroStationsDataSource extends RESTDataSource {
     const path = ["estacions", id].filter(Boolean).join("/");
     const nameFilterParameter = name ? { filter: `NOM_ESTACIO='${name}'` } : {};
 
-    const response: MetroStationsAPIType | null = await this.get(path, {
-      ...{
-        app_id: process.env.TMB_API_APP_ID ?? "",
-        app_key: process.env.TMB_API_APP_KEY ?? "",
-      },
-      ...nameFilterParameter,
-    });
+    const response: MetroStationsAPIType | null = await this.get(
+      path,
+      nameFilterParameter
+    );
 
     if (Array.isArray(response?.features) && response?.features.length === 0) {
       return new ApolloError(
@@ -103,10 +94,7 @@ export default class MetroStationsDataSource extends RESTDataSource {
     numberOfStations: number | null;
     stations: MetroStationType[];
   }> {
-    const response: MetroStationsAPIType | null = await this.get("estacions", {
-      app_id: process.env.TMB_API_APP_ID ?? "",
-      app_key: process.env.TMB_API_APP_KEY ?? "",
-    });
+    const response: MetroStationsAPIType | null = await this.get("estacions");
 
     return {
       numberOfStations: response?.numberReturned ?? null,
