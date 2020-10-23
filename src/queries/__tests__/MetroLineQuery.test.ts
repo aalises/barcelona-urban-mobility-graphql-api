@@ -2,11 +2,14 @@ import { createTestClient } from "apollo-server-testing";
 import { gql } from "apollo-server-lambda";
 import createTestServer from "../../utils/createTestServer";
 
-import { mockMetroStationsAPIResponse } from "../../datasources/__tests__/MetroStationsDataSource.test";
+import {
+  mockMetroLinesAPIResponse,
+  mockMetroLinesResponse,
+} from "../../datasources/__tests__/MetroLinesDataSource.test";
 
-const GET_METRO_STATION = gql`
-  query getMetroStations($findBy: FindByInput!) {
-    metroStation(findBy: $findBy) {
+const GET_METRO_LINE = gql`
+  query getMetroLines($findBy: FindByInput!) {
+    metroLine(findBy: $findBy) {
       id
       name
     }
@@ -14,26 +17,30 @@ const GET_METRO_STATION = gql`
 `;
 
 describe("MetroStation Query", () => {
-  const { server, metroStations } = createTestServer();
+  const { server, metroLines } = createTestServer();
   const { query } = createTestClient(server);
 
-  metroStations.get = jest.fn().mockReturnValue({
-    ...mockMetroStationsAPIResponse,
-    features: [mockMetroStationsAPIResponse.features[0]],
+  metroLines.getLineStations = jest
+    .fn()
+    .mockReturnValue(mockMetroLinesResponse.lines[0].stations);
+
+  metroLines.get = jest.fn().mockReturnValue({
+    ...mockMetroLinesAPIResponse,
+    features: [mockMetroLinesAPIResponse.features[0]],
   });
 
-  it("Gets a given metro station", async () => {
+  it("Gets a given metro line", async () => {
     const res = await query({
-      query: GET_METRO_STATION,
+      query: GET_METRO_LINE,
       variables: { findBy: { id: 32 } },
     });
 
     expect(res).toMatchInlineSnapshot(`
       Object {
         "data": Object {
-          "metroStation": Object {
-            "id": "6660935",
-            "name": "La Salut",
+          "metroLine": Object {
+            "id": 1,
+            "name": "L1",
           },
         },
         "errors": undefined,
@@ -48,17 +55,17 @@ describe("MetroStation Query", () => {
   });
   it("Throws a validation error if the ID and name are falsy", async () => {
     const res = await query({
-      query: GET_METRO_STATION,
+      query: GET_METRO_LINE,
       variables: { findBy: { id: null, name: null } },
     });
 
     expect(res).toMatchInlineSnapshot(`
       Object {
         "data": Object {
-          "metroStation": null,
+          "metroLine": null,
         },
         "errors": Array [
-          [GraphQLError: You have to provide either a non empty ID or non empty Name for the metroStation query],
+          [GraphQLError: You have to provide either a non empty ID or non empty Name for the metroLine query],
         ],
         "extensions": undefined,
         "http": Object {

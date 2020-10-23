@@ -6,6 +6,7 @@ schema {
 type RootQuery {
   metroStations(after: String, first: Int, before: String, last: Int): MetroStations
   metroStation(findBy: FindByInput!): MetroStation
+  metroLine(findBy: FindByInput!): MetroLine
 }
 
 """Information about the metro stations of the city of Barcelona"""
@@ -78,4 +79,25 @@ Input for the FindBy argument of the queries, which allows finding an entity by 
 input FindByInput {
   id: Int
   name: String
+}
+
+"""Metro line information"""
+type MetroLine {
+  """Numeric Code of the line"""
+  id: Int
+
+  """Name of the line"""
+  name: String
+
+  """Origin station of the line"""
+  originStation: MetroStation
+
+  """Ending station of the line"""
+  endingStation: MetroStation
+
+  """Stations of the line"""
+  stations(after: String, first: Int, before: String, last: Int): MetroStationConnection
+
+  """Color of the line represented as a Hexadecimal string"""
+  color: String
 }

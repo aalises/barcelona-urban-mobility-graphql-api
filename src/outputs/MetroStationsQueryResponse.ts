@@ -1,10 +1,5 @@
-import MetroStation from "./MetroStation";
+import { MetroStationConnection } from "./MetroStation";
 import { GraphQLObjectType, GraphQLInt } from "graphql";
-import { connectionDefinitions } from "graphql-relay";
-
-const { connectionType: MetroStationConnection } = connectionDefinitions({
-  nodeType: MetroStation,
-});
 
 export default new GraphQLObjectType({
   name: "MetroStations",

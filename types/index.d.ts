@@ -14,6 +14,7 @@ export type RootQuery = {
   __typename?: 'RootQuery';
   metroStations?: Maybe<MetroStations>;
   metroStation?: Maybe<MetroStation>;
+  metroLine?: Maybe<MetroLine>;
 };
 
 
@@ -28,6 +29,12 @@ export type RootQueryMetroStationsArgs = {
 
 /** Root Query */
 export type RootQueryMetroStationArgs = {
+  findBy: FindByInput;
+};
+
+
+/** Root Query */
+export type RootQueryMetroLineArgs = {
   findBy: FindByInput;
 };
 
@@ -96,4 +103,30 @@ export type Coordinates = {
 export type FindByInput = {
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
+};
+
+/** Metro line information */
+export type MetroLine = {
+  __typename?: 'MetroLine';
+  /** Numeric Code of the line */
+  id?: Maybe<Scalars['Int']>;
+  /** Name of the line */
+  name?: Maybe<Scalars['String']>;
+  /** Origin station of the line */
+  originStation?: Maybe<MetroStation>;
+  /** Ending station of the line */
+  endingStation?: Maybe<MetroStation>;
+  /** Stations of the line */
+  stations?: Maybe<MetroStationConnection>;
+  /** Color of the line represented as a Hexadecimal string */
+  color?: Maybe<Scalars['String']>;
+};
+
+
+/** Metro line information */
+export type MetroLineStationsArgs = {
+  after?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['String']>;
+  last?: Maybe<Scalars['Int']>;
 };
