@@ -14,10 +14,10 @@ const GET_METRO_STATION = gql`
 `;
 
 describe("MetroStation Query", () => {
-  const { server, metroStations } = createTestServer();
+  const { server, metro } = createTestServer();
   const { query } = createTestClient(server);
 
-  metroStations.get = jest.fn().mockReturnValue({
+  metro.get = jest.fn().mockReturnValue({
     ...mockMetroStationsAPIResponse,
     features: [mockMetroStationsAPIResponse.features[0]],
   });

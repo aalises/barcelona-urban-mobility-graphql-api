@@ -1,27 +1,23 @@
 import { ApolloServer } from "apollo-server-lambda";
 import schema from "../schema";
-import MetroStationsDataSource from "../datasources/MetroStationsDataSource";
-import MetroLinesDataSource from "../datasources/MetroLinesDataSource";
+import MetroDataSource from "../datasources/MetroDataSource";
 
 interface TestServer {
   server: ApolloServer;
-  metroStations: MetroStationsDataSource;
-  metroLines: MetroLinesDataSource;
+  metro: MetroDataSource;
 }
 
 const createTestServer = (): TestServer => {
-  const metroStations = new MetroStationsDataSource();
-  const metroLines = new MetroLinesDataSource();
+  const metro = new MetroDataSource();
 
   const server = new ApolloServer({
     schema,
     dataSources: () => ({
-      metroStations,
-      metroLines,
+      metro,
     }),
   });
 
-  return { server, metroStations, metroLines };
+  return { server, metro };
 };
 
 export default createTestServer;

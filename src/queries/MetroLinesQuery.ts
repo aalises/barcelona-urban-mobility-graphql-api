@@ -35,7 +35,7 @@ export default {
     args: ConnectionArguments,
     { dataSources }
   ): Promise<MetroLinesType> => {
-    const { numberOfLines, lines } = await dataSources.metroLines.getAllLines();
+    const { numberOfLines, lines } = await dataSources.metro.getAllLines();
 
     return {
       numberOfLines,

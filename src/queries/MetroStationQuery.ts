@@ -23,6 +23,6 @@ export default {
       );
     }
 
-    return await dataSources.metroStations.getStation(findBy);
+    return await dataSources.metro.getStation(findBy);
   },
 };
