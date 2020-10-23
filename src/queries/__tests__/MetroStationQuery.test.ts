@@ -2,7 +2,7 @@ import { createTestClient } from "apollo-server-testing";
 import { gql } from "apollo-server-lambda";
 import createTestServer from "../../utils/createTestServer";
 
-import { mockMetroStationsAPIResponse } from "../../datasources/__tests__/MetroStationsDataSource.test";
+import { mockMetroStationsAPIResponse } from "../../datasources/__fixtures__/MetroStationsFixtures";
 
 const GET_METRO_STATION = gql`
   query getMetroStations($findBy: FindByInput!) {

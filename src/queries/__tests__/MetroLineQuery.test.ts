@@ -5,7 +5,7 @@ import createTestServer from "../../utils/createTestServer";
 import {
   mockMetroLinesAPIResponse,
   mockMetroLinesResponse,
-} from "../../datasources/__tests__/MetroLinesDataSource.test";
+} from "../../datasources/__fixtures__/MetroLinesFixtures";
 
 const GET_METRO_LINE = gql`
   query getMetroLines($findBy: FindByInput!) {
