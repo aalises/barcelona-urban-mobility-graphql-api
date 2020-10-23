@@ -8,18 +8,28 @@ It provides information about bus stops and lines, metro stations/lines, and pub
 
 ### Feature Roadmap / Checklist for v1.0.0
 
+#### Metro ✅
+
 - [x] `metroStation` query with information about one metro station (find by name or id)
 - [x] `metroStations` query with information about metro stations
 - [x] `metroLine` query with information about one metro line (find by name or id)
 - [x] `metroLines` query with information about metro lines
+- [x] Add filtering of the stations by line ID or name
+
+#### Bus
+
 - [ ] `busStops` query with information about bus stops
 - [ ] `busStop` query with information about one bus stop (find by name or id)
 - [ ] `busLines` query with information about bus lines
 - [ ] `busLine` query with information about a bus line (find by name or id)
+
+#### Bike
+
 - [ ] `bikeStations` query with information about bike stations
 - [ ] `bikeStation` query with information about one bike station (find by name or id)
 - [ ] Add bike availability information to the `bikeStations` query
-- [ ] Add filtering of the stations by line ID or name (cannot do it on BusStops)
+
+#### Tram
 
 ## GraphQL Playground 🚀
 

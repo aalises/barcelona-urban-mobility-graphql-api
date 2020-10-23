@@ -1,14 +1,11 @@
-import {
-  connectionArgs,
-  ConnectionArguments,
-  connectionFromArray,
-} from "graphql-relay";
+import { connectionArgs, connectionFromArray } from "graphql-relay";
 import type {
   MetroStations as MetroStationsType,
   MetroStationConnection as MetroStationConnectionType,
 } from "../../types";
 import { MetroStationConnection } from "../outputs/MetroStation";
 import { GraphQLObjectType, GraphQLInt } from "graphql";
+import filterByInput from "../inputs/FilterByInput";
 
 const MetroStations = new GraphQLObjectType({
   name: "MetroStations",
@@ -27,16 +24,25 @@ const MetroStations = new GraphQLObjectType({
 
 export default {
   type: MetroStations,
-  args: connectionArgs,
-  resolve: async (
-    _,
-    args: ConnectionArguments,
-    { dataSources }
-  ): Promise<MetroStationsType> => {
-    const {
-      numberOfStations,
-      stations,
-    } = await dataSources.metro.getAllStations();
+  args: {
+    ...connectionArgs,
+    filterBy: {
+      type: filterByInput,
+    },
+  },
+  resolve: async (_, args, { dataSources }): Promise<MetroStationsType> => {
+    const { filterBy } = args;
+
+    const { numberOfStations, stations } = await (async () => {
+      //We get all the stations if no filter provided, if not we get the lines stations
+      if (!filterBy?.lineId && !filterBy?.lineName) {
+        return await dataSources.metro.getAllStations();
+      }
+      return await dataSources.metro.getLineStations({
+        id: filterBy?.lineId ?? null,
+        name: filterBy?.lineName ?? null,
+      });
+    })();
 
     return {
       numberOfStations,

@@ -25,6 +25,7 @@ export type RootQueryMetroStationsArgs = {
   first?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['String']>;
   last?: Maybe<Scalars['Int']>;
+  filterBy?: Maybe<FilterByInput>;
 };
 
 
@@ -107,6 +108,12 @@ export type Coordinates = {
   latitude?: Maybe<Scalars['Float']>;
   longitude?: Maybe<Scalars['Float']>;
   altitude?: Maybe<Scalars['Float']>;
+};
+
+/** Input for the filterBy argument of the queries, which allows filtering a connection by some parameters (e.g. lineName or lineId) */
+export type FilterByInput = {
+  lineId?: Maybe<Scalars['Int']>;
+  lineName?: Maybe<Scalars['String']>;
 };
 
 /** Input for the FindBy argument of the queries, which allows finding an entity by some parameters (e.g. name or id) */

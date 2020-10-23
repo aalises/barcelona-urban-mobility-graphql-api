@@ -15,9 +15,10 @@ describe("MetroDataSource", () => {
   const mockGet = jest.fn();
 
   MetroDataSource.get = mockGet;
-  MetroDataSource.getLineStations = jest
-    .fn()
-    .mockReturnValue(mockMetroLinesResponse.lines[0].stations);
+  MetroDataSource.getLineStations = jest.fn().mockReturnValue({
+    numberOfStations: 5,
+    stations: mockMetroLinesResponse.lines[0].stations,
+  });
 
   describe("[getAllLines]", () => {
     it("Correctly looks up the lines from the API", async () => {

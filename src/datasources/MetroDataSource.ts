@@ -1,6 +1,7 @@
 import TmbApiDataSource from "./TmbApiDataSource";
 import type {
   FindByInput,
+  FilterByInput,
   MetroStation as MetroStationType,
   MetroLine as MetroLineType,
 } from "../../types";
@@ -167,7 +168,10 @@ export default class MetroDataSource extends TmbApiDataSource {
   async getLineStations({
     id,
     name,
-  }: FindByInput): Promise<MetroStationType[] | null> {
+  }: FindByInput): Promise<{
+    numberOfStations: number | null;
+    stations: MetroStationType[];
+  }> {
     const path = ["linies/metro", id, "estacions"].filter(Boolean).join("/");
     const nameFilterParameter = name ? { filter: `NOM_LINIA='${name}'` } : {};
 
@@ -177,7 +181,10 @@ export default class MetroDataSource extends TmbApiDataSource {
       response?.features?.map((station) => this.metroStationReducer(station)) ??
       [];
 
-    return stations;
+    return {
+      numberOfStations: response?.numberReturned ?? null,
+      stations,
+    };
   }
 
   async getLine({ id, name }: FindByInput): Promise<MetroLineType | null> {
@@ -209,7 +216,7 @@ export default class MetroDataSource extends TmbApiDataSource {
       return new ApolloError("The line object returned did not exist");
     }
 
-    const stations = await this.getLineStations({ id, name });
+    const { stations } = await this.getLineStations({ id, name });
 
     return {
       ...line,
@@ -232,7 +239,7 @@ export default class MetroDataSource extends TmbApiDataSource {
     const lines = await Promise.all(
       (response?.features ?? []).map(async (line: MetroLineAPIType) => {
         const reducedLine = this.metroLineReducer(line);
-        const stations = await this.getLineStations({
+        const { stations } = await this.getLineStations({
           id: reducedLine.id,
           name: reducedLine.name,
         });

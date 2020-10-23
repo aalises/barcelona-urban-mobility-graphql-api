@@ -4,7 +4,7 @@ schema {
 
 """Root Query"""
 type RootQuery {
-  metroStations(after: String, first: Int, before: String, last: Int): MetroStations
+  metroStations(after: String, first: Int, before: String, last: Int, filterBy: FilterByInput): MetroStations
   metroStation(findBy: FindByInput!): MetroStation
   metroLine(findBy: FindByInput!): MetroLine
   metroLines(after: String, first: Int, before: String, last: Int): MetroLines
@@ -72,6 +72,14 @@ type Coordinates {
   latitude: Float
   longitude: Float
   altitude: Float
+}
+
+"""
+Input for the filterBy argument of the queries, which allows filtering a connection by some parameters (e.g. lineName or lineId)
+"""
+input FilterByInput {
+  lineId: Int
+  lineName: String
 }
 
 """
