@@ -15,6 +15,16 @@ describe("MetroLinesDataSource", () => {
     .fn()
     .mockReturnValue(mockMetroLinesResponse.lines[0].stations);
 
+  describe("[getAllLines]", () => {
+    it("Correctly looks up the lines from the API", async () => {
+      mockGet.mockReturnValueOnce(mockMetroLinesAPIResponse);
+
+      const res = await MetroLinesDataSource.getAllLines();
+      expect(res).toEqual(mockMetroLinesResponse);
+
+      expect(mockGet.mock.calls[0][0]).toBe("linies/metro");
+    });
+  });
   describe("[getLine]", () => {
     it("Throws a Validation Error if a falsy ID and name are passed as parameter", async () => {
       const res = await MetroLinesDataSource.getLine({
