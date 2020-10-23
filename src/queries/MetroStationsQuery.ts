@@ -36,7 +36,7 @@ export default {
     const {
       numberOfStations,
       stations,
-    } = await dataSources.metroStations.getAllStations();
+    } = await dataSources.metro.getAllStations();
 
     return {
       numberOfStations,

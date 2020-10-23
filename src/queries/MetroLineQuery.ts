@@ -19,6 +19,6 @@ export default {
       );
     }
 
-    return await dataSources.metroLines.getLine(findBy);
+    return await dataSources.metro.getLine(findBy);
   },
 };

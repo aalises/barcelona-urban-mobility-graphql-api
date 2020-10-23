@@ -21,8 +21,8 @@ const GET_METRO_LINES = gql`
 
 describe("metroLines Query", () => {
   it("Fetches list of metro lines", async () => {
-    const { server, metroLines } = createTestServer();
-    metroLines.get = jest.fn().mockReturnValueOnce(mockMetroLinesAPIResponse);
+    const { server, metro } = createTestServer();
+    metro.get = jest.fn().mockReturnValueOnce(mockMetroLinesAPIResponse);
 
     const { query } = createTestClient(server);
     const res = await query({

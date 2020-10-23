@@ -21,10 +21,8 @@ const GET_METRO_STATIONS = gql`
 
 describe("metroStations Query", () => {
   it("Fetches list of metro stations", async () => {
-    const { server, metroStations } = createTestServer();
-    metroStations.get = jest
-      .fn()
-      .mockReturnValueOnce(mockMetroStationsAPIResponse);
+    const { server, metro } = createTestServer();
+    metro.get = jest.fn().mockReturnValueOnce(mockMetroStationsAPIResponse);
 
     const { query } = createTestClient(server);
     const res = await query({
