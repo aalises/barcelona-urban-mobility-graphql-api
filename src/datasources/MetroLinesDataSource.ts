@@ -40,6 +40,21 @@ export interface MetroLineAPIType {
   };
 }
 
+interface MetroLinesAPIType {
+  type: "FeatureCollection";
+  features: ReadonlyArray<MetroLineAPIType>;
+  totalFeatures: number;
+  numberMatched: number;
+  numberReturned: number;
+  timeStamp: string;
+  crs: {
+    type: "name";
+    properties: {
+      name: string;
+    };
+  };
+}
+
 export default class MetroLinesDataSource extends TmbApiDataSource {
   constructor() {
     super();
@@ -114,6 +129,41 @@ export default class MetroLinesDataSource extends TmbApiDataSource {
       endingStation:
         stations?.find((station) => station.name === line.endingStation) ??
         null,
+    };
+  }
+
+  async getAllLines(): Promise<{
+    numberOfLines: number | null;
+    lines: MetroLineType[];
+  }> {
+    const response: MetroLinesAPIType | null = await this.get("linies/metro");
+
+    const lines = await Promise.all(
+      (response?.features ?? []).map(async (line: MetroLineAPIType) => {
+        const reducedLine = this.metroLineReducer(line);
+        const stations = await this.getLineStations({
+          id: reducedLine.id,
+          name: reducedLine.name,
+        });
+
+        return {
+          ...reducedLine,
+          stations: stations as any,
+          originStation:
+            stations?.find(
+              (station) => station.name === reducedLine.originStation
+            ) ?? null,
+          endingStation:
+            stations?.find(
+              (station) => station.name === reducedLine.endingStation
+            ) ?? null,
+        };
+      })
+    );
+
+    return {
+      numberOfLines: response?.numberReturned ?? null,
+      lines,
     };
   }
 }

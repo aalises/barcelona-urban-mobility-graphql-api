@@ -4,9 +4,10 @@ import {
   connectionArgs,
   ConnectionArguments,
   connectionFromArray,
+  connectionDefinitions,
 } from "graphql-relay";
 
-export default new GraphQLObjectType({
+const MetroLine = new GraphQLObjectType({
   name: "MetroLine",
   description: "Metro line information",
   fields: {
@@ -43,3 +44,9 @@ export default new GraphQLObjectType({
     },
   },
 });
+
+const { connectionType: MetroLineConnection } = connectionDefinitions({
+  nodeType: MetroLine,
+});
+
+export { MetroLine as default, MetroLineConnection };

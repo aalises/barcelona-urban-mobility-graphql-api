@@ -15,6 +15,7 @@ export type RootQuery = {
   metroStations?: Maybe<MetroStations>;
   metroStation?: Maybe<MetroStation>;
   metroLine?: Maybe<MetroLine>;
+  metroLines?: Maybe<MetroLines>;
 };
 
 
@@ -36,6 +37,15 @@ export type RootQueryMetroStationArgs = {
 /** Root Query */
 export type RootQueryMetroLineArgs = {
   findBy: FindByInput;
+};
+
+
+/** Root Query */
+export type RootQueryMetroLinesArgs = {
+  after?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['String']>;
+  last?: Maybe<Scalars['Int']>;
 };
 
 /** Information about the metro stations of the city of Barcelona */
@@ -129,4 +139,31 @@ export type MetroLineStationsArgs = {
   first?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['String']>;
   last?: Maybe<Scalars['Int']>;
+};
+
+/** Information about the metro lines of the city of Barcelona */
+export type MetroLines = {
+  __typename?: 'MetroLines';
+  /** Connection with the data about lines */
+  lines?: Maybe<MetroLineConnection>;
+  /** Total number of lines */
+  numberOfLines?: Maybe<Scalars['Int']>;
+};
+
+/** A connection to a list of items. */
+export type MetroLineConnection = {
+  __typename?: 'MetroLineConnection';
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** A list of edges. */
+  edges?: Maybe<Array<Maybe<MetroLineEdge>>>;
+};
+
+/** An edge in a connection. */
+export type MetroLineEdge = {
+  __typename?: 'MetroLineEdge';
+  /** The item at the end of the edge */
+  node?: Maybe<MetroLine>;
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
 };

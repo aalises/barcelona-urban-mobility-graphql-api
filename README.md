@@ -11,7 +11,7 @@ It provides information about bus stops and lines, metro stations/lines, and pub
 - [x] `metroStation` query with information about one metro station (find by name or id)
 - [x] `metroStations` query with information about metro stations
 - [x] `metroLine` query with information about one metro line (find by name or id)
-- [ ] `metroLines` query with information about metro lines
+- [x] `metroLines` query with information about metro lines
 - [ ] `busStops` query with information about bus stops
 - [ ] `busStop` query with information about one bus stop (find by name or id)
 - [ ] `busLines` query with information about bus lines

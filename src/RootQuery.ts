@@ -1,8 +1,10 @@
 import { GraphQLObjectType } from "graphql";
 
-import metroStations from "./queries/MetroStationsQuery";
 import metroStation from "./queries/MetroStationQuery";
+import metroStations from "./queries/MetroStationsQuery";
+
 import metroLine from "./queries/MetroLineQuery";
+import metroLines from "./queries/MetroLinesQuery";
 
 export default new GraphQLObjectType({
   name: "RootQuery",
@@ -11,5 +13,6 @@ export default new GraphQLObjectType({
     metroStations,
     metroStation,
     metroLine,
+    metroLines,
   },
 });

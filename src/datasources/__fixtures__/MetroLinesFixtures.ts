@@ -38,9 +38,20 @@ export const mockMetroLinesAPIResponse = {
       },
     },
   ],
+  totalFeatures: 12,
+  numberMatched: 1,
+  numberReturned: 1,
+  timeStamp: "2020-10-19T06:44:29.076Z",
+  crs: {
+    type: "name",
+    properties: {
+      name: "urn:ogc:def:crs:EPSG::4326",
+    },
+  },
 };
 
 export const mockMetroLinesResponse = {
+  numberOfLines: 1,
   lines: [
     {
       id: 1,
