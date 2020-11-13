@@ -1,7 +1,6 @@
 import TmbApiDataSource from "./TmbApiDataSource";
 import type {
   FindByInput,
-  FilterByInput,
   MetroStation as MetroStationType,
   MetroLine as MetroLineType,
 } from "../../types";
