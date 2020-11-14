@@ -1,6 +1,6 @@
 {
   "name": "barcelona-urban-mobility-graphql-api",
-  "version": "0.0.0-alpha",
+  "version": "0.2.0",
   "description": "Barcelona Urban Mobility GraphQL API",
   "main": "src/graphql.ts",
   "scripts": {

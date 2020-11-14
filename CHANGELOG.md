@@ -1,3 +1,24 @@
+# [0.1.0](https://github.com/aalises/barcelona-urban-mobility-graphql-api/compare/v0.1.0...v0.0.0-alpha) (2020-11-14)
+
+
+### Bug Fixes
+
+* **codegen:** change the local codegen path ([3171f6d](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/3171f6d356142d2d0fd564171bcb8473179892a9))
+
+
+### Features
+
+* **datasources:** create common data source for the TMB API ([fd03497](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/fd03497530417cd819d60e97d35905fb11455bd0))
+* **queries:** add filter stations by line ([352bff9](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/352bff923a38754dac65de87197b55c0cdaed153))
+* **queries:** add the ability to find a metroStation by name ([4b0b676](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/4b0b676766a2d080276239f31ebbee981b210bcf))
+* **queries:** create BikeStations query ([5ed07a6](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/5ed07a6e4b70fddef849b6b3786d27884beabd92))
+* **queries:** create metroLine query ([3b14210](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/3b142107238068a2e02aa265d78695584a066dca))
+* **queries:** create metroLines query ([160c955](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/160c9554fb1cd2f90c602f3a41d66c1544d246f4))
+* **query:** add metroStation query ([792a63b](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/792a63baa2def2a09b197fa4d0e39a890a52835f))
+* **readme:** adjust run section with the new lambda functions ([fd5d489](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/fd5d4896c142c3b3a25aed483da337713e0731a7))
+
+
+
 # [0.0.0-alpha](https://github.com/aalises/barcelona-urban-mobility-graphql-api/compare/c170475d48fadddf59a9a442ae5d76572050b320...v0.0.0-alpha) (2020-10-18)
 
 
