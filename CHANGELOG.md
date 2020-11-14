@@ -1,4 +1,4 @@
-# [0.1.0](https://github.com/aalises/barcelona-urban-mobility-graphql-api/compare/v0.1.0...v0.0.0-alpha) (2020-11-14)
+## [0.2.1](https://github.com/aalises/barcelona-urban-mobility-graphql-api/compare/v0.2.0...v0.2.1) (2020-11-14)
 
 
 ### Bug Fixes
@@ -9,6 +9,7 @@
 ### Features
 
 * **datasources:** create common data source for the TMB API ([fd03497](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/fd03497530417cd819d60e97d35905fb11455bd0))
+* **filter:** add filtering bike stations by hasAvailableDocks ([f0ad193](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/f0ad1935f6e15767aa26de0c6d3e3caf75066b3a))
 * **queries:** add filter stations by line ([352bff9](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/352bff923a38754dac65de87197b55c0cdaed153))
 * **queries:** add the ability to find a metroStation by name ([4b0b676](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/4b0b676766a2d080276239f31ebbee981b210bcf))
 * **queries:** create BikeStations query ([5ed07a6](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/5ed07a6e4b70fddef849b6b3786d27884beabd92))
