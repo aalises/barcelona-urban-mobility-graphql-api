@@ -5,7 +5,7 @@ import type {
 } from "../../types";
 import { MetroStationConnection } from "../outputs/MetroStation";
 import { GraphQLObjectType, GraphQLInt } from "graphql";
-import filterByInput from "../inputs/FilterByInput";
+import { FilterByInputMetro } from "../inputs/FilterByInput";
 
 const MetroStations = new GraphQLObjectType({
   name: "MetroStations",
@@ -27,7 +27,7 @@ export default {
   args: {
     ...connectionArgs,
     filterBy: {
-      type: filterByInput,
+      type: FilterByInputMetro,
     },
   },
   resolve: async (_, args, { dataSources }): Promise<MetroStationsType> => {

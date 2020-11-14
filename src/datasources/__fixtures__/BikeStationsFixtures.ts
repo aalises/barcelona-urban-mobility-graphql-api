@@ -1,0 +1,208 @@
+export const mockBikeStationsInfoAPIResponse: any = {
+  last_updated: 1605381341,
+  ttl: 20,
+  data: {
+    stations: [
+      {
+        station_id: 1,
+        name: "GRAN VIA CORTS CATALANES, 760",
+        physical_configuration: "ELECTRICBIKESTATION",
+        lat: 41.3979779,
+        lon: 2.1801069,
+        altitude: 16.0,
+        address: "GRAN VIA CORTS CATALANES, 760",
+        post_code: "08013",
+        capacity: 46,
+        nearby_distance: 1000.0,
+      },
+      {
+        station_id: 2,
+        name: "C/ ROGER DE FLOR, 126",
+        physical_configuration: "ELECTRICBIKESTATION",
+        lat: 41.3954877,
+        lon: 2.1771985,
+        altitude: 17.0,
+        address: "C/ ROGER DE FLOR, 126",
+        post_code: "08013",
+        capacity: 27,
+        nearby_distance: 1000.0,
+      },
+      {
+        station_id: 3,
+        name: "C/ NÀPOLS, 82",
+        physical_configuration: "ELECTRICBIKESTATION",
+        lat: 41.3941557,
+        lon: 2.1813305,
+        altitude: 11.0,
+        address: "C/ NÀPOLS, 82",
+        post_code: "08013",
+        capacity: 27,
+        nearby_distance: 1000.0,
+      },
+      {
+        station_id: 4,
+        name: "C/ RIBES, 13",
+        physical_configuration: "ELECTRICBIKESTATION",
+        lat: 41.3933173,
+        lon: 2.1812483,
+        altitude: 8.0,
+        address: "C/ RIBES, 13",
+        post_code: "08013",
+        capacity: 21,
+        nearby_distance: 1000.0,
+      },
+    ],
+  },
+};
+
+export const mockBikeStationsStatusAPIResponse: any = {
+  last_updated: 1605374106,
+  ttl: 9,
+  data: {
+    stations: [
+      {
+        station_id: 1,
+        num_bikes_available: 3,
+        num_bikes_available_types: {
+          mechanical: 2,
+          ebike: 1,
+        },
+        num_docks_available: 43,
+        last_reported: 1605374084,
+        is_charging_station: true,
+        status: "IN_SERVICE",
+        is_installed: 1,
+        is_renting: 1,
+        is_returning: 1,
+      },
+      {
+        station_id: 2,
+        num_bikes_available: 0,
+        num_bikes_available_types: {
+          mechanical: 0,
+          ebike: 0,
+        },
+        num_docks_available: 24,
+        last_reported: 1605374023,
+        is_charging_station: true,
+        status: "IN_SERVICE",
+        is_installed: 1,
+        is_renting: 1,
+        is_returning: 1,
+      },
+      {
+        station_id: 3,
+        num_bikes_available: 6,
+        num_bikes_available_types: {
+          mechanical: 6,
+          ebike: 0,
+        },
+        num_docks_available: 21,
+        last_reported: 1605374102,
+        is_charging_station: true,
+        status: "IN_SERVICE",
+        is_installed: 1,
+        is_renting: 1,
+        is_returning: 1,
+      },
+      {
+        station_id: 4,
+        num_bikes_available: 1,
+        num_bikes_available_types: {
+          mechanical: 1,
+          ebike: 0,
+        },
+        num_docks_available: 18,
+        last_reported: 1605374039,
+        is_charging_station: true,
+        status: "MAINTENANCE",
+        is_installed: 1,
+        is_renting: 1,
+        is_returning: 1,
+      },
+    ],
+  },
+};
+
+export const mockBikeStationsResponse: any = [
+  {
+    available: {
+      bikes: {
+        electrical: 1,
+        mechanical: 2,
+        total: 3,
+      },
+      docks: 43,
+    },
+    capacity: 46,
+    id: "1",
+    lastUpdated: 1605374084,
+    location: {
+      altitude: 16,
+      latitude: 41.3979779,
+      longitude: 2.1801069,
+    },
+    name: "GRAN VIA CORTS CATALANES, 760",
+    status: "IN_SERVICE",
+  },
+  {
+    available: {
+      bikes: {
+        electrical: 0,
+        mechanical: 0,
+        total: 0,
+      },
+      docks: 24,
+    },
+    capacity: 27,
+    id: "2",
+    lastUpdated: 1605374023,
+    location: {
+      altitude: 17,
+      latitude: 41.3954877,
+      longitude: 2.1771985,
+    },
+    name: "C/ ROGER DE FLOR, 126",
+    status: "IN_SERVICE",
+  },
+  {
+    available: {
+      bikes: {
+        electrical: 0,
+        mechanical: 6,
+        total: 6,
+      },
+      docks: 21,
+    },
+    capacity: 27,
+    id: "3",
+    lastUpdated: 1605374102,
+    location: {
+      altitude: 11,
+      latitude: 41.3941557,
+      longitude: 2.1813305,
+    },
+    name: "C/ NÀPOLS, 82",
+    status: "IN_SERVICE",
+  },
+  {
+    available: {
+      bikes: {
+        electrical: 0,
+        mechanical: 1,
+        total: 1,
+      },
+      docks: 18,
+    },
+    capacity: 21,
+    id: "4",
+    lastUpdated: 1605374039,
+    location: {
+      altitude: 8,
+      latitude: 41.3933173,
+      longitude: 2.1812483,
+    },
+    name: "C/ RIBES, 13",
+    status: "MAINTENANCE",
+  },
+];

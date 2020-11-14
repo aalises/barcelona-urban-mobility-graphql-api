@@ -4,10 +4,11 @@ schema {
 
 """Root Query"""
 type RootQuery {
-  metroStations(after: String, first: Int, before: String, last: Int, filterBy: FilterByInput): MetroStations
+  metroStations(after: String, first: Int, before: String, last: Int, filterBy: FilterByInputMetro): MetroStations
   metroStation(findBy: FindByInput!): MetroStation
   metroLine(findBy: FindByInput!): MetroLine
   metroLines(after: String, first: Int, before: String, last: Int): MetroLines
+  bikeStations(after: String, first: Int, before: String, last: Int, filterBy: FilterByInputBike): BikeStations
 }
 
 """Information about the metro stations of the city of Barcelona"""
@@ -75,9 +76,9 @@ type Coordinates {
 }
 
 """
-Input for the filterBy argument of the queries, which allows filtering a connection by some parameters (e.g. lineName or lineId)
+Input for the filterBy argument of the metro queries, which allows filtering a connection by some parameters (e.g. lineName or lineId)
 """
-input FilterByInput {
+input FilterByInputMetro {
   lineId: Int
   lineName: String
 }
@@ -136,4 +137,94 @@ type MetroLineEdge {
 
   """A cursor for use in pagination"""
   cursor: String!
+}
+
+"""
+Information about the public bike stations (SMOU) of the city of Barcelona
+"""
+type BikeStations {
+  """Connection with the data about bike stations"""
+  stations: BikeStationConnection
+}
+
+"""A connection to a list of items."""
+type BikeStationConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [BikeStationEdge]
+}
+
+"""An edge in a connection."""
+type BikeStationEdge {
+  """The item at the end of the edge"""
+  node: BikeStation
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""Bike station information"""
+type BikeStation {
+  """Unique ID of the station"""
+  id: ID
+
+  """Status of the station e.g. IN_SERVICE"""
+  status: BikeStationStatus
+
+  """Last updated information timestamp (in ms since epoch)"""
+  lastUpdated: Int
+
+  """Name of the station"""
+  name: String
+
+  """Total number of bikes the station has"""
+  capacity: Int
+
+  """Location coordinates of the station"""
+  location: Coordinates
+
+  """Information about the available bikes and docks of the station"""
+  available: BikeStationAvailabilityInfo
+}
+
+enum BikeStationStatus {
+  IN_SERVICE
+  MAINTENANCE
+  CLOSED
+}
+
+"""Information about the available bikes and docks of the station"""
+type BikeStationAvailabilityInfo {
+  """Number of available bikes in the station by type"""
+  bikes: BikeAvailabilityInfo
+
+  """Number of available docks in the station"""
+  docks: Int
+}
+
+"""Information of the bike availability of a station by type"""
+type BikeAvailabilityInfo {
+  """Number of available electrical bikes in the station"""
+  electrical: Int
+
+  """Number of available mechanical bikes in the station"""
+  mechanical: Int
+
+  """Total number of available bikes in the station"""
+  total: Int
+}
+
+"""
+Input for the filterBy argument of the bikes queries, which allows filtering a connection by some parameters (e.g. only with available bikes)
+"""
+input FilterByInputBike {
+  only: OnlyFilterByInputBike
+}
+
+input OnlyFilterByInputBike {
+  hasAvailableBikes: Boolean
+  hasAvailableElectricalBikes: Boolean
+  isInService: Boolean
 }
