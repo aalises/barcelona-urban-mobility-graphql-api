@@ -37,6 +37,9 @@ const FilterByInputBike = new GraphQLInputObjectType({
           isInService: {
             type: GraphQLBoolean,
           },
+          hasAvailableDocks: {
+            type: GraphQLBoolean,
+          },
         },
       }),
     },

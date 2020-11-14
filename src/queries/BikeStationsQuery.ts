@@ -27,6 +27,10 @@ const filterBikeStations = (
     return Number(station?.available?.bikes?.electrical ?? null) > 0;
   }
 
+  if (only?.hasAvailableDocks) {
+    return Number(station?.available?.docks ?? null) > 0;
+  }
+
   if (only?.isInService) {
     return station?.status === "IN_SERVICE";
   }

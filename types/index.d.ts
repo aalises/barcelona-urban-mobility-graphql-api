@@ -265,4 +265,5 @@ export type OnlyFilterByInputBike = {
   hasAvailableBikes?: Maybe<Scalars['Boolean']>;
   hasAvailableElectricalBikes?: Maybe<Scalars['Boolean']>;
   isInService?: Maybe<Scalars['Boolean']>;
+  hasAvailableDocks?: Maybe<Scalars['Boolean']>;
 };

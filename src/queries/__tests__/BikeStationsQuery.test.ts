@@ -80,6 +80,20 @@ describe("bikeStations Query", () => {
     expect(returnedStationWithNoElectricalBikes).toBeNull();
   });
 
+  it("Fetches list of bike stations with available docks", async () => {
+    const res = await query({
+      query: GET_BIKE_STATIONS,
+      variables: { filterBy: { only: { hasAvailableDocks: true } } },
+    });
+
+    //There is no station returned that has no docks
+    const returnedStationWithNoDocks =
+      res?.data?.bikeStations.stations.edges.find(
+        ({ node }) => node.available.docs === 0
+      ) ?? null;
+
+    expect(returnedStationWithNoDocks).toBeNull();
+  });
   it("Fetches list of bike stations that are in service ", async () => {
     const res = await query({
       query: GET_BIKE_STATIONS,
