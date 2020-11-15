@@ -16,18 +16,18 @@ It provides information about bus stops and lines, metro stations/lines, and pub
 - [x] `metroLines` query with information about metro lines
 - [x] Add filtering of the stations by line ID or name
 
+#### Bike ✅
+
+- [x] `bikeStations` query with information about bike stations
+- [x] `bikeStation` query with information about one bike station (find by name or id)
+- [x] Add bike availability information to the `bikeStations` query
+
 #### Bus
 
 - [ ] `busStops` query with information about bus stops
 - [ ] `busStop` query with information about one bus stop (find by name or id)
 - [ ] `busLines` query with information about bus lines
 - [ ] `busLine` query with information about a bus line (find by name or id)
-
-#### Bike
-
-- [x] `bikeStations` query with information about bike stations
-- [x] `bikeStation` query with information about one bike station (find by name or id)
-- [x] Add bike availability information to the `bikeStations` query
 
 #### Tram
 
@@ -64,3 +64,12 @@ https://api.tmb.cat/v1/transit/estacions?app_id=XXX&app_key=XXX
 ```
 
 The `App Key` and `App ID` are passed through the node's `process.env.TMB_API_APP_KEY` and `process.env.TMB_API_APP_ID` and the credentials can be obtained if you log and register an app to the portal.
+
+### Bike Stations
+
+For the bike stations, we use the [BSMSA](https://www.bsmsa.cat/es/) API for smou/bicing. The endpoints are:
+
+```
+https://api.bsmsa.eu/ext/api/bsm/gbfs/v2/en/station_information
+https://api.bsmsa.eu/ext/api/bsm/gbfs/v2/en/station_status
+```

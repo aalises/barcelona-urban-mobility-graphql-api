@@ -1,3 +1,19 @@
+# [0.3.0](https://github.com/aalises/barcelona-urban-mobility-graphql-api/compare/v0.2.1...v0.3.0) (2020-11-15)
+
+
+### Bug Fixes
+
+* **filters:** filtering bike stations now allows compound filtering by 2+ properties ([e18add0](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/e18add056180298a9ce5d7976abee32a1d784b9c))
+
+
+### Features
+
+* **caching:** add caching hints to the fields ([1ab9d03](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/1ab9d030d0e89b2218557f599bfda7742b6bb838))
+* **changelog:** add command in package for generating the changelog ([09e2e91](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/09e2e9137750be59f8fc2e618d531c2814f60b40))
+* **queries:** add bikeStation query ([5ac22ad](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/5ac22ad2fb204d4002078e32c6655ff74300a2f1))
+
+
+
 ## [0.2.1](https://github.com/aalises/barcelona-urban-mobility-graphql-api/compare/v0.2.0...v0.2.1) (2020-11-14)
 
 
