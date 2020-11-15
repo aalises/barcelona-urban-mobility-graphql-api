@@ -20,10 +20,18 @@ const BikeStation = new GraphQLObjectType({
     status: {
       description: "Status of the station e.g. IN_SERVICE",
       type: BikeStationStatus,
+      resolve: ({ status }, params, _, { cacheControl }) => {
+        cacheControl.setCacheHint({ maxAge: 0 });
+        return status;
+      },
     },
     lastUpdated: {
       description: "Last updated information timestamp (in ms since epoch)",
       type: GraphQLInt,
+      resolve: ({ lastUpdated }, params, _, { cacheControl }) => {
+        cacheControl.setCacheHint({ maxAge: 0 });
+        return lastUpdated;
+      },
     },
     name: {
       description: "Name of the station",
@@ -41,6 +49,10 @@ const BikeStation = new GraphQLObjectType({
       description:
         "Information about the available bikes and docks of the station",
       type: BikeStationAvailabilityInfo,
+      resolve: ({ available }, params, _, { cacheControl }) => {
+        cacheControl.setCacheHint({ maxAge: 0 });
+        return available;
+      },
     },
   },
 });
