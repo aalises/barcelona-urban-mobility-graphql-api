@@ -4,7 +4,7 @@ import {
   mockBikeStationsStatusAPIResponse,
   mockBikeStationsResponse,
 } from "../__fixtures__/BikeStationsFixtures";
-import { ApolloError, ValidationError } from "apollo-server-lambda";
+import { ApolloError } from "apollo-server-lambda";
 
 const BikeDataSource = new DataSource();
 
@@ -13,7 +13,7 @@ describe("BikeDataSource", () => {
 
   (BikeDataSource as any).get = mockGet;
 
-  it("[bikeStationReducer]: Correctly parses a bike station information and status API data to the schema format", () => {
+  it("[bikeStationReducer]: Parses a bike station information and status API data to the schema format", () => {
     expect(
       BikeDataSource.bikeStationReducer(
         mockBikeStationsInfoAPIResponse.data.stations[0],
@@ -23,7 +23,7 @@ describe("BikeDataSource", () => {
   });
 
   describe("[getAllStations]", () => {
-    it("Correctly looks up the bike stations from the API", async () => {
+    it("Looks up the bike stations from the API", async () => {
       mockGet
         .mockReturnValueOnce(mockBikeStationsInfoAPIResponse)
         .mockReturnValueOnce(mockBikeStationsStatusAPIResponse);
@@ -37,15 +37,6 @@ describe("BikeDataSource", () => {
   });
 
   describe("[getStation]", () => {
-    it("Throws a Validation Error if a falsy ID and name are passed as parameter", async () => {
-      const res = await BikeDataSource.getStation({
-        id: null,
-        name: null,
-      });
-
-      expect(res).toBeInstanceOf(ValidationError);
-    });
-
     it("Throws a Not Found Error if the response does not contain stations", async () => {
       mockGet.mockReturnValueOnce([]).mockReturnValueOnce([]);
       const res = await BikeDataSource.getStation({ id: 32 });
@@ -53,7 +44,7 @@ describe("BikeDataSource", () => {
       expect(res).toBeInstanceOf(ApolloError);
     });
 
-    it("Correctly gets a station by ID", async () => {
+    it("Gets a station by id", async () => {
       mockGet
         .mockReturnValueOnce(mockBikeStationsInfoAPIResponse)
         .mockReturnValueOnce(mockBikeStationsStatusAPIResponse);
@@ -63,7 +54,7 @@ describe("BikeDataSource", () => {
       expect(res).toEqual(mockBikeStationsResponse[0]);
     });
 
-    it("Correctly gets a station by Name", async () => {
+    it("Gets a station by name", async () => {
       mockGet
         .mockReturnValueOnce(mockBikeStationsInfoAPIResponse)
         .mockReturnValueOnce(mockBikeStationsStatusAPIResponse);
@@ -73,6 +64,18 @@ describe("BikeDataSource", () => {
       });
 
       expect(res).toEqual(mockBikeStationsResponse[1]);
+    });
+
+    it("Gets a station by proximity", async () => {
+      mockGet
+        .mockReturnValueOnce(mockBikeStationsInfoAPIResponse)
+        .mockReturnValueOnce(mockBikeStationsStatusAPIResponse);
+
+      const res = await BikeDataSource.getStation({
+        closest: mockBikeStationsResponse[2].location,
+      });
+
+      expect(res).toEqual(mockBikeStationsResponse[2]);
     });
   });
 });

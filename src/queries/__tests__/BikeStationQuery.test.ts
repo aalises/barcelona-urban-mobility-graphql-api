@@ -61,7 +61,7 @@ describe("bikeStation Query", () => {
           "bikeStation": null,
         },
         "errors": Array [
-          [GraphQLError: You have to provide either a non empty ID or non empty Name for the bikeStation query],
+          [GraphQLError: You have to provide either a non empty ID, non empty Name or closest coordinates for the bikeStation query],
         ],
         "extensions": undefined,
         "http": Object {

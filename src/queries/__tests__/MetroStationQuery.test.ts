@@ -58,7 +58,7 @@ describe("MetroStation Query", () => {
           "metroStation": null,
         },
         "errors": Array [
-          [GraphQLError: You have to provide either a non empty ID or non empty Name for the metroStation query],
+          [GraphQLError: You have to provide either a non empty ID , non empty Name or closest coordinates for the metroStation query],
         ],
         "extensions": undefined,
         "http": Object {

@@ -1,7 +1,11 @@
-import { GraphQLFloat, GraphQLObjectType } from "graphql";
+import {
+  GraphQLFloat,
+  GraphQLObjectType,
+  GraphQLInputObjectType,
+} from "graphql";
 
-export default new GraphQLObjectType({
-  name: "Coordinates",
+const fields = ({ isInputObject }: { isInputObject: boolean }) => ({
+  name: `Coordinates${isInputObject ? "Input" : "Output"}`,
   description:
     "Coordinates (Latitude, Longitude, Altitude), of a given station/stop",
   fields: {
@@ -16,3 +20,11 @@ export default new GraphQLObjectType({
     },
   },
 });
+
+const CoordinatesInput = new GraphQLInputObjectType(
+  fields({ isInputObject: true })
+);
+const CoordinatesOutput = new GraphQLObjectType(
+  fields({ isInputObject: false })
+);
+export { CoordinatesInput, CoordinatesOutput };

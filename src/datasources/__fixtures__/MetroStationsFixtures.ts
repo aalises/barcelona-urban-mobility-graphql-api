@@ -1,4 +1,4 @@
-export const mockMetroStationsAPIResponse = {
+export const mockMetroStationsAPIResponse: any = {
   type: "FeatureCollection",
   features: [
     {
@@ -44,7 +44,7 @@ export const mockMetroStationsAPIResponse = {
   },
 };
 
-export const mockMetroStationsResponse = {
+export const mockMetroStationsResponse: any = {
   numberOfStations: 2,
   stations: [
     {

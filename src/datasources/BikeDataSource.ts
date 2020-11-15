@@ -5,8 +5,8 @@ import type {
   BikeStation as BikeStationType,
   BikeStationStatus as BikeStationStatusType,
 } from "../../types";
-import { ApolloError, ValidationError } from "apollo-server-lambda";
-
+import { ApolloError } from "apollo-server-lambda";
+import { getClosestBikeStation } from "../utils/getClosestStation";
 interface StationInfo {
   address: string;
   altitude: number;
@@ -94,42 +94,51 @@ export default class BikeDataSource extends RESTDataSource {
     };
   }
 
-  async getStation({ id, name }: FindByInput): Promise<BikeStationType | null> {
-    if (!id && !name) {
-      return new ValidationError(
-        "You need to provide either a valid ID or a valid name"
-      );
-    }
-
+  async getStation({
+    id,
+    name,
+    closest,
+  }: FindByInput): Promise<BikeStationType | null> {
     const stations = await this.getAllStations();
 
-    let stationById: BikeStationType | null = null;
-    let stationByName: BikeStationType | null = null;
+    if (stations instanceof Error) {
+      return stations;
+    }
 
     if (id) {
-      stationById =
-        (stations as BikeStationType[])?.find(
-          ({ id: stationId }) => stationId === String(id)
-        ) ?? null;
+      const stationsById =
+        stations?.find(({ id: stationId }) => stationId === String(id)) ?? null;
+
+      if (stationsById) {
+        return stationsById;
+      }
     }
 
     if (name) {
-      stationByName =
-        (stations as BikeStationType[])?.find(
+      const stationsByName =
+        stations?.find(
           ({ name: stationName }) => stationName === String(name)
         ) ?? null;
+
+      if (stationsByName) {
+        return stationsByName;
+      }
     }
 
-    if (!stationById && !stationByName) {
-      return new ApolloError(
-        `No stations were found with these parameters: ${JSON.stringify({
-          id,
-          name,
-        })}`
-      );
+    if (closest) {
+      const stationsByProximity = getClosestBikeStation(stations, closest);
+      if (stationsByProximity) {
+        return stationsByProximity;
+      }
     }
 
-    return stationById ?? stationByName ?? null;
+    return new ApolloError(
+      `No stations were found with these parameters: ${JSON.stringify({
+        id,
+        name,
+        closest,
+      })}`
+    );
   }
 
   async getAllStations(): Promise<BikeStationType[] | Error> {
