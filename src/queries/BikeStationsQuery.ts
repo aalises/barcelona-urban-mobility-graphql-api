@@ -4,6 +4,7 @@ import type {
   FilterByInputBike as FilterByInputBikeType,
   BikeStation as BikeStationType,
   BikeStationConnection as BikeStationConnectionType,
+  OnlyFilterByInputBike,
 } from "../../types";
 import { BikeStationConnection } from "../outputs/BikeStation";
 import { GraphQLObjectType } from "graphql";
@@ -19,23 +20,29 @@ const filterBikeStations = (
 
   const { only } = filterBy;
 
-  if (only?.hasAvailableBikes) {
-    return Number(station?.available?.bikes?.total ?? null) > 0;
-  }
+  const filteringConditions: Record<keyof OnlyFilterByInputBike, boolean> = {
+    hasAvailableBikes: Number(station?.available?.bikes?.total ?? null) > 0,
+    hasAvailableDocks: Number(station?.available?.docks ?? null) > 0,
+    hasAvailableElectricalBikes:
+      Number(station?.available?.bikes?.electrical ?? null) > 0,
+    isInService: station?.status === "IN_SERVICE",
+  };
 
-  if (only?.hasAvailableElectricalBikes) {
-    return Number(station?.available?.bikes?.electrical ?? null) > 0;
-  }
+  //If one filter condition for a present flag is not met, filter the item out
+  const hasFilterableCondition = Object.entries(filteringConditions).reduce(
+    (acc, [key, value]) => {
+      const property = only?.[key] ?? null;
 
-  if (only?.hasAvailableDocks) {
-    return Number(station?.available?.docks ?? null) > 0;
-  }
+      if (property && !value) {
+        return false;
+      }
 
-  if (only?.isInService) {
-    return station?.status === "IN_SERVICE";
-  }
+      return acc;
+    },
+    true
+  );
 
-  return true;
+  return hasFilterableCondition;
 };
 
 const BikeStations = new GraphQLObjectType({
