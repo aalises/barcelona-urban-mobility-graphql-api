@@ -10,7 +10,8 @@
     "lint": "eslint",
     "schema": "graphql-codegen",
     "generate:changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --coverage"
   },
   "author": "aalises",
   "license": "ISC",
@@ -28,6 +29,8 @@
     "@typescript-eslint/eslint-plugin": "^4.4.0",
     "@typescript-eslint/parser": "^4.4.0",
     "apollo-datasource-rest": "^0.9.4",
+    "apollo-link": "^1.2.14",
+    "apollo-link-http": "^1.5.17",
     "apollo-server-testing": "^2.18.2",
     "babel-jest": "^26.5.2",
     "babel-node": "^0.0.1-security",

@@ -5,7 +5,7 @@ import BikeDataSource from "./datasources/BikeDataSource";
 import formatError from "./utils/formatError";
 import responseCachePlugin from "apollo-server-plugin-response-cache";
 
-const server: ApolloServer = new ApolloServer({
+export const server: ApolloServer = new ApolloServer({
   schema,
   playground: {
     settings: {
