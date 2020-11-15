@@ -5,8 +5,8 @@ import createTestServer from "../../utils/createTestServer";
 import { mockMetroStationsAPIResponse } from "../../datasources/__fixtures__/MetroStationsFixtures";
 
 const GET_METRO_STATIONS = gql`
-  query getMetroStations($first: Int) {
-    metroStations(first: $first) {
+  query getMetroStations($first: Int, $filterBy: FilterByInputMetro) {
+    metroStations(first: $first, filterBy: $filterBy) {
       stations {
         edges {
           node {
@@ -20,11 +20,12 @@ const GET_METRO_STATIONS = gql`
 `;
 
 describe("metroStations Query", () => {
+  const { server, metro } = createTestServer();
+  const { query } = createTestClient(server);
+
   it("Fetches list of metro stations", async () => {
-    const { server, metro } = createTestServer();
     metro.get = jest.fn().mockReturnValueOnce(mockMetroStationsAPIResponse);
 
-    const { query } = createTestClient(server);
     const res = await query({
       query: GET_METRO_STATIONS,
       variables: { first: 2 },
@@ -65,5 +66,20 @@ describe("metroStations Query", () => {
         },
       }
     `);
+  });
+  it("Calls the getLineStations with the filtering params", async () => {
+    const mockGetLineStations = jest.fn();
+
+    metro.getLineStations = mockGetLineStations;
+
+    await query({
+      query: GET_METRO_STATIONS,
+      variables: { first: 2, filterBy: { lineId: 3, lineName: "line name" } },
+    });
+
+    expect(mockGetLineStations).toHaveBeenCalledWith({
+      id: 3,
+      name: "line name",
+    });
   });
 });
