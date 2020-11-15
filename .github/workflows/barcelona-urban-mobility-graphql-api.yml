@@ -1,7 +1,7 @@
-name: ci
-on: [push]
+name: Install, Build, Lint and Test
+on: [push, pull_request]
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,6 +37,13 @@ jobs:
           CI: true
 
       - name: test
-        run: yarn test
+        run: yarn test:coverage
+        env:
+          CI: true
+
+      - name: test coverage
+        uses: coverallsapp/github-action@v1.1.2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
         env:
           CI: true

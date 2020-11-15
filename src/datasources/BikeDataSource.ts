@@ -140,12 +140,6 @@ export default class BikeDataSource extends RESTDataSource {
       "station_status"
     );
 
-    if (!stationInfoResponse && !stationStatusResponse) {
-      return new ApolloError(
-        "There was an error fetching the bike stations information"
-      );
-    }
-
     return (
       stationInfoResponse?.data?.stations?.map(
         (stationInfoData: StationInfo | null) => {

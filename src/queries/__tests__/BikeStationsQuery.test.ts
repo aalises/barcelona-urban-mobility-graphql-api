@@ -14,6 +14,7 @@ const GET_BIKE_STATIONS = gql`
       stations {
         edges {
           node {
+            lastUpdated
             available {
               bikes {
                 total
