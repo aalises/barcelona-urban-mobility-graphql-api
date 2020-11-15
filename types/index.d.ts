@@ -115,14 +115,14 @@ export type MetroStation = {
   /** Name of the station */
   name?: Maybe<Scalars['String']>;
   /** Location coordinates of the station */
-  location?: Maybe<Coordinates>;
+  location?: Maybe<CoordinatesOutput>;
   /** Lines the station belongs to e.g. L1, L2 */
   lines?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 /** Coordinates (Latitude, Longitude, Altitude), of a given station/stop */
-export type Coordinates = {
-  __typename?: 'Coordinates';
+export type CoordinatesOutput = {
+  __typename?: 'CoordinatesOutput';
   latitude?: Maybe<Scalars['Float']>;
   longitude?: Maybe<Scalars['Float']>;
   altitude?: Maybe<Scalars['Float']>;
@@ -138,6 +138,15 @@ export type FilterByInputMetro = {
 export type FindByInput = {
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
+  /** Finds the closest station given some coordinates */
+  closest?: Maybe<CoordinatesInput>;
+};
+
+/** Coordinates (Latitude, Longitude, Altitude), of a given station/stop */
+export type CoordinatesInput = {
+  latitude?: Maybe<Scalars['Float']>;
+  longitude?: Maybe<Scalars['Float']>;
+  altitude?: Maybe<Scalars['Float']>;
 };
 
 /** Metro line information */
@@ -232,7 +241,7 @@ export type BikeStation = {
   /** Total number of bikes the station has */
   capacity?: Maybe<Scalars['Int']>;
   /** Location coordinates of the station */
-  location?: Maybe<Coordinates>;
+  location?: Maybe<CoordinatesOutput>;
   /** Information about the available bikes and docks of the station */
   available?: Maybe<BikeStationAvailabilityInfo>;
 };

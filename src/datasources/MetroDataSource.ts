@@ -3,8 +3,10 @@ import type {
   FindByInput,
   MetroStation as MetroStationType,
   MetroLine as MetroLineType,
+  CoordinatesInput as CoordinatesType,
 } from "../../types";
-import { ApolloError, ValidationError } from "apollo-server-lambda";
+import { ApolloError } from "apollo-server-lambda";
+import { getClosestMetroStation } from "../utils/getClosestStation";
 
 export interface MetroLineAPIType {
   type: string;
@@ -105,13 +107,8 @@ export default class MetroDataSource extends TmbApiDataSource {
   async getStation({
     id,
     name,
+    closest,
   }: FindByInput): Promise<MetroStationType | null> {
-    if (!id && !name) {
-      return new ValidationError(
-        "You need to provide either a valid ID or a valid name"
-      );
-    }
-
     const path = ["estacions", id].filter(Boolean).join("/");
     const nameFilterParameter = name ? { filter: `NOM_ESTACIO='${name}'` } : {};
 
@@ -125,11 +122,20 @@ export default class MetroDataSource extends TmbApiDataSource {
         `No stations were found with these parameters: ${JSON.stringify({
           id,
           name,
+          closest,
         })}`
       );
     }
 
-    const station: MetroStationAPIType | null = response?.features?.[0] ?? null;
+    //If returning more than one occurrence and closest exists, try to get the closest station
+    const getClosest = Number(response?.features?.length) > 1 && closest;
+
+    const station: MetroStationAPIType | null = getClosest
+      ? getClosestMetroStation(
+          response?.features as MetroStationAPIType[],
+          closest as CoordinatesType
+        )
+      : response?.features?.[0] ?? null;
 
     if (station == null) {
       return new ApolloError("The station object returned did not exist");
@@ -187,12 +193,6 @@ export default class MetroDataSource extends TmbApiDataSource {
   }
 
   async getLine({ id, name }: FindByInput): Promise<MetroLineType | null> {
-    if (!id && !name) {
-      return new ValidationError(
-        "You need to provide either a valid ID or a valid name"
-      );
-    }
-
     const path = ["linies/metro", id].filter(Boolean).join("/");
     const nameFilterParameter = name ? { filter: `NOM_LINIA='${name}'` } : {};
 

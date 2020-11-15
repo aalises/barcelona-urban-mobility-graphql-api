@@ -1,4 +1,4 @@
-import Coordinates from "./Coordinates";
+import { CoordinatesOutput } from "./Coordinates";
 import {
   GraphQLObjectType,
   GraphQLID,
@@ -43,7 +43,7 @@ const BikeStation = new GraphQLObjectType({
     },
     location: {
       description: "Location coordinates of the station",
-      type: Coordinates,
+      type: CoordinatesOutput,
     },
     available: {
       description:

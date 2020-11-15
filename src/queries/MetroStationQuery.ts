@@ -17,9 +17,9 @@ export default {
   resolve: async (_, args, { dataSources }): Promise<MetroStationType> => {
     const { findBy }: MetroStationQueryArgsType = args;
 
-    if (!findBy.id && !findBy.name) {
+    if (!findBy.id && !findBy.name && !findBy.closest) {
       throw new ValidationError(
-        "You have to provide either a non empty ID or non empty Name for the metroStation query"
+        "You have to provide either a non empty ID , non empty Name or closest coordinates for the metroStation query"
       );
     }
 

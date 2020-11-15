@@ -63,14 +63,14 @@ type MetroStation {
   name: String
 
   """Location coordinates of the station"""
-  location: Coordinates
+  location: CoordinatesOutput
 
   """Lines the station belongs to e.g. L1, L2"""
   lines: [String]
 }
 
 """Coordinates (Latitude, Longitude, Altitude), of a given station/stop"""
-type Coordinates {
+type CoordinatesOutput {
   latitude: Float
   longitude: Float
   altitude: Float
@@ -90,6 +90,16 @@ Input for the FindBy argument of the queries, which allows finding an entity by 
 input FindByInput {
   id: Int
   name: String
+
+  """Finds the closest station given some coordinates"""
+  closest: CoordinatesInput
+}
+
+"""Coordinates (Latitude, Longitude, Altitude), of a given station/stop"""
+input CoordinatesInput {
+  latitude: Float
+  longitude: Float
+  altitude: Float
 }
 
 """Metro line information"""
@@ -184,7 +194,7 @@ type BikeStation {
   capacity: Int
 
   """Location coordinates of the station"""
-  location: Coordinates
+  location: CoordinatesOutput
 
   """Information about the available bikes and docks of the station"""
   available: BikeStationAvailabilityInfo
