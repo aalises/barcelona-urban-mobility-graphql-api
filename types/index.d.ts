@@ -17,6 +17,7 @@ export type RootQuery = {
   metroLine?: Maybe<MetroLine>;
   metroLines?: Maybe<MetroLines>;
   bikeStations?: Maybe<BikeStations>;
+  bikeStation?: Maybe<BikeStation>;
 };
 
 
@@ -58,6 +59,12 @@ export type RootQueryBikeStationsArgs = {
   before?: Maybe<Scalars['String']>;
   last?: Maybe<Scalars['Int']>;
   filterBy?: Maybe<FilterByInputBike>;
+};
+
+
+/** Root Query */
+export type RootQueryBikeStationArgs = {
+  findBy: FindByInput;
 };
 
 /** Information about the metro stations of the city of Barcelona */
