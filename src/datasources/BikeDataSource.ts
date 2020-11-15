@@ -1,11 +1,11 @@
 import { RESTDataSource } from "apollo-datasource-rest";
 import { SMOU_API_BASE_URL } from "../config";
-import { ApolloError } from "apollo-server-lambda";
 import type {
-  FilterByInputBike,
+  FindByInput,
   BikeStation as BikeStationType,
   BikeStationStatus as BikeStationStatusType,
 } from "../../types";
+import { ApolloError, ValidationError } from "apollo-server-lambda";
 
 interface StationInfo {
   address: string;
@@ -92,6 +92,44 @@ export default class BikeDataSource extends RESTDataSource {
       ...reducedStationInfo,
       ...reducedStationStatus,
     };
+  }
+
+  async getStation({ id, name }: FindByInput): Promise<BikeStationType | null> {
+    if (!id && !name) {
+      return new ValidationError(
+        "You need to provide either a valid ID or a valid name"
+      );
+    }
+
+    const stations = await this.getAllStations();
+
+    let stationById: BikeStationType | null = null;
+    let stationByName: BikeStationType | null = null;
+
+    if (id) {
+      stationById =
+        (stations as BikeStationType[])?.find(
+          ({ id: stationId }) => stationId === String(id)
+        ) ?? null;
+    }
+
+    if (name) {
+      stationByName =
+        (stations as BikeStationType[])?.find(
+          ({ name: stationName }) => stationName === String(name)
+        ) ?? null;
+    }
+
+    if (!stationById && !stationByName) {
+      return new ApolloError(
+        `No stations were found with these parameters: ${JSON.stringify({
+          id,
+          name,
+        })}`
+      );
+    }
+
+    return stationById ?? stationByName ?? null;
   }
 
   async getAllStations(): Promise<BikeStationType[] | Error> {

@@ -9,6 +9,7 @@ type RootQuery {
   metroLine(findBy: FindByInput!): MetroLine
   metroLines(after: String, first: Int, before: String, last: Int): MetroLines
   bikeStations(after: String, first: Int, before: String, last: Int, filterBy: FilterByInputBike): BikeStations
+  bikeStation(findBy: FindByInput!): BikeStation
 }
 
 """Information about the metro stations of the city of Barcelona"""

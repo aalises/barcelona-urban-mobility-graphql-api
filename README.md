@@ -26,7 +26,7 @@ It provides information about bus stops and lines, metro stations/lines, and pub
 #### Bike
 
 - [x] `bikeStations` query with information about bike stations
-- [ ] `bikeStation` query with information about one bike station (find by name or id)
+- [x] `bikeStation` query with information about one bike station (find by name or id)
 - [x] Add bike availability information to the `bikeStations` query
 
 #### Tram

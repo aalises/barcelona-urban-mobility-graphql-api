@@ -32,13 +32,10 @@ describe("bikeStations Query", () => {
   const { server, bike } = createTestServer();
   const { query } = createTestClient(server);
 
-  beforeEach(
-    () =>
-      ((bike as any).get = jest
-        .fn()
-        .mockReturnValueOnce(mockBikeStationsInfoAPIResponse)
-        .mockReturnValueOnce(mockBikeStationsStatusAPIResponse))
-  );
+  (bike as any).get = jest
+    .fn()
+    .mockReturnValue(mockBikeStationsInfoAPIResponse)
+    .mockReturnValue(mockBikeStationsStatusAPIResponse);
 
   it("Fetches all bike stations", async () => {
     const res = await query({
