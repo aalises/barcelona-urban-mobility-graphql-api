@@ -15,10 +15,9 @@ describe("MetroDataSource", () => {
   const mockGet = jest.fn();
 
   MetroDataSource.get = mockGet;
-  MetroDataSource.getLineStations = jest.fn().mockReturnValue({
-    numberOfStations: 5,
-    stations: mockMetroLinesResponse.lines[0].stations,
-  });
+  MetroDataSource.getLineStations = jest
+    .fn()
+    .mockReturnValue(mockMetroLinesResponse[0].stations);
 
   describe("[getAllLines]", () => {
     it("Looks up the lines from the API", async () => {
@@ -53,7 +52,7 @@ describe("MetroDataSource", () => {
       });
       const res = await MetroDataSource.getLine({ id: 32 });
 
-      expect(res).toEqual(mockMetroLinesResponse.lines[0]);
+      expect(res).toEqual(mockMetroLinesResponse[0]);
       expect(mockGet.mock.calls[0][0]).toBe("linies/metro/32");
     });
 
@@ -65,7 +64,7 @@ describe("MetroDataSource", () => {
         name: "L4",
       });
 
-      expect(res).toEqual(mockMetroLinesResponse.lines[0]);
+      expect(res).toEqual(mockMetroLinesResponse[0]);
       expect(mockGet).toBeCalledWith("linies/metro", {
         filter: "NOM_LINIA='L4'",
       });
@@ -73,7 +72,7 @@ describe("MetroDataSource", () => {
   });
 
   it("[metroLineReducer]: Parses a metro line API data to the schema format", () => {
-    const lineResponse = mockMetroLinesResponse.lines[0];
+    const lineResponse = mockMetroLinesResponse[0];
     expect(
       MetroDataSource.metroLineReducer(mockMetroLinesAPIResponse.features[0])
     ).toEqual({
@@ -118,7 +117,7 @@ describe("MetroDataSource", () => {
       });
       const res = await MetroDataSource.getStation({ id: 32 });
 
-      expect(res).toEqual(mockMetroStationsResponse.stations[0]);
+      expect(res).toEqual(mockMetroStationsResponse[0]);
       expect(mockGet.mock.calls[0][0]).toBe("estacions/32");
     });
 
@@ -130,7 +129,7 @@ describe("MetroDataSource", () => {
         name: "Urwhatawave",
       });
 
-      expect(res).toEqual(mockMetroStationsResponse.stations[0]);
+      expect(res).toEqual(mockMetroStationsResponse[0]);
       expect(mockGet).toBeCalledWith("estacions", {
         filter: "NOM_ESTACIO='Urwhatawave'",
       });
@@ -139,10 +138,10 @@ describe("MetroDataSource", () => {
     it("Gets a station by proximity", async () => {
       mockGet.mockReturnValueOnce(mockMetroStationsAPIResponse);
       const res = await MetroDataSource.getStation({
-        closest: mockMetroStationsResponse.stations[1].location,
+        closest: mockMetroStationsResponse[1].location,
       });
 
-      expect(res).toEqual(mockMetroStationsResponse.stations[1]);
+      expect(res).toEqual(mockMetroStationsResponse[1]);
       expect(mockGet).toBeCalledWith("estacions", {});
     });
   });
@@ -152,7 +151,7 @@ describe("MetroDataSource", () => {
       MetroDataSource.metroStationReducer(
         mockMetroStationsAPIResponse.features[0]
       )
-    ).toEqual(mockMetroStationsResponse.stations[0]);
+    ).toEqual(mockMetroStationsResponse[0]);
   });
 
   test.each([

@@ -12,11 +12,17 @@ export type Scalars = {
 /** Root Query */
 export type RootQuery = {
   __typename?: 'RootQuery';
-  metroStations?: Maybe<MetroStations>;
+  /** Information about the metro stations of the city of Barcelona */
+  metroStations?: Maybe<MetroStationConnection>;
+  /** Returns the information about a metro station */
   metroStation?: Maybe<MetroStation>;
+  /** Returns the information about a metro line */
   metroLine?: Maybe<MetroLine>;
-  metroLines?: Maybe<MetroLines>;
-  bikeStations?: Maybe<BikeStations>;
+  /** Information about the metro lines of the city of Barcelona */
+  metroLines?: Maybe<MetroLineConnection>;
+  /** Information about the public bike stations (SMOU) of the city of Barcelona */
+  bikeStations?: Maybe<BikeStationConnection>;
+  /** Returns the information about a bike station */
   bikeStation?: Maybe<BikeStation>;
 };
 
@@ -65,15 +71,6 @@ export type RootQueryBikeStationsArgs = {
 /** Root Query */
 export type RootQueryBikeStationArgs = {
   findBy: FindByInput;
-};
-
-/** Information about the metro stations of the city of Barcelona */
-export type MetroStations = {
-  __typename?: 'MetroStations';
-  /** Connection with the data about stations */
-  stations?: Maybe<MetroStationConnection>;
-  /** Total number of stations */
-  numberOfStations?: Maybe<Scalars['Int']>;
 };
 
 /** A connection to a list of items. */
@@ -175,15 +172,6 @@ export type MetroLineStationsArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-/** Information about the metro lines of the city of Barcelona */
-export type MetroLines = {
-  __typename?: 'MetroLines';
-  /** Connection with the data about lines */
-  lines?: Maybe<MetroLineConnection>;
-  /** Total number of lines */
-  numberOfLines?: Maybe<Scalars['Int']>;
-};
-
 /** A connection to a list of items. */
 export type MetroLineConnection = {
   __typename?: 'MetroLineConnection';
@@ -200,13 +188,6 @@ export type MetroLineEdge = {
   node?: Maybe<MetroLine>;
   /** A cursor for use in pagination */
   cursor: Scalars['String'];
-};
-
-/** Information about the public bike stations (SMOU) of the city of Barcelona */
-export type BikeStations = {
-  __typename?: 'BikeStations';
-  /** Connection with the data about bike stations */
-  stations?: Maybe<BikeStationConnection>;
 };
 
 /** A connection to a list of items. */

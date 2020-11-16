@@ -5,6 +5,7 @@ import { GraphQLNonNull } from "graphql";
 import { MetroLine as MetroLineType } from "../../types";
 export default {
   type: MetroLine,
+  description: "Returns the information about a metro line",
   args: {
     findBy: {
       type: new GraphQLNonNull(FindByInput),

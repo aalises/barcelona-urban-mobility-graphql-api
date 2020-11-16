@@ -144,19 +144,15 @@ export default class MetroDataSource extends TmbApiDataSource {
     return this.metroStationReducer(station);
   }
 
-  async getAllStations(): Promise<{
-    numberOfStations: number | null;
-    stations: MetroStationType[];
-  }> {
+  async getAllStations(): Promise<MetroStationType[]> {
     const response: MetroStationsAPIType | null = await this.get("estacions");
 
-    return {
-      numberOfStations: response?.numberReturned ?? null,
-      stations:
-        response?.features?.map((station: MetroStationAPIType) =>
-          this.metroStationReducer(station)
-        ) ?? [],
-    };
+    const stations =
+      response?.features?.map((station: MetroStationAPIType) =>
+        this.metroStationReducer(station)
+      ) ?? [];
+
+    return stations;
   }
 
   metroLineReducer({ properties }: MetroLineAPIType): MetroLineType {
@@ -173,10 +169,7 @@ export default class MetroDataSource extends TmbApiDataSource {
   async getLineStations({
     id,
     name,
-  }: FindByInput): Promise<{
-    numberOfStations: number | null;
-    stations: MetroStationType[];
-  }> {
+  }: FindByInput): Promise<MetroStationType[]> {
     const path = ["linies/metro", id, "estacions"].filter(Boolean).join("/");
     const nameFilterParameter = name ? { filter: `NOM_LINIA='${name}'` } : {};
 
@@ -186,10 +179,7 @@ export default class MetroDataSource extends TmbApiDataSource {
       response?.features?.map((station) => this.metroStationReducer(station)) ??
       [];
 
-    return {
-      numberOfStations: response?.numberReturned ?? null,
-      stations,
-    };
+    return stations;
   }
 
   async getLine({ id, name }: FindByInput): Promise<MetroLineType | null> {
@@ -215,7 +205,7 @@ export default class MetroDataSource extends TmbApiDataSource {
       return new ApolloError("The line object returned did not exist");
     }
 
-    const { stations } = await this.getLineStations({ id, name });
+    const stations = await this.getLineStations({ id, name });
 
     return {
       ...line,
@@ -229,16 +219,13 @@ export default class MetroDataSource extends TmbApiDataSource {
     };
   }
 
-  async getAllLines(): Promise<{
-    numberOfLines: number | null;
-    lines: MetroLineType[];
-  }> {
+  async getAllLines(): Promise<MetroLineType[]> {
     const response: MetroLinesAPIType | null = await this.get("linies/metro");
 
     const lines = await Promise.all(
       (response?.features ?? []).map(async (line: MetroLineAPIType) => {
         const reducedLine = this.metroLineReducer(line);
-        const { stations } = await this.getLineStations({
+        const stations = await this.getLineStations({
           id: reducedLine.id,
           name: reducedLine.name,
         });
@@ -258,9 +245,6 @@ export default class MetroDataSource extends TmbApiDataSource {
       })
     );
 
-    return {
-      numberOfLines: response?.numberReturned ?? null,
-      lines,
-    };
+    return lines;
   }
 }

@@ -50,13 +50,30 @@ export const mockMetroLinesAPIResponse: any = {
   },
 };
 
-export const mockMetroLinesResponse: any = {
-  numberOfLines: 1,
-  lines: [
-    {
-      id: 1,
-      name: "L1",
-      originStation: {
+export const mockMetroLinesResponse: any = [
+  {
+    id: 1,
+    name: "L1",
+    originStation: {
+      id: 6660935,
+      lines: ["L1"],
+      location: {
+        latitude: 41.442817,
+        longitude: 2.224737,
+      },
+      name: "Hospital de Bellvitge",
+    },
+    endingStation: {
+      id: 6660525,
+      lines: ["L1"],
+      location: {
+        latitude: 41.41506,
+        longitude: 2.181497,
+      },
+      name: "Fondo",
+    },
+    stations: [
+      {
         id: 6660935,
         lines: ["L1"],
         location: {
@@ -65,7 +82,7 @@ export const mockMetroLinesResponse: any = {
         },
         name: "Hospital de Bellvitge",
       },
-      endingStation: {
+      {
         id: 6660525,
         lines: ["L1"],
         location: {
@@ -74,27 +91,7 @@ export const mockMetroLinesResponse: any = {
         },
         name: "Fondo",
       },
-      stations: [
-        {
-          id: 6660935,
-          lines: ["L1"],
-          location: {
-            latitude: 41.442817,
-            longitude: 2.224737,
-          },
-          name: "Hospital de Bellvitge",
-        },
-        {
-          id: 6660525,
-          lines: ["L1"],
-          location: {
-            latitude: 41.41506,
-            longitude: 2.181497,
-          },
-          name: "Fondo",
-        },
-      ],
-      color: "CE1126",
-    },
-  ],
-};
+    ],
+    color: "CE1126",
+  },
+];

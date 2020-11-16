@@ -1,13 +1,11 @@
 import { connectionArgs, connectionFromArray } from "graphql-relay";
 import type {
-  BikeStations as BikeStationsType,
   FilterByInputBike as FilterByInputBikeType,
   BikeStation as BikeStationType,
   BikeStationConnection as BikeStationConnectionType,
   OnlyFilterByInputBike,
 } from "../../types";
 import { BikeStationConnection } from "../outputs/BikeStation";
-import { GraphQLObjectType } from "graphql";
 import { FilterByInputBike } from "../inputs/FilterByInput";
 
 const filterBikeStations = (
@@ -45,36 +43,28 @@ const filterBikeStations = (
   return hasFilterableCondition;
 };
 
-const BikeStations = new GraphQLObjectType({
-  name: "BikeStations",
+export default {
+  type: BikeStationConnection,
   description:
     "Information about the public bike stations (SMOU) of the city of Barcelona",
-  fields: {
-    stations: {
-      type: BikeStationConnection,
-      description: "Connection with the data about bike stations",
-    },
-  },
-});
-
-export default {
-  type: BikeStations,
   args: {
     ...connectionArgs,
     filterBy: {
       type: FilterByInputBike,
     },
   },
-  resolve: async (_, args, { dataSources }): Promise<BikeStationsType> => {
+  resolve: async (
+    _,
+    args,
+    { dataSources }
+  ): Promise<BikeStationConnectionType> => {
     const bikeStations = await dataSources.bike.getAllStations();
 
-    return {
-      stations: connectionFromArray(
-        bikeStations.filter((station) =>
-          filterBikeStations(station, args.filterBy)
-        ),
-        args
-      ) as BikeStationConnectionType,
-    };
+    return connectionFromArray(
+      bikeStations.filter((station) =>
+        filterBikeStations(station, args.filterBy)
+      ),
+      args
+    ) as BikeStationConnectionType;
   },
 };

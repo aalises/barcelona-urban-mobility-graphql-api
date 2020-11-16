@@ -11,18 +11,16 @@ import {
 const GET_BIKE_STATIONS = gql`
   query getBikeStations($filterBy: FilterByInputBike) {
     bikeStations(filterBy: $filterBy) {
-      stations {
-        edges {
-          node {
-            lastUpdated
-            available {
-              bikes {
-                total
-                electrical
-              }
+      edges {
+        node {
+          lastUpdated
+          available {
+            bikes {
+              total
+              electrical
             }
-            status
           }
+          status
         }
       }
     }
@@ -43,7 +41,7 @@ describe("bikeStations Query", () => {
       query: GET_BIKE_STATIONS,
     });
 
-    expect(res?.data?.bikeStations.stations.edges).toHaveLength(
+    expect(res?.data?.bikeStations.edges).toHaveLength(
       mockBikeStationsResponse.length
     );
   });
@@ -56,7 +54,7 @@ describe("bikeStations Query", () => {
 
     //There is no station returned that has no bikes
     const returnedStationWithNoBikes =
-      res?.data?.bikeStations.stations.edges.find(
+      res?.data?.bikeStations.edges.find(
         ({ node }) => node.available.bikes.total === 0
       ) ?? null;
 
@@ -71,7 +69,7 @@ describe("bikeStations Query", () => {
 
     //There is no station returned that has no electrical bikes
     const returnedStationWithNoElectricalBikes =
-      res?.data?.bikeStations.stations.edges.find(
+      res?.data?.bikeStations.edges.find(
         ({ node }) => node.available.bikes.electrical === 0
       ) ?? null;
 
@@ -86,7 +84,7 @@ describe("bikeStations Query", () => {
 
     //There is no station returned that has no docks
     const returnedStationWithNoDocks =
-      res?.data?.bikeStations.stations.edges.find(
+      res?.data?.bikeStations.edges.find(
         ({ node }) => node.available.docs === 0
       ) ?? null;
 
@@ -100,7 +98,7 @@ describe("bikeStations Query", () => {
 
     //There is no station returned that is not in service
     const returnedStationNotInService =
-      res?.data?.bikeStations.stations.edges.find(
+      res?.data?.bikeStations.edges.find(
         ({ node }) => node.status !== "IN_SERVICE"
       ) ?? null;
 

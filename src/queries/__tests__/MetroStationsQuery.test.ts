@@ -7,12 +7,10 @@ import { mockMetroStationsAPIResponse } from "../../datasources/__fixtures__/Met
 const GET_METRO_STATIONS = gql`
   query getMetroStations($first: Int, $filterBy: FilterByInputMetro) {
     metroStations(first: $first, filterBy: $filterBy) {
-      stations {
-        edges {
-          node {
-            lines
-            name
-          }
+      edges {
+        node {
+          lines
+          name
         }
       }
     }
@@ -35,26 +33,24 @@ describe("metroStations Query", () => {
       Object {
         "data": Object {
           "metroStations": Object {
-            "stations": Object {
-              "edges": Array [
-                Object {
-                  "node": Object {
-                    "lines": Array [
-                      "L10N",
-                    ],
-                    "name": "La Salut",
-                  },
+            "edges": Array [
+              Object {
+                "node": Object {
+                  "lines": Array [
+                    "L10N",
+                  ],
+                  "name": "La Salut",
                 },
-                Object {
-                  "node": Object {
-                    "lines": Array [
-                      "L5",
-                    ],
-                    "name": "Camp de l'Arpa",
-                  },
+              },
+              Object {
+                "node": Object {
+                  "lines": Array [
+                    "L5",
+                  ],
+                  "name": "Camp de l'Arpa",
                 },
-              ],
-            },
+              },
+            ],
           },
         },
         "errors": undefined,

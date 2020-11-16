@@ -5,41 +5,19 @@ import {
 } from "graphql-relay";
 
 import { MetroLineConnection } from "../outputs/MetroLine";
-import { GraphQLObjectType, GraphQLInt } from "graphql";
 
-import type {
-  MetroLines as MetroLinesType,
-  MetroLineConnection as MetroLineConnectionType,
-} from "../../types";
-
-const MetroLines = new GraphQLObjectType({
-  name: "MetroLines",
-  description: "Information about the metro lines of the city of Barcelona",
-  fields: {
-    lines: {
-      type: MetroLineConnection,
-      description: "Connection with the data about lines",
-    },
-    numberOfLines: {
-      type: GraphQLInt,
-      description: "Total number of lines",
-    },
-  },
-});
+import type { MetroLineConnection as MetroLineConnectionType } from "../../types";
 
 export default {
-  type: MetroLines,
+  type: MetroLineConnection,
+  description: "Information about the metro lines of the city of Barcelona",
   args: connectionArgs,
   resolve: async (
     _,
     args: ConnectionArguments,
     { dataSources }
-  ): Promise<MetroLinesType> => {
-    const { numberOfLines, lines } = await dataSources.metro.getAllLines();
-
-    return {
-      numberOfLines,
-      lines: connectionFromArray(lines, args) as MetroLineConnectionType,
-    };
+  ): Promise<MetroLineConnectionType> => {
+    const lines = await dataSources.metro.getAllLines();
+    return connectionFromArray(lines, args) as MetroLineConnectionType;
   },
 };

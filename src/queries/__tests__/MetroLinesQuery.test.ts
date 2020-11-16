@@ -7,12 +7,10 @@ import { mockMetroLinesAPIResponse } from "../../datasources/__fixtures__/MetroL
 const GET_METRO_LINES = gql`
   query getMetroLines($first: Int) {
     metroLines(first: $first) {
-      lines {
-        edges {
-          node {
-            id
-            name
-          }
+      edges {
+        node {
+          id
+          name
         }
       }
     }
@@ -34,16 +32,14 @@ describe("metroLines Query", () => {
       Object {
         "data": Object {
           "metroLines": Object {
-            "lines": Object {
-              "edges": Array [
-                Object {
-                  "node": Object {
-                    "id": 1,
-                    "name": "L1",
-                  },
+            "edges": Array [
+              Object {
+                "node": Object {
+                  "id": 1,
+                  "name": "L1",
                 },
-              ],
-            },
+              },
+            ],
           },
         },
         "errors": undefined,

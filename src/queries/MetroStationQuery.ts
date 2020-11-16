@@ -9,6 +9,7 @@ import { GraphQLNonNull } from "graphql";
 
 export default {
   type: MetroStation,
+  description: "Returns the information about a metro station",
   args: {
     findBy: {
       type: new GraphQLNonNull(FindByInput),

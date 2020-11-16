@@ -34,9 +34,9 @@ describe("MetroStation Query", () => {
   });
 
   it("Gets a given metro line", async () => {
-    metro.getLineStations = jest.fn().mockReturnValueOnce({
-      stations: mockMetroLinesResponse.lines[0].stations,
-    });
+    metro.getLineStations = jest
+      .fn()
+      .mockReturnValueOnce(mockMetroLinesResponse[0].stations);
 
     const res = await query({
       query: GET_METRO_LINE,
@@ -79,9 +79,7 @@ describe("MetroStation Query", () => {
   });
 
   it("Gets a metro line with no stations", async () => {
-    metro.getLineStations = jest.fn().mockReturnValueOnce({
-      stations: undefined,
-    });
+    metro.getLineStations = jest.fn().mockReturnValueOnce(undefined);
 
     const res = await query({
       query: GET_METRO_LINE,

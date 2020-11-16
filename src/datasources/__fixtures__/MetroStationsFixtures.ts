@@ -44,26 +44,23 @@ export const mockMetroStationsAPIResponse: any = {
   },
 };
 
-export const mockMetroStationsResponse: any = {
-  numberOfStations: 2,
-  stations: [
-    {
-      id: 6660935,
-      lines: ["L10N"],
-      location: {
-        latitude: 41.442817,
-        longitude: 2.224737,
-      },
-      name: "La Salut",
+export const mockMetroStationsResponse: any = [
+  {
+    id: 6660935,
+    lines: ["L10N"],
+    location: {
+      latitude: 41.442817,
+      longitude: 2.224737,
     },
-    {
-      id: 6660525,
-      lines: ["L5"],
-      location: {
-        latitude: 41.41506,
-        longitude: 2.181497,
-      },
-      name: "Camp de l'Arpa",
+    name: "La Salut",
+  },
+  {
+    id: 6660525,
+    lines: ["L5"],
+    location: {
+      latitude: 41.41506,
+      longitude: 2.181497,
     },
-  ],
-};
+    name: "Camp de l'Arpa",
+  },
+];

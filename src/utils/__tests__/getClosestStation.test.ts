@@ -30,11 +30,11 @@ describe("getClosestStation", () => {
   describe("[getClosestMetroStation]", () => {
     test.each([
       [
-        mockMetroStationsResponse.stations[0].location,
+        mockMetroStationsResponse[0].location,
         mockMetroStationsAPIResponse.features[0],
       ],
       [
-        mockMetroStationsResponse.stations[1].location,
+        mockMetroStationsResponse[1].location,
         mockMetroStationsAPIResponse.features[1],
       ],
       [nullLocation, mockMetroStationsAPIResponse.features[0]],

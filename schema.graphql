@@ -4,21 +4,25 @@ schema {
 
 """Root Query"""
 type RootQuery {
-  metroStations(after: String, first: Int, before: String, last: Int, filterBy: FilterByInputMetro): MetroStations
+  """Information about the metro stations of the city of Barcelona"""
+  metroStations(after: String, first: Int, before: String, last: Int, filterBy: FilterByInputMetro): MetroStationConnection
+
+  """Returns the information about a metro station"""
   metroStation(findBy: FindByInput!): MetroStation
+
+  """Returns the information about a metro line"""
   metroLine(findBy: FindByInput!): MetroLine
-  metroLines(after: String, first: Int, before: String, last: Int): MetroLines
-  bikeStations(after: String, first: Int, before: String, last: Int, filterBy: FilterByInputBike): BikeStations
+
+  """Information about the metro lines of the city of Barcelona"""
+  metroLines(after: String, first: Int, before: String, last: Int): MetroLineConnection
+
+  """
+  Information about the public bike stations (SMOU) of the city of Barcelona
+  """
+  bikeStations(after: String, first: Int, before: String, last: Int, filterBy: FilterByInputBike): BikeStationConnection
+
+  """Returns the information about a bike station"""
   bikeStation(findBy: FindByInput!): BikeStation
-}
-
-"""Information about the metro stations of the city of Barcelona"""
-type MetroStations {
-  """Connection with the data about stations"""
-  stations: MetroStationConnection
-
-  """Total number of stations"""
-  numberOfStations: Int
 }
 
 """A connection to a list of items."""
@@ -123,15 +127,6 @@ type MetroLine {
   color: String
 }
 
-"""Information about the metro lines of the city of Barcelona"""
-type MetroLines {
-  """Connection with the data about lines"""
-  lines: MetroLineConnection
-
-  """Total number of lines"""
-  numberOfLines: Int
-}
-
 """A connection to a list of items."""
 type MetroLineConnection {
   """Information to aid in pagination."""
@@ -148,14 +143,6 @@ type MetroLineEdge {
 
   """A cursor for use in pagination"""
   cursor: String!
-}
-
-"""
-Information about the public bike stations (SMOU) of the city of Barcelona
-"""
-type BikeStations {
-  """Connection with the data about bike stations"""
-  stations: BikeStationConnection
 }
 
 """A connection to a list of items."""
