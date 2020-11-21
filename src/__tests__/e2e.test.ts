@@ -6,8 +6,10 @@ import { createTestClient } from "apollo-server-testing";
 const GET_BIKE_STATION = gql`
   query getBikeStation($findBy: FindByInput!) {
     bikeStation(findBy: $findBy) {
-      id
-      name
+      ... on BikeStation {
+        id
+        name
+      }
     }
   }
 `;
