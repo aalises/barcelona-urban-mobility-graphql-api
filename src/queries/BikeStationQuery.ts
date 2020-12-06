@@ -1,22 +1,35 @@
 import { ValidationError } from "apollo-server-lambda";
 import type {
-  BikeStation as BikeStationType,
-  RootQueryBikeStationArgs as BikeStationQueryArgsType,
+  BikeStationQueryResponseType,
+  RootQueryBikeStationArgsType,
 } from "../../types";
 import BikeStation from "../outputs/BikeStation";
 import FindByInput from "../inputs/FindByInput";
-import { GraphQLNonNull } from "graphql";
+import { NotFoundError } from "../outputs/Errors";
+import { GraphQLNonNull, GraphQLUnionType } from "graphql";
+
+export const BikeStationQueryResponse = new GraphQLUnionType({
+  name: "BikeStationQueryResponse",
+  types: [BikeStation, NotFoundError],
+  resolveType(value) {
+    return value.params !== undefined ? NotFoundError : BikeStation;
+  },
+});
 
 export default {
-  type: BikeStation,
+  type: BikeStationQueryResponse,
   description: "Returns the information about a bike station",
   args: {
     findBy: {
       type: new GraphQLNonNull(FindByInput),
     },
   },
-  resolve: async (_, args, { dataSources }): Promise<BikeStationType> => {
-    const { findBy }: BikeStationQueryArgsType = args;
+  resolve: async (
+    _,
+    args,
+    { dataSources }
+  ): Promise<BikeStationQueryResponseType | null> => {
+    const { findBy }: RootQueryBikeStationArgsType = args;
 
     if (!findBy.id && !findBy.name && !findBy.closest) {
       throw new ValidationError(

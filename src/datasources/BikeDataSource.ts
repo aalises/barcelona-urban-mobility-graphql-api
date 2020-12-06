@@ -1,11 +1,11 @@
 import { RESTDataSource } from "apollo-datasource-rest";
 import { SMOU_API_BASE_URL } from "../config";
 import type {
-  FindByInput,
-  BikeStation as BikeStationType,
-  BikeStationStatus as BikeStationStatusType,
+  FindByInputType,
+  BikeStationType,
+  BikeStationQueryResponseType,
+  BikeStationStatusType,
 } from "../../types";
-import { ApolloError } from "apollo-server-lambda";
 import { getClosestBikeStation } from "../utils/getClosestStation";
 interface StationInfo {
   address: string;
@@ -98,12 +98,8 @@ export default class BikeDataSource extends RESTDataSource {
     id,
     name,
     closest,
-  }: FindByInput): Promise<BikeStationType | null> {
+  }: FindByInputType): Promise<BikeStationQueryResponseType | null> {
     const stations = await this.getAllStations();
-
-    if (stations instanceof Error) {
-      return stations;
-    }
 
     if (id) {
       const stationsById =
@@ -132,16 +128,16 @@ export default class BikeDataSource extends RESTDataSource {
       }
     }
 
-    return new ApolloError(
-      `No stations were found with these parameters: ${JSON.stringify({
+    return {
+      params: {
         id,
         name,
         closest,
-      })}`
-    );
+      },
+    };
   }
 
-  async getAllStations(): Promise<BikeStationType[] | Error> {
+  async getAllStations(): Promise<BikeStationType[]> {
     const stationInfoResponse: StationInfoAPIResponse | null = await this.get(
       "station_information"
     );

@@ -6,7 +6,7 @@ import {
 
 import { MetroLineConnection } from "../outputs/MetroLine";
 
-import type { MetroLineConnection as MetroLineConnectionType } from "../../types";
+import type { MetroLineConnectionType } from "../../types";
 
 export default {
   type: MetroLineConnection,

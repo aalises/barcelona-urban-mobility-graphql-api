@@ -23,21 +23,37 @@ describe("Production Server - e2e", () => {
 
     expect(res).toMatchInlineSnapshot(`
       Object {
-        "data": Object {
-          "bikeStation": Object {
-            "id": "3",
-            "name": "C/ NÀPOLS, 82",
+        "data": undefined,
+        "errors": Array [
+          Object {
+            "extensions": Object {
+              "code": "GRAPHQL_VALIDATION_FAILED",
+            },
+            "locations": Array [
+              Object {
+                "column": 5,
+                "line": 3,
+              },
+            ],
+            "message": "Cannot query field \\"id\\" on type \\"BikeStationQueryResponse\\". Did you mean to use an inline fragment on \\"BikeStation\\"?",
           },
-        },
-        "errors": undefined,
+          Object {
+            "extensions": Object {
+              "code": "GRAPHQL_VALIDATION_FAILED",
+            },
+            "locations": Array [
+              Object {
+                "column": 5,
+                "line": 4,
+              },
+            ],
+            "message": "Cannot query field \\"name\\" on type \\"BikeStationQueryResponse\\". Did you mean to use an inline fragment on \\"BikeStation\\"?",
+          },
+        ],
         "extensions": undefined,
         "http": Object {
           "headers": Headers {
-            Symbol(map): Object {
-              "Cache-Control": Array [
-                "max-age=3400, public",
-              ],
-            },
+            Symbol(map): Object {},
           },
         },
       }
