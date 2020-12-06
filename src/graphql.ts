@@ -17,15 +17,17 @@ const exampleQuery = `# Welcome to the Barcelona urban mobility GraphQL API
   station: bikeStation(
     findBy: { closest: { latitude: 41.402451, longitude: 2.1880918 } }
   ) {
-    name
-    location {
-      longitude
-      latitude
-    }
-    available {
-      bikes {
-        electrical
-        mechanical
+    ...on BikeStation {
+      name
+      location {
+        longitude
+        latitude
+      }
+      available {
+        bikes {
+          electrical
+          mechanical
+        }
       }
     }
   }

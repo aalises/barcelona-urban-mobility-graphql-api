@@ -1,7 +1,7 @@
 # Barcelona Urban Mobility Graphql API
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/a1b85612-974d-4aeb-8350-c78fae6dd9c0/deploy-status)](https://app.netlify.com/sites/barcelona-urban-mobility-graphql-api/deploys)
-[![Coverage Status](https://coveralls.io/repos/github/aalises/barcelona-urban-mobility-graphql-api/badge.svg?branch=aalises/add-coverage)](https://coveralls.io/github/aalises/barcelona-urban-mobility-graphql-api?branch=aalises/add-coverage)
+[![Coverage Status](https://coveralls.io/repos/github/aalises/barcelona-urban-mobility-graphql-api/badge.svg?branch=main)](https://coveralls.io/github/aalises/barcelona-urban-mobility-graphql-api?branch=main)
 
 GraphQL API built using Apollo Server + Typescript that integrates information about the urban mobility services of the city of Barcelona.
 
