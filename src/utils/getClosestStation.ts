@@ -1,8 +1,5 @@
 import getDistance from "geolib/es/getDistance";
-import type {
-  BikeStation as BikeStationType,
-  CoordinatesInput,
-} from "../../types";
+import type { BikeStationType, CoordinatesInputType } from "../../types";
 
 import type { MetroStationAPIType } from "../datasources/MetroDataSource";
 
@@ -13,7 +10,7 @@ interface StationDistanceInfoInterface<T> {
 
 export const getClosestBikeStation = (
   stations: BikeStationType[],
-  closest: CoordinatesInput
+  closest: CoordinatesInputType
 ): BikeStationType => {
   const initValue: StationDistanceInfoInterface<BikeStationType> = {
     station: stations[0],
@@ -49,7 +46,7 @@ export const getClosestBikeStation = (
 
 export const getClosestMetroStation = (
   stations: ReadonlyArray<MetroStationAPIType>,
-  closest: CoordinatesInput
+  closest: CoordinatesInputType
 ): MetroStationAPIType => {
   const initValue: StationDistanceInfoInterface<MetroStationAPIType> = {
     station: stations[0],

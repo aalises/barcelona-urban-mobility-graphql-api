@@ -8,10 +8,10 @@ type RootQuery {
   metroStations(after: String, first: Int, before: String, last: Int, filterBy: FilterByInputMetro): MetroStationConnection
 
   """Returns the information about a metro station"""
-  metroStation(findBy: FindByInput!): MetroStation
+  metroStation(findBy: FindByInput!): MetroStationQueryResponse
 
   """Returns the information about a metro line"""
-  metroLine(findBy: FindByInput!): MetroLine
+  metroLine(findBy: FindByInput!): MetroLineQueryResponse
 
   """Information about the metro lines of the city of Barcelona"""
   metroLines(after: String, first: Int, before: String, last: Int): MetroLineConnection
@@ -22,7 +22,7 @@ type RootQuery {
   bikeStations(after: String, first: Int, before: String, last: Int, filterBy: FilterByInputBike): BikeStationConnection
 
   """Returns the information about a bike station"""
-  bikeStation(findBy: FindByInput!): BikeStation
+  bikeStation(findBy: FindByInput!): BikeStationQueryResponse
 }
 
 """A connection to a list of items."""
@@ -88,6 +88,18 @@ input FilterByInputMetro {
   lineName: String
 }
 
+union MetroStationQueryResponse = MetroStation | NotFoundError
+
+type NotFoundError {
+  """Search params that resulted in a not found error"""
+  params: JSON
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
 """
 Input for the FindBy argument of the queries, which allows finding an entity by some parameters (e.g. name or id)
 """
@@ -105,6 +117,8 @@ input CoordinatesInput {
   longitude: Float
   altitude: Float
 }
+
+union MetroLineQueryResponse = MetroLine | NotFoundError
 
 """Metro line information"""
 type MetroLine {
@@ -227,3 +241,5 @@ input OnlyFilterByInputBike {
   isInService: Boolean
   hasAvailableDocks: Boolean
 }
+
+union BikeStationQueryResponse = BikeStation | NotFoundError

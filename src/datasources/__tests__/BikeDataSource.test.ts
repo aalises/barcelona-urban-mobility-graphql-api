@@ -4,7 +4,6 @@ import {
   mockBikeStationsStatusAPIResponse,
   mockBikeStationsResponse,
 } from "../__fixtures__/BikeStationsFixtures";
-import { ApolloError } from "apollo-server-lambda";
 
 const BikeDataSource = new DataSource();
 
@@ -39,9 +38,19 @@ describe("BikeDataSource", () => {
   describe("[getStation]", () => {
     it("Throws a Not Found Error if the response does not contain stations", async () => {
       mockGet.mockReturnValueOnce([]).mockReturnValueOnce([]);
-      const res = await BikeDataSource.getStation({ id: 32 });
+      const res = await BikeDataSource.getStation({
+        id: 32,
+        name: null,
+        closest: null,
+      });
 
-      expect(res).toBeInstanceOf(ApolloError);
+      expect(res).toEqual({
+        params: {
+          id: 32,
+          name: null,
+          closest: null,
+        },
+      });
     });
 
     it("Gets a station by id", async () => {
@@ -49,7 +58,11 @@ describe("BikeDataSource", () => {
         .mockReturnValueOnce(mockBikeStationsInfoAPIResponse)
         .mockReturnValueOnce(mockBikeStationsStatusAPIResponse);
 
-      const res = await BikeDataSource.getStation({ id: 1 });
+      const res = await BikeDataSource.getStation({
+        id: 1,
+        name: null,
+        closest: null,
+      });
 
       expect(res).toEqual(mockBikeStationsResponse[0]);
     });
@@ -60,6 +73,8 @@ describe("BikeDataSource", () => {
         .mockReturnValueOnce(mockBikeStationsStatusAPIResponse);
 
       const res = await BikeDataSource.getStation({
+        id: null,
+        closest: null,
         name: "C/ ROGER DE FLOR, 126",
       });
 
@@ -72,6 +87,8 @@ describe("BikeDataSource", () => {
         .mockReturnValueOnce(mockBikeStationsStatusAPIResponse);
 
       const res = await BikeDataSource.getStation({
+        id: null,
+        name: null,
         closest: mockBikeStationsResponse[2].location,
       });
 

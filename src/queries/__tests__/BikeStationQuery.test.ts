@@ -10,8 +10,13 @@ import {
 const GET_BIKE_STATION = gql`
   query getBikeStation($findBy: FindByInput!) {
     bikeStation(findBy: $findBy) {
-      id
-      name
+      ... on BikeStation {
+        id
+        name
+      }
+      ... on NotFoundError {
+        params
+      }
     }
   }
 `;
@@ -20,7 +25,7 @@ describe("bikeStation Query", () => {
   const { server, bike } = createTestServer();
   const { query } = createTestClient(server);
 
-  it("Gets a given metro station", async () => {
+  it("Gets a given bike station", async () => {
     (bike as any).get = jest
       .fn()
       .mockReturnValueOnce(mockBikeStationsInfoAPIResponse)
@@ -31,23 +36,21 @@ describe("bikeStation Query", () => {
       variables: { findBy: { id: 2 } },
     });
 
-    expect(res).toMatchInlineSnapshot(`
-      Object {
-        "data": Object {
-          "bikeStation": Object {
-            "id": "2",
-            "name": "C/ ROGER DE FLOR, 126",
-          },
-        },
-        "errors": undefined,
-        "extensions": undefined,
-        "http": Object {
-          "headers": Headers {
-            Symbol(map): Object {},
-          },
-        },
-      }
-    `);
+    expect(res?.data?.bikeStation?.id).toBe("2");
+  });
+
+  it("Returns a NotFoundError if the station was not found", async () => {
+    (bike as any).get = jest
+      .fn()
+      .mockReturnValueOnce(null)
+      .mockReturnValueOnce(null);
+
+    const res = await query({
+      query: GET_BIKE_STATION,
+      variables: { findBy: { id: 32 } },
+    });
+
+    expect(res?.data?.bikeStation?.params?.id).toBe(32);
   });
   it("Throws a validation error if the ID and name are falsy", async () => {
     const res = await query({

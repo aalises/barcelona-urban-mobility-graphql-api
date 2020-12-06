@@ -7,8 +7,13 @@ import { mockMetroStationsAPIResponse } from "../../datasources/__fixtures__/Met
 const GET_METRO_STATION = gql`
   query getMetroStations($findBy: FindByInput!) {
     metroStation(findBy: $findBy) {
-      id
-      name
+      ... on MetroStation {
+        id
+        name
+      }
+      ... on NotFoundError {
+        params
+      }
     }
   }
 `;
@@ -17,35 +22,31 @@ describe("MetroStation Query", () => {
   const { server, metro } = createTestServer();
   const { query } = createTestClient(server);
 
-  metro.get = jest.fn().mockReturnValue({
-    ...mockMetroStationsAPIResponse,
-    features: [mockMetroStationsAPIResponse.features[0]],
-  });
-
   it("Gets a given metro station", async () => {
+    metro.get = jest.fn().mockReturnValueOnce({
+      ...mockMetroStationsAPIResponse,
+      features: [mockMetroStationsAPIResponse.features[0]],
+    });
+
     const res = await query({
       query: GET_METRO_STATION,
       variables: { findBy: { id: 32 } },
     });
 
-    expect(res).toMatchInlineSnapshot(`
-      Object {
-        "data": Object {
-          "metroStation": Object {
-            "id": "6660935",
-            "name": "La Salut",
-          },
-        },
-        "errors": undefined,
-        "extensions": undefined,
-        "http": Object {
-          "headers": Headers {
-            Symbol(map): Object {},
-          },
-        },
-      }
-    `);
+    expect(res?.data?.metroStation?.name).toEqual("La Salut");
   });
+
+  it("Returns a NotFoundError if there were no stations found", async () => {
+    metro.get = jest.fn().mockReturnValueOnce({ features: [] });
+
+    const res = await query({
+      query: GET_METRO_STATION,
+      variables: { findBy: { id: 32 } },
+    });
+
+    expect(res?.data?.metroStation?.params?.id).toBe(32);
+  });
+
   it("Throws a validation error if the ID and name are falsy", async () => {
     const res = await query({
       query: GET_METRO_STATION,

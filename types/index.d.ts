@@ -1,266 +1,281 @@
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 /** All built-in and custom scalars, mapped to their actual values */
-export type Scalars = {
+export interface Scalars {
   ID: string;
   String: string;
   Boolean: boolean;
   Int: number;
   Float: number;
-};
+  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSON: any;
+}
 
 /** Root Query */
-export type RootQuery = {
+export interface RootQueryType {
   __typename?: 'RootQuery';
   /** Information about the metro stations of the city of Barcelona */
-  metroStations?: Maybe<MetroStationConnection>;
+  metroStations: Maybe<MetroStationConnectionType>;
   /** Returns the information about a metro station */
-  metroStation?: Maybe<MetroStation>;
+  metroStation: Maybe<MetroStationQueryResponseType>;
   /** Returns the information about a metro line */
-  metroLine?: Maybe<MetroLine>;
+  metroLine: Maybe<MetroLineQueryResponseType>;
   /** Information about the metro lines of the city of Barcelona */
-  metroLines?: Maybe<MetroLineConnection>;
+  metroLines: Maybe<MetroLineConnectionType>;
   /** Information about the public bike stations (SMOU) of the city of Barcelona */
-  bikeStations?: Maybe<BikeStationConnection>;
+  bikeStations: Maybe<BikeStationConnectionType>;
   /** Returns the information about a bike station */
-  bikeStation?: Maybe<BikeStation>;
-};
+  bikeStation: Maybe<BikeStationQueryResponseType>;
+}
 
 
 /** Root Query */
-export type RootQueryMetroStationsArgs = {
-  after?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['String']>;
-  last?: Maybe<Scalars['Int']>;
-  filterBy?: Maybe<FilterByInputMetro>;
-};
+export interface RootQueryMetroStationsArgsType {
+  after: Maybe<Scalars['String']>;
+  first: Maybe<Scalars['Int']>;
+  before: Maybe<Scalars['String']>;
+  last: Maybe<Scalars['Int']>;
+  filterBy: Maybe<FilterByInputMetroType>;
+}
 
 
 /** Root Query */
-export type RootQueryMetroStationArgs = {
-  findBy: FindByInput;
-};
+export interface RootQueryMetroStationArgsType {
+  findBy: FindByInputType;
+}
 
 
 /** Root Query */
-export type RootQueryMetroLineArgs = {
-  findBy: FindByInput;
-};
+export interface RootQueryMetroLineArgsType {
+  findBy: FindByInputType;
+}
 
 
 /** Root Query */
-export type RootQueryMetroLinesArgs = {
-  after?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['String']>;
-  last?: Maybe<Scalars['Int']>;
-};
+export interface RootQueryMetroLinesArgsType {
+  after: Maybe<Scalars['String']>;
+  first: Maybe<Scalars['Int']>;
+  before: Maybe<Scalars['String']>;
+  last: Maybe<Scalars['Int']>;
+}
 
 
 /** Root Query */
-export type RootQueryBikeStationsArgs = {
-  after?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['String']>;
-  last?: Maybe<Scalars['Int']>;
-  filterBy?: Maybe<FilterByInputBike>;
-};
+export interface RootQueryBikeStationsArgsType {
+  after: Maybe<Scalars['String']>;
+  first: Maybe<Scalars['Int']>;
+  before: Maybe<Scalars['String']>;
+  last: Maybe<Scalars['Int']>;
+  filterBy: Maybe<FilterByInputBikeType>;
+}
 
 
 /** Root Query */
-export type RootQueryBikeStationArgs = {
-  findBy: FindByInput;
-};
+export interface RootQueryBikeStationArgsType {
+  findBy: FindByInputType;
+}
 
 /** A connection to a list of items. */
-export type MetroStationConnection = {
+export interface MetroStationConnectionType {
   __typename?: 'MetroStationConnection';
   /** Information to aid in pagination. */
-  pageInfo: PageInfo;
+  pageInfo: PageInfoType;
   /** A list of edges. */
-  edges?: Maybe<Array<Maybe<MetroStationEdge>>>;
-};
+  edges: Maybe<Array<Maybe<MetroStationEdgeType>>>;
+}
 
 /** Information about pagination in a connection. */
-export type PageInfo = {
+export interface PageInfoType {
   __typename?: 'PageInfo';
   /** When paginating forwards, are there more items? */
   hasNextPage: Scalars['Boolean'];
   /** When paginating backwards, are there more items? */
   hasPreviousPage: Scalars['Boolean'];
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor: Maybe<Scalars['String']>;
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
-};
+  endCursor: Maybe<Scalars['String']>;
+}
 
 /** An edge in a connection. */
-export type MetroStationEdge = {
+export interface MetroStationEdgeType {
   __typename?: 'MetroStationEdge';
   /** The item at the end of the edge */
-  node?: Maybe<MetroStation>;
+  node: Maybe<MetroStationType>;
   /** A cursor for use in pagination */
   cursor: Scalars['String'];
-};
+}
 
 /** Metro station information */
-export type MetroStation = {
+export interface MetroStationType {
   __typename?: 'MetroStation';
   /** Unique ID of the station */
-  id?: Maybe<Scalars['ID']>;
+  id: Maybe<Scalars['ID']>;
   /** Name of the station */
-  name?: Maybe<Scalars['String']>;
+  name: Maybe<Scalars['String']>;
   /** Location coordinates of the station */
-  location?: Maybe<CoordinatesOutput>;
+  location: Maybe<CoordinatesOutputType>;
   /** Lines the station belongs to e.g. L1, L2 */
-  lines?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
+  lines: Maybe<Array<Maybe<Scalars['String']>>>;
+}
 
 /** Coordinates (Latitude, Longitude, Altitude), of a given station/stop */
-export type CoordinatesOutput = {
+export interface CoordinatesOutputType {
   __typename?: 'CoordinatesOutput';
-  latitude?: Maybe<Scalars['Float']>;
-  longitude?: Maybe<Scalars['Float']>;
-  altitude?: Maybe<Scalars['Float']>;
-};
+  latitude: Maybe<Scalars['Float']>;
+  longitude: Maybe<Scalars['Float']>;
+  altitude: Maybe<Scalars['Float']>;
+}
 
 /** Input for the filterBy argument of the metro queries, which allows filtering a connection by some parameters (e.g. lineName or lineId) */
-export type FilterByInputMetro = {
-  lineId?: Maybe<Scalars['Int']>;
-  lineName?: Maybe<Scalars['String']>;
-};
+export interface FilterByInputMetroType {
+  lineId: Maybe<Scalars['Int']>;
+  lineName: Maybe<Scalars['String']>;
+}
+
+export type MetroStationQueryResponseType = MetroStationType | NotFoundErrorType;
+
+export interface NotFoundErrorType {
+  __typename?: 'NotFoundError';
+  /** Search params that resulted in a not found error */
+  params: Maybe<Scalars['JSON']>;
+}
+
 
 /** Input for the FindBy argument of the queries, which allows finding an entity by some parameters (e.g. name or id) */
-export type FindByInput = {
-  id?: Maybe<Scalars['Int']>;
-  name?: Maybe<Scalars['String']>;
+export interface FindByInputType {
+  id: Maybe<Scalars['Int']>;
+  name: Maybe<Scalars['String']>;
   /** Finds the closest station given some coordinates */
-  closest?: Maybe<CoordinatesInput>;
-};
+  closest: Maybe<CoordinatesInputType>;
+}
 
 /** Coordinates (Latitude, Longitude, Altitude), of a given station/stop */
-export type CoordinatesInput = {
-  latitude?: Maybe<Scalars['Float']>;
-  longitude?: Maybe<Scalars['Float']>;
-  altitude?: Maybe<Scalars['Float']>;
-};
+export interface CoordinatesInputType {
+  latitude: Maybe<Scalars['Float']>;
+  longitude: Maybe<Scalars['Float']>;
+  altitude: Maybe<Scalars['Float']>;
+}
+
+export type MetroLineQueryResponseType = MetroLineType | NotFoundErrorType;
 
 /** Metro line information */
-export type MetroLine = {
+export interface MetroLineType {
   __typename?: 'MetroLine';
   /** Numeric Code of the line */
-  id?: Maybe<Scalars['Int']>;
+  id: Maybe<Scalars['Int']>;
   /** Name of the line */
-  name?: Maybe<Scalars['String']>;
+  name: Maybe<Scalars['String']>;
   /** Origin station of the line */
-  originStation?: Maybe<MetroStation>;
+  originStation: Maybe<MetroStationType>;
   /** Ending station of the line */
-  endingStation?: Maybe<MetroStation>;
+  endingStation: Maybe<MetroStationType>;
   /** Stations of the line */
-  stations?: Maybe<MetroStationConnection>;
+  stations: Maybe<MetroStationConnectionType>;
   /** Color of the line represented as a Hexadecimal string */
-  color?: Maybe<Scalars['String']>;
-};
+  color: Maybe<Scalars['String']>;
+}
 
 
 /** Metro line information */
-export type MetroLineStationsArgs = {
-  after?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['String']>;
-  last?: Maybe<Scalars['Int']>;
-};
+export interface MetroLineStationsArgsType {
+  after: Maybe<Scalars['String']>;
+  first: Maybe<Scalars['Int']>;
+  before: Maybe<Scalars['String']>;
+  last: Maybe<Scalars['Int']>;
+}
 
 /** A connection to a list of items. */
-export type MetroLineConnection = {
+export interface MetroLineConnectionType {
   __typename?: 'MetroLineConnection';
   /** Information to aid in pagination. */
-  pageInfo: PageInfo;
+  pageInfo: PageInfoType;
   /** A list of edges. */
-  edges?: Maybe<Array<Maybe<MetroLineEdge>>>;
-};
+  edges: Maybe<Array<Maybe<MetroLineEdgeType>>>;
+}
 
 /** An edge in a connection. */
-export type MetroLineEdge = {
+export interface MetroLineEdgeType {
   __typename?: 'MetroLineEdge';
   /** The item at the end of the edge */
-  node?: Maybe<MetroLine>;
+  node: Maybe<MetroLineType>;
   /** A cursor for use in pagination */
   cursor: Scalars['String'];
-};
+}
 
 /** A connection to a list of items. */
-export type BikeStationConnection = {
+export interface BikeStationConnectionType {
   __typename?: 'BikeStationConnection';
   /** Information to aid in pagination. */
-  pageInfo: PageInfo;
+  pageInfo: PageInfoType;
   /** A list of edges. */
-  edges?: Maybe<Array<Maybe<BikeStationEdge>>>;
-};
+  edges: Maybe<Array<Maybe<BikeStationEdgeType>>>;
+}
 
 /** An edge in a connection. */
-export type BikeStationEdge = {
+export interface BikeStationEdgeType {
   __typename?: 'BikeStationEdge';
   /** The item at the end of the edge */
-  node?: Maybe<BikeStation>;
+  node: Maybe<BikeStationType>;
   /** A cursor for use in pagination */
   cursor: Scalars['String'];
-};
+}
 
 /** Bike station information */
-export type BikeStation = {
+export interface BikeStationType {
   __typename?: 'BikeStation';
   /** Unique ID of the station */
-  id?: Maybe<Scalars['ID']>;
+  id: Maybe<Scalars['ID']>;
   /** Status of the station e.g. IN_SERVICE */
-  status?: Maybe<BikeStationStatus>;
+  status: Maybe<BikeStationStatusType>;
   /** Last updated information timestamp (in ms since epoch) */
-  lastUpdated?: Maybe<Scalars['Int']>;
+  lastUpdated: Maybe<Scalars['Int']>;
   /** Name of the station */
-  name?: Maybe<Scalars['String']>;
+  name: Maybe<Scalars['String']>;
   /** Total number of bikes the station has */
-  capacity?: Maybe<Scalars['Int']>;
+  capacity: Maybe<Scalars['Int']>;
   /** Location coordinates of the station */
-  location?: Maybe<CoordinatesOutput>;
+  location: Maybe<CoordinatesOutputType>;
   /** Information about the available bikes and docks of the station */
-  available?: Maybe<BikeStationAvailabilityInfo>;
-};
+  available: Maybe<BikeStationAvailabilityInfoType>;
+}
 
-export enum BikeStationStatus {
-  InService = 'IN_SERVICE',
-  Maintenance = 'MAINTENANCE',
-  Closed = 'CLOSED'
+export enum BikeStationStatusType {
+  InServiceType = 'IN_SERVICE',
+  MaintenanceType = 'MAINTENANCE',
+  ClosedType = 'CLOSED'
 }
 
 /** Information about the available bikes and docks of the station */
-export type BikeStationAvailabilityInfo = {
+export interface BikeStationAvailabilityInfoType {
   __typename?: 'BikeStationAvailabilityInfo';
   /** Number of available bikes in the station by type */
-  bikes?: Maybe<BikeAvailabilityInfo>;
+  bikes: Maybe<BikeAvailabilityInfoType>;
   /** Number of available docks in the station */
-  docks?: Maybe<Scalars['Int']>;
-};
+  docks: Maybe<Scalars['Int']>;
+}
 
 /** Information of the bike availability of a station by type */
-export type BikeAvailabilityInfo = {
+export interface BikeAvailabilityInfoType {
   __typename?: 'BikeAvailabilityInfo';
   /** Number of available electrical bikes in the station */
-  electrical?: Maybe<Scalars['Int']>;
+  electrical: Maybe<Scalars['Int']>;
   /** Number of available mechanical bikes in the station */
-  mechanical?: Maybe<Scalars['Int']>;
+  mechanical: Maybe<Scalars['Int']>;
   /** Total number of available bikes in the station */
-  total?: Maybe<Scalars['Int']>;
-};
+  total: Maybe<Scalars['Int']>;
+}
 
 /** Input for the filterBy argument of the bikes queries, which allows filtering a connection by some parameters (e.g. only with available bikes) */
-export type FilterByInputBike = {
-  only?: Maybe<OnlyFilterByInputBike>;
-};
+export interface FilterByInputBikeType {
+  only: Maybe<OnlyFilterByInputBikeType>;
+}
 
-export type OnlyFilterByInputBike = {
-  hasAvailableBikes?: Maybe<Scalars['Boolean']>;
-  hasAvailableElectricalBikes?: Maybe<Scalars['Boolean']>;
-  isInService?: Maybe<Scalars['Boolean']>;
-  hasAvailableDocks?: Maybe<Scalars['Boolean']>;
-};
+export interface OnlyFilterByInputBikeType {
+  hasAvailableBikes: Maybe<Scalars['Boolean']>;
+  hasAvailableElectricalBikes: Maybe<Scalars['Boolean']>;
+  isInService: Maybe<Scalars['Boolean']>;
+  hasAvailableDocks: Maybe<Scalars['Boolean']>;
+}
+
+export type BikeStationQueryResponseType = BikeStationType | NotFoundErrorType;
