@@ -3,6 +3,9 @@ generates:
   ./types/index.d.ts:
     plugins:
       - typescript
+    config:
+      declarationKind: 'interface'
+      avoidOptionals: true
   ./schema.graphql:
     plugins:
       - schema-ast
