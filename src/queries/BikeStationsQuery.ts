@@ -1,9 +1,9 @@
 import { connectionArgs, connectionFromArray } from "graphql-relay";
 import type {
-  FilterByInputBike as FilterByInputBikeType,
-  BikeStation as BikeStationType,
-  BikeStationConnection as BikeStationConnectionType,
-  OnlyFilterByInputBike,
+  FilterByInputBikeType,
+  BikeStationType,
+  BikeStationConnectionType,
+  OnlyFilterByInputBikeType,
 } from "../../types";
 import { BikeStationConnection } from "../outputs/BikeStation";
 import { FilterByInputBike } from "../inputs/FilterByInput";
@@ -18,7 +18,10 @@ const filterBikeStations = (
 
   const { only } = filterBy;
 
-  const filteringConditions: Record<keyof OnlyFilterByInputBike, boolean> = {
+  const filteringConditions: Record<
+    keyof OnlyFilterByInputBikeType,
+    boolean
+  > = {
     hasAvailableBikes: Number(station?.available?.bikes?.total ?? null) > 0,
     hasAvailableDocks: Number(station?.available?.docks ?? null) > 0,
     hasAvailableElectricalBikes:

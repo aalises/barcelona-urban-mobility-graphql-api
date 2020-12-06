@@ -1,5 +1,4 @@
 import DataSource from "../MetroDataSource";
-import { ApolloError } from "apollo-server-lambda";
 import {
   mockMetroStationsAPIResponse,
   mockMetroStationsResponse,
@@ -30,27 +29,42 @@ describe("MetroDataSource", () => {
     });
   });
   describe("[getLine]", () => {
-    it("Throws a Not Found Error if the response does not contain features", async () => {
+    it("Returns a Not Found Error if the response does not contain features", async () => {
       mockGet.mockReturnValueOnce({ features: [] });
-      const res = await MetroDataSource.getLine({ id: 32 });
-
-      expect(res).toBeInstanceOf(ApolloError);
-    });
-
-    it("Throws an Error if the features are null or undefined", async () => {
-      mockGet.mockReturnValueOnce({ features: null });
       const res = await MetroDataSource.getLine({
-        name: "L4",
+        id: 32,
+        name: null,
+        closest: null,
       });
 
-      expect(res).toBeInstanceOf(ApolloError);
+      expect(res).toEqual({
+        params: {
+          id: 32,
+          name: null,
+        },
+      });
+    });
+
+    it("Returns a Not Found Error if the features are null or undefined", async () => {
+      mockGet.mockReturnValueOnce({ features: null });
+      const res = await MetroDataSource.getLine({
+        id: null,
+        name: "L4",
+        closest: null,
+      });
+
+      expect(res).toEqual({ params: { name: "L4", id: null } });
     });
 
     it("Gets a line by ID", async () => {
       mockGet.mockReturnValueOnce({
         features: [mockMetroLinesAPIResponse.features[0]],
       });
-      const res = await MetroDataSource.getLine({ id: 32 });
+      const res = await MetroDataSource.getLine({
+        id: 32,
+        name: null,
+        closest: null,
+      });
 
       expect(res).toEqual(mockMetroLinesResponse[0]);
       expect(mockGet.mock.calls[0][0]).toBe("linies/metro/32");
@@ -61,6 +75,8 @@ describe("MetroDataSource", () => {
         features: [mockMetroLinesAPIResponse.features[0]],
       });
       const res = await MetroDataSource.getLine({
+        id: null,
+        closest: null,
         name: "L4",
       });
 
@@ -95,27 +111,45 @@ describe("MetroDataSource", () => {
   });
 
   describe("[getStation]", () => {
-    it("Throws a Not Found Error if the response does not contain features", async () => {
+    it("Returns a Not Found Error if the response does not contain features", async () => {
       mockGet.mockReturnValueOnce({ features: [] });
-      const res = await MetroDataSource.getStation({ id: 32 });
+      const res = await MetroDataSource.getStation({
+        id: 32,
+        name: null,
+        closest: null,
+      });
 
-      expect(res).toBeInstanceOf(ApolloError);
+      expect(res).toEqual({
+        params: {
+          id: 32,
+          name: null,
+          closest: null,
+        },
+      });
     });
 
-    it("Throws an Error if the features are null or undefined", async () => {
+    it("Returns an Not Found Error if the features are null or undefined", async () => {
       mockGet.mockReturnValueOnce({ features: null });
       const res = await MetroDataSource.getStation({
+        closest: null,
+        id: null,
         name: "Urwhatawave",
       });
 
-      expect(res).toBeInstanceOf(ApolloError);
+      expect(res).toEqual({
+        params: { name: "Urwhatawave", closest: null, id: null },
+      });
     });
 
     it("Gets a station by ID", async () => {
       mockGet.mockReturnValueOnce({
         features: [mockMetroStationsAPIResponse.features[0]],
       });
-      const res = await MetroDataSource.getStation({ id: 32 });
+      const res = await MetroDataSource.getStation({
+        id: 32,
+        name: null,
+        closest: null,
+      });
 
       expect(res).toEqual(mockMetroStationsResponse[0]);
       expect(mockGet.mock.calls[0][0]).toBe("estacions/32");
@@ -126,6 +160,8 @@ describe("MetroDataSource", () => {
         features: [mockMetroStationsAPIResponse.features[0]],
       });
       const res = await MetroDataSource.getStation({
+        id: null,
+        closest: null,
         name: "Urwhatawave",
       });
 
@@ -138,6 +174,8 @@ describe("MetroDataSource", () => {
     it("Gets a station by proximity", async () => {
       mockGet.mockReturnValueOnce(mockMetroStationsAPIResponse);
       const res = await MetroDataSource.getStation({
+        name: null,
+        id: null,
         closest: mockMetroStationsResponse[1].location,
       });
 

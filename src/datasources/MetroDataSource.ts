@@ -1,11 +1,12 @@
 import TmbApiDataSource from "./TmbApiDataSource";
 import type {
-  FindByInput,
-  MetroStation as MetroStationType,
-  MetroLine as MetroLineType,
-  CoordinatesInput as CoordinatesType,
+  FindByInputType,
+  MetroStationType,
+  MetroStationQueryResponseType,
+  MetroLineType,
+  MetroLineQueryResponseType,
+  CoordinatesInputType,
 } from "../../types";
-import { ApolloError } from "apollo-server-lambda";
 import { getClosestMetroStation } from "../utils/getClosestStation";
 
 export interface MetroLineAPIType {
@@ -99,6 +100,7 @@ export default class MetroDataSource extends TmbApiDataSource {
       location: {
         longitude: data.geometry.coordinates[0],
         latitude: data.geometry.coordinates[1],
+        altitude: null,
       },
       lines: this.parseLines(data.properties["PICTO"]),
     };
@@ -108,7 +110,7 @@ export default class MetroDataSource extends TmbApiDataSource {
     id,
     name,
     closest,
-  }: FindByInput): Promise<MetroStationType | null> {
+  }: FindByInputType): Promise<MetroStationQueryResponseType | null> {
     const path = ["estacions", id].filter(Boolean).join("/");
     const nameFilterParameter = name ? { filter: `NOM_ESTACIO='${name}'` } : {};
 
@@ -118,13 +120,13 @@ export default class MetroDataSource extends TmbApiDataSource {
     );
 
     if (Array.isArray(response?.features) && response?.features.length === 0) {
-      return new ApolloError(
-        `No stations were found with these parameters: ${JSON.stringify({
+      return {
+        params: {
           id,
           name,
           closest,
-        })}`
-      );
+        },
+      };
     }
 
     //If returning more than one occurrence and closest exists, try to get the closest station
@@ -133,12 +135,18 @@ export default class MetroDataSource extends TmbApiDataSource {
     const station: MetroStationAPIType | null = getClosest
       ? getClosestMetroStation(
           response?.features as MetroStationAPIType[],
-          closest as CoordinatesType
+          closest as CoordinatesInputType
         )
       : response?.features?.[0] ?? null;
 
     if (station == null) {
-      return new ApolloError("The station object returned did not exist");
+      return {
+        params: {
+          id,
+          name,
+          closest,
+        },
+      };
     }
 
     return this.metroStationReducer(station);
@@ -169,7 +177,7 @@ export default class MetroDataSource extends TmbApiDataSource {
   async getLineStations({
     id,
     name,
-  }: FindByInput): Promise<MetroStationType[]> {
+  }: FindByInputType): Promise<MetroStationType[]> {
     const path = ["linies/metro", id, "estacions"].filter(Boolean).join("/");
     const nameFilterParameter = name ? { filter: `NOM_LINIA='${name}'` } : {};
 
@@ -182,19 +190,22 @@ export default class MetroDataSource extends TmbApiDataSource {
     return stations;
   }
 
-  async getLine({ id, name }: FindByInput): Promise<MetroLineType | null> {
+  async getLine({
+    id,
+    name,
+  }: FindByInputType): Promise<MetroLineQueryResponseType | null> {
     const path = ["linies/metro", id].filter(Boolean).join("/");
     const nameFilterParameter = name ? { filter: `NOM_LINIA='${name}'` } : {};
 
     const response = await this.get(path, nameFilterParameter);
 
     if (Array.isArray(response?.features) && response?.features.length === 0) {
-      return new ApolloError(
-        `No metro lines were found with these parameters: ${JSON.stringify({
+      return {
+        params: {
           id,
           name,
-        })}`
-      );
+        },
+      };
     }
 
     const line: MetroLineType | null = response?.features?.[0]
@@ -202,10 +213,15 @@ export default class MetroDataSource extends TmbApiDataSource {
       : null;
 
     if (line == null) {
-      return new ApolloError("The line object returned did not exist");
+      return {
+        params: {
+          id,
+          name,
+        },
+      };
     }
 
-    const stations = await this.getLineStations({ id, name });
+    const stations = await this.getLineStations({ id, name, closest: null });
 
     return {
       ...line,
@@ -228,6 +244,7 @@ export default class MetroDataSource extends TmbApiDataSource {
         const stations = await this.getLineStations({
           id: reducedLine.id,
           name: reducedLine.name,
+          closest: null,
         });
 
         return {

@@ -1,5 +1,5 @@
 import { connectionArgs, connectionFromArray } from "graphql-relay";
-import type { MetroStationConnection as MetroStationConnectionType } from "../../types";
+import type { MetroStationConnectionType } from "../../types";
 import { FilterByInputMetro } from "../inputs/FilterByInput";
 import { MetroStationConnection } from "../outputs/MetroStation";
 

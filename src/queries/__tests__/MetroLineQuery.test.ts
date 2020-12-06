@@ -10,16 +10,21 @@ import {
 const GET_METRO_LINE = gql`
   query getMetroLines($findBy: FindByInput!) {
     metroLine(findBy: $findBy) {
-      stations {
-        edges {
-          node {
-            id
-            name
+      ... on MetroLine {
+        stations {
+          edges {
+            node {
+              id
+              name
+            }
           }
         }
+        id
+        name
       }
-      id
-      name
+      ... on NotFoundError {
+        params
+      }
     }
   }
 `;
@@ -28,12 +33,12 @@ describe("MetroStation Query", () => {
   const { server, metro } = createTestServer();
   const { query } = createTestClient(server);
 
-  metro.get = jest.fn().mockReturnValue({
-    ...mockMetroLinesAPIResponse,
-    features: [mockMetroLinesAPIResponse.features[0]],
-  });
-
   it("Gets a given metro line", async () => {
+    metro.get = jest.fn().mockReturnValueOnce({
+      ...mockMetroLinesAPIResponse,
+      features: [mockMetroLinesAPIResponse.features[0]],
+    });
+
     metro.getLineStations = jest
       .fn()
       .mockReturnValueOnce(mockMetroLinesResponse[0].stations);
@@ -43,42 +48,25 @@ describe("MetroStation Query", () => {
       variables: { findBy: { id: 32 } },
     });
 
-    expect(res).toMatchInlineSnapshot(`
-      Object {
-        "data": Object {
-          "metroLine": Object {
-            "id": 1,
-            "name": "L1",
-            "stations": Object {
-              "edges": Array [
-                Object {
-                  "node": Object {
-                    "id": "6660935",
-                    "name": "Hospital de Bellvitge",
-                  },
-                },
-                Object {
-                  "node": Object {
-                    "id": "6660525",
-                    "name": "Fondo",
-                  },
-                },
-              ],
-            },
-          },
-        },
-        "errors": undefined,
-        "extensions": undefined,
-        "http": Object {
-          "headers": Headers {
-            Symbol(map): Object {},
-          },
-        },
-      }
-    `);
+    expect(res?.data?.metroLine?.id).toBe(1);
+  });
+
+  it("Returns a NotFoundError if the line was not found", async () => {
+    metro.get = jest.fn().mockReturnValueOnce({ features: [] });
+
+    const res = await query({
+      query: GET_METRO_LINE,
+      variables: { findBy: { id: 32 } },
+    });
+
+    expect(res?.data?.metroLine?.params?.id).toBe(32);
   });
 
   it("Gets a metro line with no stations", async () => {
+    metro.get = jest.fn().mockReturnValueOnce({
+      ...mockMetroLinesAPIResponse,
+      features: [mockMetroLinesAPIResponse.features[0]],
+    });
     metro.getLineStations = jest.fn().mockReturnValueOnce(undefined);
 
     const res = await query({
