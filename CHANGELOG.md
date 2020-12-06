@@ -1,4 +1,4 @@
-## [0.3.1](https://github.com/aalises/barcelona-urban-mobility-graphql-api/compare/v0.2.1...v0.3.1) (2020-11-15)
+## [0.3.2](https://github.com/aalises/barcelona-urban-mobility-graphql-api/compare/v0.2.1...v0.3.2) (2020-12-06)
 
 
 ### Bug Fixes
@@ -10,8 +10,11 @@
 
 * **caching:** add caching hints to the fields ([1ab9d03](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/1ab9d030d0e89b2218557f599bfda7742b6bb838))
 * **changelog:** add command in package for generating the changelog ([09e2e91](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/09e2e9137750be59f8fc2e618d531c2814f60b40))
+* **codegen:** use interfaces for generated types ([ccbe871](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/ccbe871c6168bc2cb8c1f1d4e9e25d1ba7babf6a))
 * **coverage:** add test coverage information ([a853dc4](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/a853dc448c91f0fccd2692790653ab9c66b1ad04))
+* **errors:** add NotFoundError as a return type on queries ([32cbeaa](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/32cbeaa039fa93b215fd1ebcbb89913367154c97))
 * **findby:** add findBy closest station input parameter ([e82dbec](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/e82dbec2f3332c2789c8ba103345becb8cbf94d9))
+* **playground:** add example query to the playground ([9471c3d](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/9471c3dc4e80814e59f72ce32bd74edd1cffca5d))
 * **queries:** add bikeStation query ([5ac22ad](https://github.com/aalises/barcelona-urban-mobility-graphql-api/commit/5ac22ad2fb204d4002078e32c6655ff74300a2f1))
 
 
