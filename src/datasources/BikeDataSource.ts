@@ -66,7 +66,7 @@ export default class BikeDataSource extends RESTDataSource {
       id: String(stationInfoData?.station_id) ?? null,
       name: stationInfoData?.name ?? null,
       capacity: stationInfoData?.capacity ?? null,
-      location: {
+      coordinates: {
         latitude: stationInfoData?.lat ?? null,
         longitude: stationInfoData?.lon ?? null,
         altitude: stationInfoData?.altitude ?? null,

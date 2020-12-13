@@ -1,9 +1,11 @@
 import getDistance from "geolib/es/getDistance";
 import type { BikeStationType, CoordinatesInputType } from "../../types";
 
+import type { BusStopAPIType } from "../datasources/BusDataSource";
 import type { MetroStationAPIType } from "../datasources/MetroDataSource";
 
-interface StationDistanceInfoInterface<T> {
+type StationAPITypes = MetroStationAPIType | BusStopAPIType;
+interface IStationDistanceInfo<T> {
   station: T;
   distance: number | null;
 }
@@ -12,18 +14,18 @@ export const getClosestBikeStation = (
   stations: BikeStationType[],
   closest: CoordinatesInputType
 ): BikeStationType => {
-  const initValue: StationDistanceInfoInterface<BikeStationType> = {
+  const initValue: IStationDistanceInfo<BikeStationType> = {
     station: stations[0],
     distance: null,
   };
 
   return stations.reduce(
     (
-      closestStation: StationDistanceInfoInterface<BikeStationType>,
+      closestStation: IStationDistanceInfo<BikeStationType>,
       station: BikeStationType
-    ): StationDistanceInfoInterface<BikeStationType> => {
+    ): IStationDistanceInfo<BikeStationType> => {
       try {
-        const coordinates = station?.location ?? null;
+        const coordinates = station?.coordinates ?? null;
         if (!coordinates) {
           return closestStation;
         }
@@ -44,27 +46,27 @@ export const getClosestBikeStation = (
   ).station;
 };
 
-export const getClosestMetroStation = (
-  stations: ReadonlyArray<MetroStationAPIType>,
+export const getClosestTmbStation = <T extends StationAPITypes>(
+  stations: ReadonlyArray<T>,
   closest: CoordinatesInputType
-): MetroStationAPIType => {
-  const initValue: StationDistanceInfoInterface<MetroStationAPIType> = {
+): T => {
+  const initValue: IStationDistanceInfo<T> = {
     station: stations[0],
     distance: null,
   };
 
   return stations.reduce(
     (
-      closestStation: StationDistanceInfoInterface<MetroStationAPIType>,
-      station: MetroStationAPIType
-    ): StationDistanceInfoInterface<MetroStationAPIType> => {
+      closestStation: IStationDistanceInfo<T>,
+      station: T
+    ): IStationDistanceInfo<T> => {
       try {
         const coordinates = {
           longitude: station?.geometry.coordinates[0] ?? null,
           latitude: station?.geometry.coordinates[1] ?? null,
         };
 
-        const distance = getDistance(coordinates, closest as any);
+        const distance = getDistance(coordinates as any, closest as any);
         if (
           closestStation.distance === null ||
           distance < Number(closestStation.distance)

@@ -19,7 +19,7 @@ const MetroStation = new GraphQLObjectType({
       description: "Name of the station",
       type: GraphQLString,
     },
-    location: {
+    coordinates: {
       description: "Location coordinates of the station",
       type: CoordinatesOutput,
     },

@@ -1,6 +1,6 @@
 import {
   getClosestBikeStation,
-  getClosestMetroStation,
+  getClosestTmbStation,
 } from "../getClosestStation";
 
 import { mockBikeStationsResponse } from "../../datasources/__fixtures__/BikeStationsFixtures";
@@ -10,7 +10,7 @@ import {
   mockMetroStationsResponse,
 } from "../../datasources/__fixtures__/MetroStationsFixtures";
 
-const nullLocation = {
+const nullcoordinates = {
   latitude: null,
   longitude: null,
 };
@@ -18,29 +18,29 @@ const nullLocation = {
 describe("getClosestStation", () => {
   describe("[getClosestBikeStation]", () => {
     test.each([
-      [mockBikeStationsResponse[0].location, mockBikeStationsResponse[0]],
-      [mockBikeStationsResponse[1].location, mockBikeStationsResponse[1]],
-      [nullLocation, mockBikeStationsResponse[0]],
-    ])("Gets the closest bike station", (location, closestStation) => {
-      expect(getClosestBikeStation(mockBikeStationsResponse, location)).toBe(
+      [mockBikeStationsResponse[0].coordinates, mockBikeStationsResponse[0]],
+      [mockBikeStationsResponse[1].coordinates, mockBikeStationsResponse[1]],
+      [nullcoordinates, mockBikeStationsResponse[0]],
+    ])("Gets the closest bike station", (coordinates, closestStation) => {
+      expect(getClosestBikeStation(mockBikeStationsResponse, coordinates)).toBe(
         closestStation
       );
     });
   });
-  describe("[getClosestMetroStation]", () => {
+  describe("[getClosestTmbStation]", () => {
     test.each([
       [
-        mockMetroStationsResponse[0].location,
+        mockMetroStationsResponse[0].coordinates,
         mockMetroStationsAPIResponse.features[0],
       ],
       [
-        mockMetroStationsResponse[1].location,
+        mockMetroStationsResponse[1].coordinates,
         mockMetroStationsAPIResponse.features[1],
       ],
-      [nullLocation, mockMetroStationsAPIResponse.features[0]],
-    ])("Gets the closest metro station", (location, closestStation) => {
+      [nullcoordinates, mockMetroStationsAPIResponse.features[0]],
+    ])("Gets the closest metro station", (coordinates, closestStation) => {
       expect(
-        getClosestMetroStation(mockMetroStationsAPIResponse.features, location)
+        getClosestTmbStation(mockMetroStationsAPIResponse.features, coordinates)
       ).toBe(closestStation);
     });
   });

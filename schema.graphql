@@ -23,6 +23,9 @@ type RootQuery {
 
   """Returns the information about a bike station"""
   bikeStation(findBy: FindByInput!): BikeStationQueryResponse
+
+  """Returns the information about a bus stop"""
+  busStop(findBy: FindByInput!): BusStopQueryResponse
 }
 
 """A connection to a list of items."""
@@ -67,7 +70,7 @@ type MetroStation {
   name: String
 
   """Location coordinates of the station"""
-  location: CoordinatesOutput
+  coordinates: CoordinatesOutput
 
   """Lines the station belongs to e.g. L1, L2"""
   lines: [String]
@@ -195,7 +198,7 @@ type BikeStation {
   capacity: Int
 
   """Location coordinates of the station"""
-  location: CoordinatesOutput
+  coordinates: CoordinatesOutput
 
   """Information about the available bikes and docks of the station"""
   available: BikeStationAvailabilityInfo
@@ -243,3 +246,26 @@ input OnlyFilterByInputBike {
 }
 
 union BikeStationQueryResponse = BikeStation | NotFoundError
+
+union BusStopQueryResponse = BusStop | NotFoundError
+
+"""Bus stop information"""
+type BusStop {
+  """Unique ID of the stop"""
+  id: ID
+
+  """Name of the stop"""
+  name: String
+
+  """Location of the stop"""
+  location: Location
+}
+
+"""Location of a stop/station"""
+type Location {
+  address: String
+  city: String
+  district: String
+  street: String
+  coordinates: CoordinatesOutput
+}

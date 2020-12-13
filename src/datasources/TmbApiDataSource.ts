@@ -1,6 +1,20 @@
 import { RESTDataSource } from "apollo-datasource-rest";
 import { TMB_API_BASE_URL } from "../config";
 
+export interface ITmbApiFeatureCollection<T> {
+  type: "FeatureCollection";
+  features: ReadonlyArray<T>;
+  totalFeatures: number;
+  numberMatched: number;
+  numberReturned: number;
+  timeStamp: string;
+  crs: {
+    type: "name";
+    properties: {
+      name: string;
+    };
+  };
+}
 export default class TmbApiDataSource extends RESTDataSource {
   constructor() {
     super();
