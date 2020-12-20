@@ -17,6 +17,17 @@ describe("BusDataSource", () => {
     ).toEqual(mockBusStopsResponse[0]);
   });
 
+  describe("[getAllStops]", () => {
+    it("Looks up the stops from the API", async () => {
+      mockGet.mockReturnValueOnce(mockBusStopsAPIResponse);
+
+      const res = await BusDataSource.getAllStops();
+      expect(res).toEqual(mockBusStopsResponse);
+
+      expect(mockGet.mock.calls[0][0]).toBe("parades");
+    });
+  });
+
   describe("[getStop]", () => {
     it("Returns a Not Found Error if the response does not contain features", async () => {
       mockGet.mockReturnValueOnce({ features: [] });

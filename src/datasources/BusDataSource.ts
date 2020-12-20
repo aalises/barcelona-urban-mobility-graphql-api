@@ -101,4 +101,17 @@ export default class BusDataSource extends TmbApiDataSource {
 
     return this.busStopReducer(stop);
   }
+
+  async getAllStops(): Promise<BusStopType[]> {
+    const response: ITmbApiFeatureCollection<
+      BusStopAPIType
+    > | null = await this.get("parades");
+
+    const stops =
+      response?.features?.map((stop: BusStopAPIType) =>
+        this.busStopReducer(stop)
+      ) ?? [];
+
+    return stops;
+  }
 }
