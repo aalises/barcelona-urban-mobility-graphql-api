@@ -28,6 +28,8 @@ export interface RootQueryType {
   bikeStation: Maybe<BikeStationQueryResponseType>;
   /** Returns the information about a bus stop */
   busStop: Maybe<BusStopQueryResponseType>;
+  /** Information about the bus stops of the city of Barcelona */
+  busStops: Maybe<BusStopConnectionType>;
 }
 
 
@@ -81,6 +83,15 @@ export interface RootQueryBikeStationArgsType {
 /** Root Query */
 export interface RootQueryBusStopArgsType {
   findBy: FindByInputType;
+}
+
+
+/** Root Query */
+export interface RootQueryBusStopsArgsType {
+  after: Maybe<Scalars['String']>;
+  first: Maybe<Scalars['Int']>;
+  before: Maybe<Scalars['String']>;
+  last: Maybe<Scalars['Int']>;
 }
 
 /** A connection to a list of items. */
@@ -309,4 +320,22 @@ export interface LocationType {
   district: Maybe<Scalars['String']>;
   street: Maybe<Scalars['String']>;
   coordinates: Maybe<CoordinatesOutputType>;
+}
+
+/** A connection to a list of items. */
+export interface BusStopConnectionType {
+  __typename?: 'BusStopConnection';
+  /** Information to aid in pagination. */
+  pageInfo: PageInfoType;
+  /** A list of edges. */
+  edges: Maybe<Array<Maybe<BusStopEdgeType>>>;
+}
+
+/** An edge in a connection. */
+export interface BusStopEdgeType {
+  __typename?: 'BusStopEdge';
+  /** The item at the end of the edge */
+  node: Maybe<BusStopType>;
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
 }

@@ -26,6 +26,9 @@ type RootQuery {
 
   """Returns the information about a bus stop"""
   busStop(findBy: FindByInput!): BusStopQueryResponse
+
+  """Information about the bus stops of the city of Barcelona"""
+  busStops(after: String, first: Int, before: String, last: Int): BusStopConnection
 }
 
 """A connection to a list of items."""
@@ -268,4 +271,22 @@ type Location {
   district: String
   street: String
   coordinates: CoordinatesOutput
+}
+
+"""A connection to a list of items."""
+type BusStopConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [BusStopEdge]
+}
+
+"""An edge in a connection."""
+type BusStopEdge {
+  """The item at the end of the edge"""
+  node: BusStop
+
+  """A cursor for use in pagination"""
+  cursor: String!
 }
