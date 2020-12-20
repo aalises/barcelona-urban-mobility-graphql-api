@@ -48,7 +48,7 @@ export const mockMetroStationsResponse: any = [
   {
     id: 6660935,
     lines: ["L10N"],
-    location: {
+    coordinates: {
       altitude: null,
       latitude: 41.442817,
       longitude: 2.224737,
@@ -58,7 +58,7 @@ export const mockMetroStationsResponse: any = [
   {
     id: 6660525,
     lines: ["L5"],
-    location: {
+    coordinates: {
       altitude: null,
       latitude: 41.41506,
       longitude: 2.181497,

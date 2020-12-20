@@ -89,7 +89,7 @@ describe("BikeDataSource", () => {
       const res = await BikeDataSource.getStation({
         id: null,
         name: null,
-        closest: mockBikeStationsResponse[2].location,
+        closest: mockBikeStationsResponse[2].coordinates,
       });
 
       expect(res).toEqual(mockBikeStationsResponse[2]);

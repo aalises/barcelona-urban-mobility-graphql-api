@@ -41,7 +41,7 @@ const BikeStation = new GraphQLObjectType({
       description: "Total number of bikes the station has",
       type: GraphQLInt,
     },
-    location: {
+    coordinates: {
       description: "Location coordinates of the station",
       type: CoordinatesOutput,
     },

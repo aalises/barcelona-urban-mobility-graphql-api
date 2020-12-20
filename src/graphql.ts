@@ -4,6 +4,7 @@ import MetroDataSource from "./datasources/MetroDataSource";
 import BikeDataSource from "./datasources/BikeDataSource";
 import formatError from "./utils/formatError";
 import responseCachePlugin from "apollo-server-plugin-response-cache";
+import BusDataSource from "./datasources/BusDataSource";
 
 const exampleQuery = `# Welcome to the Barcelona urban mobility GraphQL API
 #
@@ -67,6 +68,7 @@ export const server: ApolloServer = new ApolloServer({
   dataSources: () => ({
     metro: new MetroDataSource(),
     bike: new BikeDataSource(),
+    bus: new BusDataSource(),
   }),
   plugins: [responseCachePlugin()],
 });

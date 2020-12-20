@@ -57,7 +57,7 @@ export const mockMetroLinesResponse: any = [
     originStation: {
       id: 6660935,
       lines: ["L1"],
-      location: {
+      coordinates: {
         latitude: 41.442817,
         longitude: 2.224737,
       },
@@ -66,7 +66,7 @@ export const mockMetroLinesResponse: any = [
     endingStation: {
       id: 6660525,
       lines: ["L1"],
-      location: {
+      coordinates: {
         latitude: 41.41506,
         longitude: 2.181497,
       },
@@ -76,7 +76,7 @@ export const mockMetroLinesResponse: any = [
       {
         id: 6660935,
         lines: ["L1"],
-        location: {
+        coordinates: {
           latitude: 41.442817,
           longitude: 2.224737,
         },
@@ -85,7 +85,7 @@ export const mockMetroLinesResponse: any = [
       {
         id: 6660525,
         lines: ["L1"],
-        location: {
+        coordinates: {
           latitude: 41.41506,
           longitude: 2.181497,
         },

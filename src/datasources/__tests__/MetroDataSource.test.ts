@@ -176,7 +176,7 @@ describe("MetroDataSource", () => {
       const res = await MetroDataSource.getStation({
         name: null,
         id: null,
-        closest: mockMetroStationsResponse[1].location,
+        closest: mockMetroStationsResponse[1].coordinates,
       });
 
       expect(res).toEqual(mockMetroStationsResponse[1]);

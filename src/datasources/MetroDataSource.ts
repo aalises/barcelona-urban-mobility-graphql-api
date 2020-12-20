@@ -1,4 +1,4 @@
-import TmbApiDataSource from "./TmbApiDataSource";
+import TmbApiDataSource, { ITmbApiFeatureCollection } from "./TmbApiDataSource";
 import type {
   FindByInputType,
   MetroStationType,
@@ -7,7 +7,7 @@ import type {
   MetroLineQueryResponseType,
   CoordinatesInputType,
 } from "../../types";
-import { getClosestMetroStation } from "../utils/getClosestStation";
+import { getClosestTmbStation } from "../utils/getClosestStation";
 
 export interface MetroLineAPIType {
   type: string;
@@ -41,21 +41,6 @@ export interface MetroLineAPIType {
   };
 }
 
-interface MetroLinesAPIType {
-  type: "FeatureCollection";
-  features: ReadonlyArray<MetroLineAPIType>;
-  totalFeatures: number;
-  numberMatched: number;
-  numberReturned: number;
-  timeStamp: string;
-  crs: {
-    type: "name";
-    properties: {
-      name: string;
-    };
-  };
-}
-
 export interface MetroStationAPIType {
   type: string;
   id: string;
@@ -72,21 +57,6 @@ export interface MetroStationAPIType {
   };
 }
 
-interface MetroStationsAPIType {
-  type: "FeatureCollection";
-  features: ReadonlyArray<MetroStationAPIType>;
-  totalFeatures: number;
-  numberMatched: number;
-  numberReturned: number;
-  timeStamp: string;
-  crs: {
-    type: "name";
-    properties: {
-      name: string;
-    };
-  };
-}
-
 export default class MetroDataSource extends TmbApiDataSource {
   //Transforms e.g. L1L2 into [L1, L2]
   parseLines(lines: string): string[] {
@@ -97,7 +67,7 @@ export default class MetroDataSource extends TmbApiDataSource {
     return {
       id: data.properties["CODI_GRUP_ESTACIO"],
       name: data.properties["NOM_ESTACIO"],
-      location: {
+      coordinates: {
         longitude: data.geometry.coordinates[0],
         latitude: data.geometry.coordinates[1],
         altitude: null,
@@ -114,10 +84,9 @@ export default class MetroDataSource extends TmbApiDataSource {
     const path = ["estacions", id].filter(Boolean).join("/");
     const nameFilterParameter = name ? { filter: `NOM_ESTACIO='${name}'` } : {};
 
-    const response: MetroStationsAPIType | null = await this.get(
-      path,
-      nameFilterParameter
-    );
+    const response: ITmbApiFeatureCollection<
+      MetroStationAPIType
+    > | null = await this.get(path, nameFilterParameter);
 
     if (Array.isArray(response?.features) && response?.features.length === 0) {
       return {
@@ -133,7 +102,7 @@ export default class MetroDataSource extends TmbApiDataSource {
     const getClosest = Number(response?.features?.length) > 1 && closest;
 
     const station: MetroStationAPIType | null = getClosest
-      ? getClosestMetroStation(
+      ? getClosestTmbStation(
           response?.features as MetroStationAPIType[],
           closest as CoordinatesInputType
         )
@@ -153,7 +122,9 @@ export default class MetroDataSource extends TmbApiDataSource {
   }
 
   async getAllStations(): Promise<MetroStationType[]> {
-    const response: MetroStationsAPIType | null = await this.get("estacions");
+    const response: ITmbApiFeatureCollection<
+      MetroStationAPIType
+    > | null = await this.get("estacions");
 
     const stations =
       response?.features?.map((station: MetroStationAPIType) =>
@@ -236,7 +207,9 @@ export default class MetroDataSource extends TmbApiDataSource {
   }
 
   async getAllLines(): Promise<MetroLineType[]> {
-    const response: MetroLinesAPIType | null = await this.get("linies/metro");
+    const response: ITmbApiFeatureCollection<
+      MetroLineAPIType
+    > | null = await this.get("linies/metro");
 
     const lines = await Promise.all(
       (response?.features ?? []).map(async (line: MetroLineAPIType) => {

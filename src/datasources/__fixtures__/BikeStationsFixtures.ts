@@ -164,7 +164,7 @@ export const mockBikeStationsResponse: any = [
     capacity: 46,
     id: "1",
     lastUpdated: 1605374084,
-    location: {
+    coordinates: {
       altitude: 16,
       latitude: 41.3979779,
       longitude: 2.1801069,
@@ -184,7 +184,7 @@ export const mockBikeStationsResponse: any = [
     capacity: 27,
     id: "2",
     lastUpdated: 1605374023,
-    location: {
+    coordinates: {
       altitude: 17,
       latitude: 41.3954877,
       longitude: 2.1771985,
@@ -204,7 +204,7 @@ export const mockBikeStationsResponse: any = [
     capacity: 27,
     id: "3",
     lastUpdated: 1605374102,
-    location: {
+    coordinates: {
       altitude: 11,
       latitude: 41.3941557,
       longitude: 2.1813305,
@@ -224,7 +224,7 @@ export const mockBikeStationsResponse: any = [
     capacity: 21,
     id: "4",
     lastUpdated: 1605374039,
-    location: {
+    coordinates: {
       altitude: 8,
       latitude: 41.3933173,
       longitude: 2.1812483,
@@ -244,7 +244,7 @@ export const mockBikeStationsResponse: any = [
     capacity: 39,
     id: "5",
     lastUpdated: 1605388149,
-    location: {
+    coordinates: {
       altitude: 7,
       latitude: 41.3911035,
       longitude: 2.1801763,

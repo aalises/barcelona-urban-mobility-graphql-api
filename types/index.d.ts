@@ -26,6 +26,8 @@ export interface RootQueryType {
   bikeStations: Maybe<BikeStationConnectionType>;
   /** Returns the information about a bike station */
   bikeStation: Maybe<BikeStationQueryResponseType>;
+  /** Returns the information about a bus stop */
+  busStop: Maybe<BusStopQueryResponseType>;
 }
 
 
@@ -75,6 +77,12 @@ export interface RootQueryBikeStationArgsType {
   findBy: FindByInputType;
 }
 
+
+/** Root Query */
+export interface RootQueryBusStopArgsType {
+  findBy: FindByInputType;
+}
+
 /** A connection to a list of items. */
 export interface MetroStationConnectionType {
   __typename?: 'MetroStationConnection';
@@ -114,7 +122,7 @@ export interface MetroStationType {
   /** Name of the station */
   name: Maybe<Scalars['String']>;
   /** Location coordinates of the station */
-  location: Maybe<CoordinatesOutputType>;
+  coordinates: Maybe<CoordinatesOutputType>;
   /** Lines the station belongs to e.g. L1, L2 */
   lines: Maybe<Array<Maybe<Scalars['String']>>>;
 }
@@ -235,7 +243,7 @@ export interface BikeStationType {
   /** Total number of bikes the station has */
   capacity: Maybe<Scalars['Int']>;
   /** Location coordinates of the station */
-  location: Maybe<CoordinatesOutputType>;
+  coordinates: Maybe<CoordinatesOutputType>;
   /** Information about the available bikes and docks of the station */
   available: Maybe<BikeStationAvailabilityInfoType>;
 }
@@ -279,3 +287,26 @@ export interface OnlyFilterByInputBikeType {
 }
 
 export type BikeStationQueryResponseType = BikeStationType | NotFoundErrorType;
+
+export type BusStopQueryResponseType = BusStopType | NotFoundErrorType;
+
+/** Bus stop information */
+export interface BusStopType {
+  __typename?: 'BusStop';
+  /** Unique ID of the stop */
+  id: Maybe<Scalars['ID']>;
+  /** Name of the stop */
+  name: Maybe<Scalars['String']>;
+  /** Location of the stop */
+  location: Maybe<LocationType>;
+}
+
+/** Location of a stop/station */
+export interface LocationType {
+  __typename?: 'Location';
+  address: Maybe<Scalars['String']>;
+  city: Maybe<Scalars['String']>;
+  district: Maybe<Scalars['String']>;
+  street: Maybe<Scalars['String']>;
+  coordinates: Maybe<CoordinatesOutputType>;
+}
