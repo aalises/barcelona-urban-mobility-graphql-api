@@ -15,6 +15,39 @@ export interface ITmbApiFeatureCollection<T> {
     };
   };
 }
+
+export interface LineAPIType {
+  type: string;
+  id: string;
+  geometry: {
+    type: string;
+    coordinates: number[][];
+  };
+  geometry_name: string;
+  properties: {
+    ID_LINIA: number;
+    CODI_LINIA: number;
+    NOM_LINIA: string;
+    DESC_LINIA: string;
+    ORIGEN_LINIA: string;
+    DESTI_LINIA: string;
+    NUM_PAQUETS: number;
+    ID_OPERADOR: number;
+    NOM_OPERADOR: string;
+    NOM_TIPUS_TRANSPORT: string;
+    CODI_FAMILIA: number;
+    NOM_FAMILIA: string;
+    ORDRE_FAMILIA: string;
+    ORDRE_LINIA: number;
+    CODI_TIPUS_CALENDARI: string;
+    NOM_TIPUS_CALENDARI: string;
+    DATA: string;
+    COLOR_LINIA: string;
+    COLOR_AUX_LINIA: string;
+    COLOR_TEXT_LINIA: string;
+  };
+}
+
 export default class TmbApiDataSource extends RESTDataSource {
   constructor() {
     super();
