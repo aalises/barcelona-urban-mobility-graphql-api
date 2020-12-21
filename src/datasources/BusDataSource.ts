@@ -4,6 +4,7 @@ import {
   BusStopType,
   CoordinatesInputType,
   BusLineType,
+  BusLineQueryResponseType,
 } from "../../types";
 import { BusStopQueryResponseType } from "../../types";
 import { getClosestTmbStation } from "../utils/getClosestStation";
@@ -137,6 +138,47 @@ export default class BusDataSource extends TmbApiDataSource {
       endingStop: properties["DESTI_LINIA"] as any,
       stops: null,
       color: properties["COLOR_LINIA"],
+    };
+  }
+
+  async getLine({
+    id,
+    name,
+  }: FindByInputType): Promise<BusLineQueryResponseType | null> {
+    const path = ["linies/bus", id].filter(Boolean).join("/");
+    const nameFilterParameter = name ? { filter: `NOM_LINIA='${name}'` } : {};
+
+    const response = await this.get(path, nameFilterParameter);
+
+    if (Array.isArray(response?.features) && response?.features.length === 0) {
+      return {
+        params: {
+          id,
+          name,
+        },
+      };
+    }
+
+    const line: BusLineType | null = response?.features?.[0]
+      ? this.busLineReducer(response?.features?.[0])
+      : null;
+
+    if (line == null) {
+      return {
+        params: {
+          id,
+          name,
+        },
+      };
+    }
+
+    const stops = await this.getLineStops({ id, name, closest: null });
+
+    return {
+      ...line,
+      stops: stops as any,
+      originStop: stops?.find((stop) => stop.name === line.originStop) ?? null,
+      endingStop: stops?.find((stop) => stop.name === line.endingStop) ?? null,
     };
   }
 

@@ -30,6 +30,8 @@ export interface RootQueryType {
   busStop: Maybe<BusStopQueryResponseType>;
   /** Information about the bus stops of the city of Barcelona */
   busStops: Maybe<BusStopConnectionType>;
+  /** Returns the information about a bus line */
+  busLine: Maybe<BusLineQueryResponseType>;
   /** Information about the bus lines of the city of Barcelona */
   busLines: Maybe<BusLineConnectionType>;
 }
@@ -95,6 +97,12 @@ export interface RootQueryBusStopsArgsType {
   before: Maybe<Scalars['String']>;
   last: Maybe<Scalars['Int']>;
   filterBy: Maybe<FilterByInputTmbType>;
+}
+
+
+/** Root Query */
+export interface RootQueryBusLineArgsType {
+  findBy: FindByInputType;
 }
 
 
@@ -352,23 +360,7 @@ export interface BusStopEdgeType {
   cursor: Scalars['String'];
 }
 
-/** A connection to a list of items. */
-export interface BusLineConnectionType {
-  __typename?: 'BusLineConnection';
-  /** Information to aid in pagination. */
-  pageInfo: PageInfoType;
-  /** A list of edges. */
-  edges: Maybe<Array<Maybe<BusLineEdgeType>>>;
-}
-
-/** An edge in a connection. */
-export interface BusLineEdgeType {
-  __typename?: 'BusLineEdge';
-  /** The item at the end of the edge */
-  node: Maybe<BusLineType>;
-  /** A cursor for use in pagination */
-  cursor: Scalars['String'];
-}
+export type BusLineQueryResponseType = BusLineType | NotFoundErrorType;
 
 /** Bus line information */
 export interface BusLineType {
@@ -394,4 +386,22 @@ export interface BusLineStopsArgsType {
   first: Maybe<Scalars['Int']>;
   before: Maybe<Scalars['String']>;
   last: Maybe<Scalars['Int']>;
+}
+
+/** A connection to a list of items. */
+export interface BusLineConnectionType {
+  __typename?: 'BusLineConnection';
+  /** Information to aid in pagination. */
+  pageInfo: PageInfoType;
+  /** A list of edges. */
+  edges: Maybe<Array<Maybe<BusLineEdgeType>>>;
+}
+
+/** An edge in a connection. */
+export interface BusLineEdgeType {
+  __typename?: 'BusLineEdge';
+  /** The item at the end of the edge */
+  node: Maybe<BusLineType>;
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
 }
