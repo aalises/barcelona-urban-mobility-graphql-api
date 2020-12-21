@@ -20,7 +20,7 @@ const exampleQuery = `# Welcome to the Barcelona urban mobility GraphQL API
   ) {
     ...on BikeStation {
       name
-      location {
+      coordinates {
         longitude
         latitude
       }
