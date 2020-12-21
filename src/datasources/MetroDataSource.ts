@@ -8,38 +8,7 @@ import type {
   CoordinatesInputType,
 } from "../../types";
 import { getClosestTmbStation } from "../utils/getClosestStation";
-
-export interface MetroLineAPIType {
-  type: string;
-  id: string;
-  geometry: {
-    type: string;
-    coordinates: number[][];
-  };
-  geometry_name: string;
-  properties: {
-    ID_LINIA: number;
-    CODI_LINIA: number;
-    NOM_LINIA: string;
-    DESC_LINIA: string;
-    ORIGEN_LINIA: string;
-    DESTI_LINIA: string;
-    NUM_PAQUETS: number;
-    ID_OPERADOR: number;
-    NOM_OPERADOR: string;
-    NOM_TIPUS_TRANSPORT: string;
-    CODI_FAMILIA: number;
-    NOM_FAMILIA: string;
-    ORDRE_FAMILIA: string;
-    ORDRE_LINIA: number;
-    CODI_TIPUS_CALENDARI: string;
-    NOM_TIPUS_CALENDARI: string;
-    DATA: string;
-    COLOR_LINIA: string;
-    COLOR_AUX_LINIA: string;
-    COLOR_TEXT_LINIA: string;
-  };
-}
+import type { LineAPIType } from "./TmbApiDataSource";
 
 export interface MetroStationAPIType {
   type: string;
@@ -134,7 +103,7 @@ export default class MetroDataSource extends TmbApiDataSource {
     return stations;
   }
 
-  metroLineReducer({ properties }: MetroLineAPIType): MetroLineType {
+  metroLineReducer({ properties }: LineAPIType): MetroLineType {
     return {
       id: properties["CODI_LINIA"],
       name: properties["NOM_LINIA"],
@@ -208,11 +177,11 @@ export default class MetroDataSource extends TmbApiDataSource {
 
   async getAllLines(): Promise<MetroLineType[]> {
     const response: ITmbApiFeatureCollection<
-      MetroLineAPIType
+      LineAPIType
     > | null = await this.get("linies/metro");
 
     const lines = await Promise.all(
-      (response?.features ?? []).map(async (line: MetroLineAPIType) => {
+      (response?.features ?? []).map(async (line: LineAPIType) => {
         const reducedLine = this.metroLineReducer(line);
         const stations = await this.getLineStations({
           id: reducedLine.id,

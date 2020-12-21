@@ -27,7 +27,7 @@ It provides information about bus stops and lines, metro stations/lines, and pub
 
 - [x] `busStops` query with information about bus stops
 - [x] `busStop` query with information about one bus stop (find by name or id)
-- [ ] `busLines` query with information about bus lines
+- [x] `busLines` query with information about bus lines
 - [ ] `busLine` query with information about a bus line (find by name or id)
 
 #### Tram

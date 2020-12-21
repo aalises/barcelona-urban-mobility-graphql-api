@@ -4,12 +4,30 @@ import {
   mockBusStopsResponse,
 } from "../__fixtures__/BusStopsFixtures";
 
+import {
+  mockBusLinesAPIResponse,
+  mockBusLinesResponse,
+} from "../__fixtures__/BusLinesFixtures";
 const BusDataSource = new DataSource();
 
 describe("BusDataSource", () => {
   const mockGet = jest.fn();
 
   BusDataSource.get = mockGet;
+  BusDataSource.getLineStops = jest
+    .fn()
+    .mockReturnValue(mockBusLinesResponse[0].stops);
+
+  describe("[getAllLines]", () => {
+    it("Looks up the lines from the API", async () => {
+      mockGet.mockReturnValueOnce(mockBusLinesAPIResponse);
+
+      const res = await BusDataSource.getAllLines();
+      expect(res).toEqual(mockBusLinesResponse);
+
+      expect(mockGet.mock.calls[0][0]).toBe("linies/bus");
+    });
+  });
 
   it("[busStopReducer]: Parses a bus stop API data to the schema format", () => {
     expect(

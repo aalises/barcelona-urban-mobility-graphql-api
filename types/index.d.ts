@@ -30,6 +30,8 @@ export interface RootQueryType {
   busStop: Maybe<BusStopQueryResponseType>;
   /** Information about the bus stops of the city of Barcelona */
   busStops: Maybe<BusStopConnectionType>;
+  /** Information about the bus lines of the city of Barcelona */
+  busLines: Maybe<BusLineConnectionType>;
 }
 
 
@@ -93,6 +95,15 @@ export interface RootQueryBusStopsArgsType {
   before: Maybe<Scalars['String']>;
   last: Maybe<Scalars['Int']>;
   filterBy: Maybe<FilterByInputTmbType>;
+}
+
+
+/** Root Query */
+export interface RootQueryBusLinesArgsType {
+  after: Maybe<Scalars['String']>;
+  first: Maybe<Scalars['Int']>;
+  before: Maybe<Scalars['String']>;
+  last: Maybe<Scalars['Int']>;
 }
 
 /** A connection to a list of items. */
@@ -339,4 +350,48 @@ export interface BusStopEdgeType {
   node: Maybe<BusStopType>;
   /** A cursor for use in pagination */
   cursor: Scalars['String'];
+}
+
+/** A connection to a list of items. */
+export interface BusLineConnectionType {
+  __typename?: 'BusLineConnection';
+  /** Information to aid in pagination. */
+  pageInfo: PageInfoType;
+  /** A list of edges. */
+  edges: Maybe<Array<Maybe<BusLineEdgeType>>>;
+}
+
+/** An edge in a connection. */
+export interface BusLineEdgeType {
+  __typename?: 'BusLineEdge';
+  /** The item at the end of the edge */
+  node: Maybe<BusLineType>;
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
+}
+
+/** Bus line information */
+export interface BusLineType {
+  __typename?: 'BusLine';
+  /** Numeric Code of the line */
+  id: Maybe<Scalars['Int']>;
+  /** Name of the line */
+  name: Maybe<Scalars['String']>;
+  /** Origin stop of the line */
+  originStop: Maybe<BusStopType>;
+  /** Ending stop of the line */
+  endingStop: Maybe<BusStopType>;
+  /** Stops of the line */
+  stops: Maybe<BusStopConnectionType>;
+  /** Color of the line represented as a Hexadecimal string */
+  color: Maybe<Scalars['String']>;
+}
+
+
+/** Bus line information */
+export interface BusLineStopsArgsType {
+  after: Maybe<Scalars['String']>;
+  first: Maybe<Scalars['Int']>;
+  before: Maybe<Scalars['String']>;
+  last: Maybe<Scalars['Int']>;
 }

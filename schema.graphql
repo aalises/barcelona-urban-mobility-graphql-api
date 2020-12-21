@@ -29,6 +29,9 @@ type RootQuery {
 
   """Information about the bus stops of the city of Barcelona"""
   busStops(after: String, first: Int, before: String, last: Int, filterBy: FilterByInputTmb): BusStopConnection
+
+  """Information about the bus lines of the city of Barcelona"""
+  busLines(after: String, first: Int, before: String, last: Int): BusLineConnection
 }
 
 """A connection to a list of items."""
@@ -289,4 +292,43 @@ type BusStopEdge {
 
   """A cursor for use in pagination"""
   cursor: String!
+}
+
+"""A connection to a list of items."""
+type BusLineConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [BusLineEdge]
+}
+
+"""An edge in a connection."""
+type BusLineEdge {
+  """The item at the end of the edge"""
+  node: BusLine
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""Bus line information"""
+type BusLine {
+  """Numeric Code of the line"""
+  id: Int
+
+  """Name of the line"""
+  name: String
+
+  """Origin stop of the line"""
+  originStop: BusStop
+
+  """Ending stop of the line"""
+  endingStop: BusStop
+
+  """Stops of the line"""
+  stops(after: String, first: Int, before: String, last: Int): BusStopConnection
+
+  """Color of the line represented as a Hexadecimal string"""
+  color: String
 }
