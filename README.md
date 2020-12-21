@@ -6,32 +6,6 @@
 GraphQL API built using Apollo Server + Typescript that integrates information about the urban mobility services of the city of Barcelona.
 
 It provides information about bus stops and lines, metro stations/lines, and public bikes (Bicing) stations and availability.
-
-### Feature Roadmap / Checklist for v1.0.0
-
-#### Metro ✅
-
-- [x] `metroStation` query with information about one metro station (find by name or id)
-- [x] `metroStations` query with information about metro stations
-- [x] `metroLine` query with information about one metro line (find by name or id)
-- [x] `metroLines` query with information about metro lines
-- [x] Add filtering of the stations by line ID or name
-
-#### Bike ✅
-
-- [x] `bikeStations` query with information about bike stations
-- [x] `bikeStation` query with information about one bike station (find by name or id)
-- [x] Add bike availability information to the `bikeStations` query
-
-#### Bus
-
-- [x] `busStops` query with information about bus stops
-- [x] `busStop` query with information about one bus stop (find by name or id)
-- [x] `busLines` query with information about bus lines
-- [x] `busLine` query with information about a bus line (find by name or id)
-
-#### Tram
-
 ## GraphQL Playground 🚀
 
 [Barcelona Urban Mobility GraphQL Playground](https://barcelona-urban-mobility-graphql-api.netlify.app/graphql)
@@ -56,13 +30,9 @@ In order to test using Jest, just run `yarn test` or `npm run test`
 
 ## Data Sources 📊
 
-### Metro Stations
+### Metro Stations / Bus Stops
 
-For the metro stations, we use the public `Transports Metropolitans de Barcelona (TMB)` API, at [https://developer.tmb.cat/](https://developer.tmb.cat/). The endpoint used it:
-
-```
-https://api.tmb.cat/v1/transit/estacions?app_id=XXX&app_key=XXX
-```
+For the metro stations and bus stops, we use the public `Transports Metropolitans de Barcelona (TMB)` API, at [https://developer.tmb.cat/](https://developer.tmb.cat/). 
 
 The `App Key` and `App ID` are passed through the node's `process.env.TMB_API_APP_KEY` and `process.env.TMB_API_APP_ID` and the credentials can be obtained if you log and register an app to the portal.
 
