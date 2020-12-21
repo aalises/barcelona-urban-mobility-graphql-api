@@ -92,6 +92,7 @@ export interface RootQueryBusStopsArgsType {
   first: Maybe<Scalars['Int']>;
   before: Maybe<Scalars['String']>;
   last: Maybe<Scalars['Int']>;
+  filterBy: Maybe<FilterByInputBusType>;
 }
 
 /** A connection to a list of items. */
@@ -338,4 +339,9 @@ export interface BusStopEdgeType {
   node: Maybe<BusStopType>;
   /** A cursor for use in pagination */
   cursor: Scalars['String'];
+}
+
+/** Input for the filterBy argument of the bus queries, which allows filtering a connection by some parameters (e.g. lineId) */
+export interface FilterByInputBusType {
+  lineId: Maybe<Scalars['Int']>;
 }
