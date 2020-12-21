@@ -13,6 +13,7 @@ import busStop from "./queries/BusStopQuery";
 import busStops from "./queries/BusStopsQuery";
 
 import busLines from "./queries/BusLinesQuery";
+import busLine from "./queries/BusLineQuery";
 
 export default new GraphQLObjectType({
   name: "RootQuery",
@@ -26,6 +27,7 @@ export default new GraphQLObjectType({
     bikeStation,
     busStop,
     busStops,
+    busLine,
     busLines,
   },
 });

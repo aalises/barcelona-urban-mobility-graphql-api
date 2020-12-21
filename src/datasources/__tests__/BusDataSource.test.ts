@@ -29,6 +29,67 @@ describe("BusDataSource", () => {
     });
   });
 
+  describe("[getLine]", () => {
+    it("Returns a Not Found Error if the response does not contain features", async () => {
+      mockGet.mockReturnValueOnce({ features: [] });
+      const res = await BusDataSource.getLine({
+        id: 32,
+        name: null,
+        closest: null,
+      });
+
+      expect(res).toEqual({
+        params: {
+          id: 32,
+          name: null,
+        },
+      });
+    });
+
+    it("Returns a Not Found Error if the features are null or undefined", async () => {
+      mockGet.mockReturnValueOnce({ features: null });
+      const res = await BusDataSource.getLine({
+        id: null,
+        name: "Cornellà Circular 1",
+        closest: null,
+      });
+
+      expect(res).toEqual({
+        params: { name: "Cornellà Circular 1", id: null },
+      });
+    });
+
+    it("Gets a line by ID", async () => {
+      mockGet.mockReturnValueOnce({
+        features: [mockBusLinesAPIResponse.features[0]],
+      });
+      const res = await BusDataSource.getLine({
+        id: 32,
+        name: null,
+        closest: null,
+      });
+
+      expect(res).toEqual(mockBusLinesResponse[0]);
+      expect(mockGet.mock.calls[0][0]).toBe("linies/bus/32");
+    });
+
+    it("Gets a line by Name", async () => {
+      mockGet.mockReturnValueOnce({
+        features: [mockBusLinesAPIResponse.features[0]],
+      });
+      const res = await BusDataSource.getLine({
+        id: null,
+        closest: null,
+        name: "Cornellà Circular 1",
+      });
+
+      expect(res).toEqual(mockBusLinesResponse[0]);
+      expect(mockGet).toBeCalledWith("linies/bus", {
+        filter: "NOM_LINIA='Cornellà Circular 1'",
+      });
+    });
+  });
+
   it("[busStopReducer]: Parses a bus stop API data to the schema format", () => {
     expect(
       BusDataSource.busStopReducer(mockBusStopsAPIResponse.features[0])
