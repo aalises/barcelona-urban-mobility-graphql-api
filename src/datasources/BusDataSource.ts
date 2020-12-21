@@ -102,6 +102,16 @@ export default class BusDataSource extends TmbApiDataSource {
     return this.busStopReducer(stop);
   }
 
+  async getLineStops({ id }: FindByInputType): Promise<BusStopType[]> {
+    const path = ["linies/bus", id, "parades"].filter(Boolean).join("/");
+    const response = await this.get(path);
+
+    const stops =
+      response?.features?.map((stop) => this.busStopReducer(stop)) ?? [];
+
+    return stops;
+  }
+
   async getAllStops(): Promise<BusStopType[]> {
     const response: ITmbApiFeatureCollection<
       BusStopAPIType

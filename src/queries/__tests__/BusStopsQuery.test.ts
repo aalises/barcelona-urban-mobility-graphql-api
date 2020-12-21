@@ -8,8 +8,8 @@ import {
 } from "../../datasources/__fixtures__/BusStopsFixtures";
 
 const GET_BUS_STOPS = gql`
-  query getBusStops($first: Int) {
-    busStops(first: $first) {
+  query getBusStops($first: Int, $filterBy: FilterByInputBus) {
+    busStops(first: $first, filterBy: $filterBy) {
       edges {
         node {
           id
@@ -36,5 +36,19 @@ describe("busStops Query", () => {
     expect(res?.data?.busStops?.edges[0]?.node?.id).toBe(
       mockBusStopsResponse[0].id
     );
+  });
+
+  it("Calls the getLineStops with the filtering params", async () => {
+    const mockGetLineStops = jest.fn();
+    bus.getLineStops = mockGetLineStops;
+
+    await query({
+      query: GET_BUS_STOPS,
+      variables: { first: 2, filterBy: { lineId: 3 } },
+    });
+
+    expect(mockGetLineStops).toHaveBeenCalledWith({
+      id: 3,
+    });
   });
 });

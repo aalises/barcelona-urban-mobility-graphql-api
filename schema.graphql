@@ -28,7 +28,7 @@ type RootQuery {
   busStop(findBy: FindByInput!): BusStopQueryResponse
 
   """Information about the bus stops of the city of Barcelona"""
-  busStops(after: String, first: Int, before: String, last: Int): BusStopConnection
+  busStops(after: String, first: Int, before: String, last: Int, filterBy: FilterByInputBus): BusStopConnection
 }
 
 """A connection to a list of items."""
@@ -289,4 +289,11 @@ type BusStopEdge {
 
   """A cursor for use in pagination"""
   cursor: String!
+}
+
+"""
+Input for the filterBy argument of the bus queries, which allows filtering a connection by some parameters (e.g. lineId)
+"""
+input FilterByInputBus {
+  lineId: Int
 }
