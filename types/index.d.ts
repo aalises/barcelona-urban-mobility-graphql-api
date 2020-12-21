@@ -39,7 +39,7 @@ export interface RootQueryMetroStationsArgsType {
   first: Maybe<Scalars['Int']>;
   before: Maybe<Scalars['String']>;
   last: Maybe<Scalars['Int']>;
-  filterBy: Maybe<FilterByInputMetroType>;
+  filterBy: Maybe<FilterByInputTmbType>;
 }
 
 
@@ -92,7 +92,7 @@ export interface RootQueryBusStopsArgsType {
   first: Maybe<Scalars['Int']>;
   before: Maybe<Scalars['String']>;
   last: Maybe<Scalars['Int']>;
-  filterBy: Maybe<FilterByInputBusType>;
+  filterBy: Maybe<FilterByInputTmbType>;
 }
 
 /** A connection to a list of items. */
@@ -147,8 +147,8 @@ export interface CoordinatesOutputType {
   altitude: Maybe<Scalars['Float']>;
 }
 
-/** Input for the filterBy argument of the metro queries, which allows filtering a connection by some parameters (e.g. lineName or lineId) */
-export interface FilterByInputMetroType {
+/** Input for the filterBy argument of the metro and bus queries, which allows filtering a connection by some parameters (e.g. lineName or lineId) */
+export interface FilterByInputTmbType {
   lineId: Maybe<Scalars['Int']>;
   lineName: Maybe<Scalars['String']>;
 }
@@ -339,9 +339,4 @@ export interface BusStopEdgeType {
   node: Maybe<BusStopType>;
   /** A cursor for use in pagination */
   cursor: Scalars['String'];
-}
-
-/** Input for the filterBy argument of the bus queries, which allows filtering a connection by some parameters (e.g. lineId) */
-export interface FilterByInputBusType {
-  lineId: Maybe<Scalars['Int']>;
 }

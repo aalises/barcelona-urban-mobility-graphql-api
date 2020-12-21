@@ -1,7 +1,7 @@
 import { connectionArgs, connectionFromArray } from "graphql-relay";
 import type { BusStopConnectionType } from "../../types";
 import { BusStopConnection } from "../outputs/BusStop";
-import { FilterByInputBus } from "../inputs/FilterByInput";
+import { FilterByInputTmb } from "../inputs/FilterByInput";
 
 export default {
   type: BusStopConnection,
@@ -9,18 +9,19 @@ export default {
   args: {
     ...connectionArgs,
     filterBy: {
-      type: FilterByInputBus,
+      type: FilterByInputTmb,
     },
   },
   resolve: async (_, args, { dataSources }): Promise<BusStopConnectionType> => {
     const { filterBy } = args;
 
     const stops = await (async () => {
-      if (!filterBy?.lineId) {
+      if (!filterBy?.lineId && !filterBy?.lineName) {
         return await dataSources.bus.getAllStops();
       }
       return await dataSources.bus.getLineStops({
         id: filterBy?.lineId ?? null,
+        name: filterBy?.lineName ?? null,
       });
     })();
 

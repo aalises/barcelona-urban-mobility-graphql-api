@@ -5,7 +5,7 @@ schema {
 """Root Query"""
 type RootQuery {
   """Information about the metro stations of the city of Barcelona"""
-  metroStations(after: String, first: Int, before: String, last: Int, filterBy: FilterByInputMetro): MetroStationConnection
+  metroStations(after: String, first: Int, before: String, last: Int, filterBy: FilterByInputTmb): MetroStationConnection
 
   """Returns the information about a metro station"""
   metroStation(findBy: FindByInput!): MetroStationQueryResponse
@@ -28,7 +28,7 @@ type RootQuery {
   busStop(findBy: FindByInput!): BusStopQueryResponse
 
   """Information about the bus stops of the city of Barcelona"""
-  busStops(after: String, first: Int, before: String, last: Int, filterBy: FilterByInputBus): BusStopConnection
+  busStops(after: String, first: Int, before: String, last: Int, filterBy: FilterByInputTmb): BusStopConnection
 }
 
 """A connection to a list of items."""
@@ -87,9 +87,9 @@ type CoordinatesOutput {
 }
 
 """
-Input for the filterBy argument of the metro queries, which allows filtering a connection by some parameters (e.g. lineName or lineId)
+Input for the filterBy argument of the metro and bus queries, which allows filtering a connection by some parameters (e.g. lineName or lineId)
 """
-input FilterByInputMetro {
+input FilterByInputTmb {
   lineId: Int
   lineName: String
 }
@@ -289,11 +289,4 @@ type BusStopEdge {
 
   """A cursor for use in pagination"""
   cursor: String!
-}
-
-"""
-Input for the filterBy argument of the bus queries, which allows filtering a connection by some parameters (e.g. lineId)
-"""
-input FilterByInputBus {
-  lineId: Int
 }

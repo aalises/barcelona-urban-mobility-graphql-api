@@ -5,7 +5,7 @@ import createTestServer from "../../utils/createTestServer";
 import { mockMetroStationsAPIResponse } from "../../datasources/__fixtures__/MetroStationsFixtures";
 
 const GET_METRO_STATIONS = gql`
-  query getMetroStations($first: Int, $filterBy: FilterByInputMetro) {
+  query getMetroStations($first: Int, $filterBy: FilterByInputTmb) {
     metroStations(first: $first, filterBy: $filterBy) {
       edges {
         node {

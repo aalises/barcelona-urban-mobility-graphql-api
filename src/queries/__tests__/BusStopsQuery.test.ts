@@ -8,7 +8,7 @@ import {
 } from "../../datasources/__fixtures__/BusStopsFixtures";
 
 const GET_BUS_STOPS = gql`
-  query getBusStops($first: Int, $filterBy: FilterByInputBus) {
+  query getBusStops($first: Int, $filterBy: FilterByInputTmb) {
     busStops(first: $first, filterBy: $filterBy) {
       edges {
         node {
@@ -49,6 +49,7 @@ describe("busStops Query", () => {
 
     expect(mockGetLineStops).toHaveBeenCalledWith({
       id: 3,
+      name: null,
     });
   });
 });

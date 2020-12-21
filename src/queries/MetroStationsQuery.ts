@@ -1,6 +1,6 @@
 import { connectionArgs, connectionFromArray } from "graphql-relay";
 import type { MetroStationConnectionType } from "../../types";
-import { FilterByInputMetro } from "../inputs/FilterByInput";
+import { FilterByInputTmb } from "../inputs/FilterByInput";
 import { MetroStationConnection } from "../outputs/MetroStation";
 
 export default {
@@ -9,7 +9,7 @@ export default {
   args: {
     ...connectionArgs,
     filterBy: {
-      type: FilterByInputMetro,
+      type: FilterByInputTmb,
     },
   },
   resolve: async (

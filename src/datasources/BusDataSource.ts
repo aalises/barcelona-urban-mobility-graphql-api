@@ -102,9 +102,11 @@ export default class BusDataSource extends TmbApiDataSource {
     return this.busStopReducer(stop);
   }
 
-  async getLineStops({ id }: FindByInputType): Promise<BusStopType[]> {
+  async getLineStops({ id, name }: FindByInputType): Promise<BusStopType[]> {
     const path = ["linies/bus", id, "parades"].filter(Boolean).join("/");
-    const response = await this.get(path);
+    const nameFilterParameter = name ? { filter: `DESC_LINIA='${name}'` } : {};
+
+    const response = await this.get(path, nameFilterParameter);
 
     const stops =
       response?.features?.map((stop) => this.busStopReducer(stop)) ?? [];
