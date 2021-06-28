@@ -1,4 +1,4 @@
-schema: http://localhost:9000/graphql
+schema: https://goofy-keller-49aefb.netlify.app/graphql
 generates:
   ./types/index.d.ts:
     plugins:
